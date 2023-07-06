@@ -6,18 +6,21 @@ import Register from "./pages/Register";
 import NoPage from "./pages/NoPage";
 
 function App() {
-  return (
-    <div className="App">
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
 
-          <Route path="*" element={<NoPage />} />
-        </Routes>
-      </Router>
-    </div>
+  return (
+    <>
+      <div className="App">
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+
+            <Route path="*" element={<NoPage />} />
+          </Routes>
+        </Router>
+      </div>
+    </>
   );
 }
 
