@@ -5,7 +5,7 @@ const port = 5000;
 
 app.use(express.json());
 
-app.use("/api/data", routes);
+app.use("/", routes);
 
 app.listen(port, () => {
   console.log(`Server running on port http://www.localhost:${port}/api/data`);
