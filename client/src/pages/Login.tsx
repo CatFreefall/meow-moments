@@ -1,17 +1,40 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { validate } from "email-validator";
 
-function Login() {
+// TODO: USERNAME/EMAIL LOGIN CHOICE USING EMAIL VALIDATOR LIB
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const nav = useNavigate();
 
-  const setUser = (e: any) => {
-    setUsername(e.target.value);
-  };
-  const setPass = (e: any) => {
-    setPassword(e.target.value);
+  const login = () => {
+    console.log("username: ", username, "password: ", password);
+    let jsonBody: string;
+
+    // determining if the user is signing in with their email or username
+    validate(username)
+      ? (jsonBody = JSON.stringify({
+          username: null,
+          email: username,
+          password: password,
+        }))
+      : (jsonBody = JSON.stringify({
+          username: username,
+          email: null,
+          password: password,
+        }));
+
+    fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonBody,
+    })
+      .then((res) => res.json())
+      .catch((e) => console.log(e));
   };
 
   return (
@@ -23,7 +46,7 @@ function Login() {
           type="text"
           placeholder="Username"
           value={username}
-          onChange={setUser}
+          onChange={(e) => setUsername(e.target.value)}
         ></input>
       </form>
       <form>
@@ -31,18 +54,12 @@ function Login() {
           type="password"
           placeholder="Password"
           value={password}
-          onChange={setPass}
+          onChange={(e) => setPassword(e.target.value)}
         ></input>
       </form>
-      <button
-        onClick={() =>
-          console.log("username: ", username, "password: ", password)
-        }
-      >
-        Submit
-      </button>
+      <button onClick={login}>Submit</button>
     </>
   );
-}
+};
 
 export default Login;

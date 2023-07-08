@@ -3,9 +3,11 @@ import { useState } from "react";
 import { validate } from "email-validator";
 
 // TODO: EMAIL VALIDATION STILL NEEDED
-function Register() {
+const Register = () => {
   const nav = useNavigate();
 
+  // TODO: utilize these states later to check for correct input after each change in the text box
+  // TODO: also utilize username and email to check if they are already in the database on change
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -15,7 +17,7 @@ function Register() {
   const currentDate: String =
     date.getMonth() + 1 + "-" + date.getDate() + "-" + date.getFullYear();
 
-  const registerUser = () => {
+  const register = () => {
     // validating the email using the email-validator lib before querying the database.
     validate(email)
       ? fetch("/register", {
@@ -25,7 +27,7 @@ function Register() {
           },
           body: JSON.stringify({
             username: username,
-            password_hash: password,
+            password: password,
             email: email,
             account_creation_date: currentDate,
           }),
@@ -59,7 +61,7 @@ function Register() {
           onChange={(e) => setEmail(e.target.value)}
         ></input>
       </form>
-      <button onClick={registerUser}>Click to register</button>
+      <button onClick={register}>Click to register</button>
     </>
   );
 }

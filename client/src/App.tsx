@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NoPage from "./pages/NoPage";
+import Confirm from "./pages/Confirm";
 
 function App() {
 
@@ -15,6 +16,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+
+            <Route path="/confirm/:token" element={<Confirm />} />
 
             <Route path="*" element={<NoPage />} />
           </Routes>
