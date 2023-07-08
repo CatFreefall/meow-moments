@@ -1,16 +1,18 @@
 import { Request, Response } from "express";
 import { genSalt, hash, compare } from "bcrypt";
-import nodemailer from "nodemailer";
+import { createTransport } from "nodemailer";
+import { Secret, sign, verify } from "jsonwebtoken";
 
 import pool from "../db";
 import {
   registerUser,
   usernameExists,
   emailExists,
+  changeVerifyStatus,
 } from "../queries/authQueries";
 
-// TODO: add a "didn't recieve the email, click to resend" function
-const transporter = nodemailer.createTransport({
+// TODO: add a "didn't recieve the email, click to resend" function and rate limit it
+const transporter = createTransport({
   service: "gmail",
   port: 465,
   secure: true,
@@ -20,23 +22,34 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// casting the secret to type Secret so that it can be used to sign the JWT
+const verificationSecret: Secret = process.env.EMAIL_VERIFY_SECRET as Secret;
+
+// helper function to sign a JWT
+const signJWT = (email: string, secret: Secret): string => {
+  const token = sign({ email }, secret, {
+    expiresIn: "1h",
+  });
+  return token;
+};
+
 // TODO: create a proper email template and change link
 // helper function to send a confirmation email to the user
-const sendConfirmationEmail = (email: string): void => {
+const sendConfirmationEmail = async (email: string): Promise<void> => {
+  const verificationToken = signJWT(email, verificationSecret);
+
   const emailDetails: object = {
     from: process.env.NODE_MAILER_HOST,
     to: email,
     subject: "Confirm Your Meow Moments Account! 🐱",
     html: `
     <div>Hello, please confirm your account by clicking the link below.</div>
-    <a href="http://localhost:3000/confirm/${email}">Confirm Account</a>
+    <a href="http://localhost:3000/confirm/${verificationToken}">Confirm Account</a>
     `,
   };
-  transporter.sendMail(emailDetails);
+  await transporter.sendMail(emailDetails);
 };
 
-// TODO: add e-mail verification. this can be done using JWT and setting the token expiration
-// to a short time period (30 minutes).
 // TODO: add a password reset feature.
 const addUser = async (req: Request, res: Response): Promise<any> => {
   const { username, password, email, account_creation_date } = req.body;
@@ -121,4 +134,24 @@ const loginUser = (req: Request, res: Response): void => {
   }
 };
 
-export { addUser, loginUser };
+const verifyUser = async (req: Request, res: Response): Promise<void> => {
+  // check if token is expired or not. If not, update status of user in database to verified
+  // if yes, the token is destructured and the verification status of the entry with the email
+  // is changed to true.
+  try {
+    const token = verify(req.params.token, verificationSecret);
+    res.status(200).send("user verified");
+    const { email } = token as { email: string };
+    await pool.query(changeVerifyStatus, [email]);
+  } catch {
+    // TODO: figure out a way to do "verification link has expired. please try again
+    // using the new link sent to your email." email needs to be accessed somehow.
+    res
+      .status(200)
+      .send(
+        "verification link has expired. please try logging in again to resend the verification email."
+      );
+  }
+};
+
+export { addUser, loginUser, verifyUser };

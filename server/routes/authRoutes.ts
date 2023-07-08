@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addUser, loginUser } from "../controllers/authControllers";
+import { addUser, loginUser, verifyUser } from "../controllers/authControllers";
 
 const router = Router();
 
@@ -7,6 +7,6 @@ router.post("/register", addUser);
 
 router.post("/login", loginUser);
 
-router.get("/confirm/:token", loginUser);
+router.post("/confirm/:token", verifyUser);
 
 export default router;
