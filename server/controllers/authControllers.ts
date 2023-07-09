@@ -25,9 +25,9 @@ const transporter = createTransport({
 // casting the secret to type Secret so that it can be used to sign the JWT
 const verificationSecret: Secret = process.env.EMAIL_VERIFY_SECRET as Secret;
 
-// helper function to sign a JWT
-const signJWT = (email: string, secret: Secret): string => {
-  const token = sign({ email }, secret, {
+// helper function to sign a JWT. payload does not include iat and exp
+const signJWT = (payload: string, secret: Secret): string => {
+  const token = sign({ payload }, secret, {
     expiresIn: "1h",
   });
   return token;
@@ -87,7 +87,6 @@ const addUser = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
-// TODO: rate limit login attempts
 // this function is used to login a user with username/email and password.
 const loginUser = (req: Request, res: Response): void => {
   const { username, email, password } = req.body;
