@@ -7,6 +7,7 @@ const Register = () => {
 
   // TODO: utilize these states later to check for correct input after each change in the text box
   // TODO: also utilize username and email to check if they are already in the database on change
+  // instead of having the user submitting to find out
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");

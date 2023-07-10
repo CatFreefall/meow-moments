@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NoPage from "./pages/NoPage";
 import Confirm from "./pages/Confirm";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
             <Route path="/register" element={<Register />} />
 
             <Route path="/confirm/:username/:token" element={<Confirm />} />
-            <Route path="/password-reset/:token" element={<Confirm />} />
+            <Route path="/password-reset-req/:token" element={<ForgotPassword />} />
 
             <Route path="*" element={<NoPage />} />
           </Routes>

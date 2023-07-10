@@ -41,7 +41,7 @@ const Login = () => {
   //TODO: have the user enter their username in the box before fetching the endpoint
   const forgotPassword = () => {
     validate(username)
-      ? fetch("/password-reset", {
+      ? fetch("/password-reset-req", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -60,7 +60,7 @@ const Login = () => {
       <form>
         <input
           type="text"
-          placeholder="Username"
+          placeholder="Email/Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         ></input>

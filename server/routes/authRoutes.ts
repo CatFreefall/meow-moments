@@ -3,7 +3,8 @@ import {
   addUser,
   loginUser,
   verifyUser,
-  resetPassword,
+  resetPasswordReq,
+  changePassword,
 } from "../controllers/authControllers";
 
 const router = Router();
@@ -14,6 +15,7 @@ router.post("/login", loginUser);
 
 router.post("/confirm/:username/:token", verifyUser);
 
-router.post("/password-reset", resetPassword);
+router.post("/password-reset-req", resetPasswordReq);
+router.post("/password-reset", changePassword);
 
 export default router;

@@ -104,25 +104,9 @@ const loginUser = (req: Request, res: Response): void => {
         const isCorrectPassword = await compare(password, password_hash);
 
         // sending back repsponses based on status codes.
-        // responses for invalid password and invalid username/email are the same
-        // to prevent users from finding out if a username/email exists in the database.
-        if (isCorrectPassword) {
-          if (findUser.rows[0].is_verified === false) {
-            res
-              .status(401)
-              .json(
-                "User is not verified. Please verify your account using the confirmation email sent."
-              );
-            sendConfirmationEmail(
-              findUser.rows[0].username,
-              findUser.rows[0].email
-            );
-          } else {
-            res.status(201).json("User successfully logged in");
-          }
-        } else {
-          res.status(401).json("Password incorrect");
-        }
+        isCorrectPassword
+          ? res.status(201).json("User successfully logged in")
+          : res.status(401).json("Password incorrect");
       } else {
         res.status(401).json("Username/Email does not exist");
       }
@@ -140,10 +124,8 @@ const loginUser = (req: Request, res: Response): void => {
 };
 
 const verifyUser = async (req: Request, res: Response): Promise<void> => {
-  console.log("verification link expired");
   // check if token is expired or not. If not, update status of user in database to verified
-  // if yes, the token is destructured and the verification status of the entry with the email
-  // is changed to true.
+  // if yes, notify the user.
   const username = req.params.username;
 
   try {
@@ -151,20 +133,12 @@ const verifyUser = async (req: Request, res: Response): Promise<void> => {
 
     res.status(200).send("user verified");
     await pool.query(changeVerifyStatus, [username]);
-    console.log("fart");
   } catch {
-    res
-      .status(200)
-      .send(
-        "verification link has expired. please verify using the new verification link sent."
-      );
-    const dataEntry = await pool.query(getEntryByUsername, [username]);
-    const email = dataEntry.rows[0].email;
-    // sendConfirmationEmail(username, email);
+    res.status(200).send("verification link expired.");
   }
 };
 
-const resetPassword = async (req: Request, res: Response): Promise<void> => {
+const resetPasswordReq = async (req: Request, res: Response): Promise<void> => {
   const { email } = req.body;
   const resetToken = signJWT(email, verificationSecret);
 
@@ -174,10 +148,19 @@ const resetPassword = async (req: Request, res: Response): Promise<void> => {
     subject: "Reset Your Meow Moments Account Password! 🐱",
     html: `
     <div>Hello, please click on the link provided below to reset your account password</div>
-    <a href="http://localhost:3000/password-reset/${resetToken}">Reset Password</a>
+    <a href="http://localhost:3000/password-reset-req/${resetToken}">Reset Password</a>
     `,
   };
   await transporter.sendMail(emailDetails);
 };
 
-export { addUser, loginUser, verifyUser, resetPassword };
+const changePassword = (req: Request, res: Response) => {
+  try {
+    const { token } = req.body;
+  } catch {
+    //TODO: this means that the token is expired. change this later to use password reset function
+    // in settings as well
+  }
+};
+
+export { addUser, loginUser, verifyUser, resetPasswordReq, changePassword };
