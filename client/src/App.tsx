@@ -7,7 +7,6 @@ import NoPage from "./pages/NoPage";
 import Confirm from "./pages/Confirm";
 
 function App() {
-
   return (
     <>
       <div className="App">
@@ -17,7 +16,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
-            <Route path="/confirm/:token" element={<Confirm />} />
+            <Route path="/confirm/:username/:token" element={<Confirm />} />
+            <Route path="/password-reset/:token" element={<Confirm />} />
 
             <Route path="*" element={<NoPage />} />
           </Routes>

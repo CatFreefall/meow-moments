@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { validate } from "email-validator";
 
-// TODO: USERNAME/EMAIL LOGIN CHOICE USING EMAIL VALIDATOR LIB
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -37,6 +36,23 @@ const Login = () => {
       .catch((e) => console.log(e));
   };
 
+  //TODO: add a JWT to forgot password emails so that they expire. this should also
+  // redirect the user to the login page after they change their password.
+  //TODO: have the user enter their username in the box before fetching the endpoint
+  const forgotPassword = () => {
+    validate(username)
+      ? fetch("/password-reset", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: username }),
+        })
+          .then((res) => res.json())
+          .catch((e) => console.log(e))
+      : console.log("Please enter a valid email address");
+  };
+
   return (
     <>
       <button onClick={() => nav("/")}>Home Page</button>
@@ -58,6 +74,7 @@ const Login = () => {
         ></input>
       </form>
       <button onClick={login}>Submit</button>
+      <button onClick={forgotPassword}>Forgot Password?</button>
     </>
   );
 };

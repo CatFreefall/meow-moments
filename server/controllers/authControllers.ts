@@ -6,12 +6,12 @@ import { Secret, sign, verify } from "jsonwebtoken";
 import pool from "../db";
 import {
   registerUser,
-  usernameExists,
-  emailExists,
+  getEntryByUsername,
+  getEntryByEmail,
   changeVerifyStatus,
 } from "../queries/authQueries";
 
-// TODO: add a "didn't recieve the email, click to resend" function and rate limit it
+// TODO: add a "didn't recieve the email, click to resend" function and rate limit
 const transporter = createTransport({
   service: "gmail",
   port: 465,
@@ -35,7 +35,10 @@ const signJWT = (payload: string, secret: Secret): string => {
 
 // TODO: create a proper email template and change link
 // helper function to send a confirmation email to the user
-const sendConfirmationEmail = async (email: string): Promise<void> => {
+const sendConfirmationEmail = async (
+  username: string,
+  email: string
+): Promise<void> => {
   const verificationToken = signJWT(email, verificationSecret);
 
   const emailDetails: object = {
@@ -44,7 +47,7 @@ const sendConfirmationEmail = async (email: string): Promise<void> => {
     subject: "Confirm Your Meow Moments Account! 🐱",
     html: `
     <div>Hello, please confirm your account by clicking the link below.</div>
-    <a href="http://localhost:3000/confirm/${verificationToken}">Confirm Account</a>
+    <a href="http://localhost:3000/confirm/${username}/${verificationToken}">Confirm Account</a>
     `,
   };
   await transporter.sendMail(emailDetails);
@@ -56,8 +59,8 @@ const addUser = async (req: Request, res: Response): Promise<any> => {
 
   // querying to ensure the username and email DNE in the database
   try {
-    const userQuery = await pool.query(usernameExists, [username]);
-    const emailQuery = await pool.query(emailExists, [email]);
+    const userQuery = await pool.query(getEntryByUsername, [username]);
+    const emailQuery = await pool.query(getEntryByEmail, [email]);
 
     if (userQuery.rows.length) {
       return res.status(409).json("Username Already Exists");
@@ -80,7 +83,7 @@ const addUser = async (req: Request, res: Response): Promise<any> => {
         .json(
           "Confirmation email sent. Please check your email and verify your account."
         );
-      sendConfirmationEmail(email);
+      sendConfirmationEmail(username, email);
     }
   } catch (err) {
     res.status(500).json("User registration error");
@@ -110,7 +113,10 @@ const loginUser = (req: Request, res: Response): void => {
               .json(
                 "User is not verified. Please verify your account using the confirmation email sent."
               );
-            sendConfirmationEmail(findUser.rows[0].email);
+            sendConfirmationEmail(
+              findUser.rows[0].username,
+              findUser.rows[0].email
+            );
           } else {
             res.status(201).json("User successfully logged in");
           }
@@ -127,30 +133,51 @@ const loginUser = (req: Request, res: Response): void => {
 
   // a null username signifies that the user is logging in with their email
   if (username === null) {
-    findUser(emailExists, email);
+    findUser(getEntryByEmail, email);
   } else {
-    findUser(usernameExists, username);
+    findUser(getEntryByUsername, username);
   }
 };
 
 const verifyUser = async (req: Request, res: Response): Promise<void> => {
+  console.log("verification link expired");
   // check if token is expired or not. If not, update status of user in database to verified
   // if yes, the token is destructured and the verification status of the entry with the email
   // is changed to true.
+  const username = req.params.username;
+
   try {
-    const token = verify(req.params.token, verificationSecret);
+    verify(req.params.token, verificationSecret);
+
     res.status(200).send("user verified");
-    const { email } = token as { email: string };
-    await pool.query(changeVerifyStatus, [email]);
+    await pool.query(changeVerifyStatus, [username]);
+    console.log("fart");
   } catch {
-    // TODO: figure out a way to do "verification link has expired. please try again
-    // using the new link sent to your email." email needs to be accessed somehow.
     res
       .status(200)
       .send(
-        "verification link has expired. please try logging in again to resend the verification email."
+        "verification link has expired. please verify using the new verification link sent."
       );
+    const dataEntry = await pool.query(getEntryByUsername, [username]);
+    const email = dataEntry.rows[0].email;
+    // sendConfirmationEmail(username, email);
   }
 };
 
-export { addUser, loginUser, verifyUser };
+const resetPassword = async (req: Request, res: Response): Promise<void> => {
+  const { email } = req.body;
+  const resetToken = signJWT(email, verificationSecret);
+
+  const emailDetails: object = {
+    from: process.env.NODE_MAILER_HOST,
+    to: email,
+    subject: "Reset Your Meow Moments Account Password! 🐱",
+    html: `
+    <div>Hello, please click on the link provided below to reset your account password</div>
+    <a href="http://localhost:3000/password-reset/${resetToken}">Reset Password</a>
+    `,
+  };
+  await transporter.sendMail(emailDetails);
+};
+
+export { addUser, loginUser, verifyUser, resetPassword };

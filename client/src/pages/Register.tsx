@@ -2,7 +2,6 @@ import { useNavigate } from "react-router";
 import { useState } from "react";
 import { validate } from "email-validator";
 
-// TODO: EMAIL VALIDATION STILL NEEDED
 const Register = () => {
   const nav = useNavigate();
 
@@ -64,6 +63,6 @@ const Register = () => {
       <button onClick={register}>Click to register</button>
     </>
   );
-}
+};
 
 export default Register;
