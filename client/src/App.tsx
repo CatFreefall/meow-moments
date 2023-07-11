@@ -18,7 +18,7 @@ function App() {
             <Route path="/register" element={<Register />} />
 
             <Route path="/confirm/:username/:token" element={<Confirm />} />
-            <Route path="/password-reset-req/:token" element={<ForgotPassword />} />
+            <Route path="/password-reset-req/:user/:token" element={<ForgotPassword />} />
 
             <Route path="*" element={<NoPage />} />
           </Routes>

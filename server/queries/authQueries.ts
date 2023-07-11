@@ -7,7 +7,13 @@ const getEntryByEmail = "SELECT * FROM users WHERE email = $1";
 const changeVerifyStatus =
   "UPDATE users SET is_verified = true WHERE username = $1";
 
-const changePassword = "UPDATE users SET password_hash = $1 WHERE username = $2";
-const getUserEmail = "SELECT email FROM users WHERE username = $1"
+const changeDBPassword =
+  "UPDATE users SET password_hash = $1, password_salt = $2 WHERE username = $3";
 
-export { registerUser, getEntryByUsername, getEntryByEmail, changeVerifyStatus, changePassword, getUserEmail };
+export {
+  registerUser,
+  getEntryByUsername,
+  getEntryByEmail,
+  changeVerifyStatus,
+  changeDBPassword,
+};

@@ -6,10 +6,11 @@ const ForgotPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const token = useParams().token;
+  const user = useParams().user;
 
   const changePassword = () => {
     newPassword === confirmNewPassword
-      ? fetch(`/password-reset/${token}`, {
+      ? fetch(`/password-reset/${user}/${token}`, {
           method: "PUT",
           headers: {
             "content-type": "application/json",

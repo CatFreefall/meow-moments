@@ -9,8 +9,9 @@ import {
   getEntryByUsername,
   getEntryByEmail,
   changeVerifyStatus,
-  getUserEmail,
+  changeDBPassword,
 } from "../queries/authQueries";
+import { QueryResult } from "pg";
 
 // TODO: add a "didn't recieve the email, click to resend" function and rate limit
 const transporter = createTransport({
@@ -55,7 +56,10 @@ const sendConfirmationEmail = async (
 };
 
 // helper function to send a password reset email to the user
-const sendPasswordResetEmail = async (email: string): Promise<void> => {
+const sendPasswordResetEmail = async (
+  email: string,
+  username: string
+): Promise<void> => {
   const resetToken = signJWT(email, verificationSecret);
   const emailDetails: object = {
     from: process.env.NODE_MAILER_HOST,
@@ -63,11 +67,12 @@ const sendPasswordResetEmail = async (email: string): Promise<void> => {
     subject: "Reset Your Meow Moments Account Password! 🐱",
     html: `
     <div>Hello, please click on the link provided below to reset your account password</div>
-    <a href="http://localhost:3000/password-reset-req/${resetToken}">Reset Password</a>
+    <a href="http://localhost:3000/password-reset-req/${username}/${resetToken}">Reset Password</a>
     `,
   };
 
-  await transporter.sendMail(emailDetails);
+  // a null email signifies that the user DNE in the database
+  email === "" ? null : await transporter.sendMail(emailDetails);
 };
 
 const validToken = (token: string, secret: Secret): boolean => {
@@ -164,29 +169,52 @@ const verifyUser = async (req: Request, res: Response): Promise<void> => {
 const resetPasswordReq = async (req: Request, res: Response): Promise<void> => {
   const { username, email } = req.body;
   let emailRecipient: string = "";
+  let userUsername: string = "";
 
   // getting the user email based on whether the user is logging in with their username or email
   if (username === null) {
     const emailExists = await pool.query(getEntryByEmail, [email]);
 
-    emailExists.rows.length ? (emailRecipient = email) : null;
+    if (emailExists.rows.length) {
+      emailRecipient = email;
+      userUsername = emailExists.rows[0].username;
+    }
   } else {
-    const userEmail = await pool.query(getUserEmail, [username]);
+    const userEmail = await pool.query(getEntryByUsername, [username]);
 
-    userEmail.rows.length ? (emailRecipient = userEmail.rows[0].email) : null;
+    if (userEmail.rows.length) {
+      emailRecipient = userEmail.rows[0].email;
+      userUsername = username;
+    }
   }
 
-  sendPasswordResetEmail(emailRecipient);
+  console.log(emailRecipient, userUsername);
+  sendPasswordResetEmail(emailRecipient, userUsername);
 
   res
     .status(200)
     .send("If a user with that email exists, an email has been sent to them.");
 };
 
-const updateDBPassword = async () => {};
+const updateDBPassword = async (
+  username: string,
+  newPassword: string
+): Promise<void> => {
+  const saltRounds = 10;
+  const newSalt = await genSalt(saltRounds);
+  const newPasswordHash = await hash(newPassword, newSalt);
 
-const changePassword = (req: Request, res: Response) => {
+  await pool.query(changeDBPassword, [newPasswordHash, newSalt, username]);
+};
+
+const changePassword = async (req: Request, res: Response): Promise<void> => {
   try {
+    if (validToken(req.params.token, verificationSecret)) {
+      updateDBPassword(req.params.user, req.body.password);
+
+      res.status(200).send("password changed through email link!");
+    }
+
     validToken(req.params.token, verificationSecret)
       ? res.status(200).send("password changed through email link!")
       : res.status(200).send("JWT token expired.");
@@ -195,6 +223,7 @@ const changePassword = (req: Request, res: Response) => {
     // in settings as well
     console.log("password change through settings");
   }
+  console.log(req.params.token, req.params.user, req.body.newPassword);
 };
 
 export { addUser, loginUser, verifyUser, resetPasswordReq, changePassword };
