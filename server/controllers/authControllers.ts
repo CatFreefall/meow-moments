@@ -27,6 +27,9 @@ const transporter = createTransport({
 // casting the secret to type Secret so that it can be used to sign the JWT
 const verificationSecret: Secret = process.env.EMAIL_VERIFY_SECRET as Secret;
 
+// this is the number of rounds bcrypt will use to generate a salt
+const saltRounds = 10;
+
 // helper function to sign a JWT. payload does not include iat and exp
 const signJWT = (payload: string, secret: Secret): string => {
   const token = sign({ payload }, secret, {
@@ -98,7 +101,6 @@ const addUser = async (req: Request, res: Response): Promise<any> => {
       return res.status(409).json("Email Already Exists");
     } else {
       // asynchronously generating a salt and hashing the password before querying
-      const saltRounds = 10;
       const salt = await genSalt(saltRounds);
       const password_hash = await hash(password, salt);
       await pool.query(registerUser, [
@@ -198,11 +200,10 @@ const resetPasswordReq = async (req: Request, res: Response): Promise<void> => {
 
 const updateDBPassword = async (
   username: string,
-  newPassword: string
+  password: string
 ): Promise<void> => {
-  const saltRounds = 10;
   const newSalt = await genSalt(saltRounds);
-  const newPasswordHash = await hash(newPassword, newSalt);
+  const newPasswordHash = await hash(password, newSalt);
 
   await pool.query(changeDBPassword, [newPasswordHash, newSalt, username]);
 };
@@ -210,20 +211,15 @@ const updateDBPassword = async (
 const changePassword = async (req: Request, res: Response): Promise<void> => {
   try {
     if (validToken(req.params.token, verificationSecret)) {
-      updateDBPassword(req.params.user, req.body.password);
+      updateDBPassword(req.params.user, req.body.newPassword);
 
       res.status(200).send("password changed through email link!");
+    } else {
+      res.status(200).send("JWT token expired.");
     }
-
-    validToken(req.params.token, verificationSecret)
-      ? res.status(200).send("password changed through email link!")
-      : res.status(200).send("JWT token expired.");
   } catch {
-    //TODO: this means that the token is expired. change this later to use password reset function
-    // in settings as well
     console.log("password change through settings");
   }
-  console.log(req.params.token, req.params.user, req.body.newPassword);
 };
 
 export { addUser, loginUser, verifyUser, resetPasswordReq, changePassword };
