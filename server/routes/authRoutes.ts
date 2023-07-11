@@ -13,9 +13,9 @@ router.post("/register", addUser);
 
 router.post("/login", loginUser);
 
-router.post("/confirm/:username/:token", verifyUser);
+router.get("/confirm/:username/:token", verifyUser);
 
 router.post("/password-reset-req", resetPasswordReq);
-router.post("/password-reset", changePassword);
+router.put("/password-reset/:token", changePassword);
 
 export default router;

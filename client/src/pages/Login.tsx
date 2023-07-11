@@ -3,24 +3,24 @@ import { useState } from "react";
 import { validate } from "email-validator";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [emailUsername, setEmailUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const nav = useNavigate();
 
   const login = () => {
-    console.log("username: ", username, "password: ", password);
+    console.log("username: ", emailUsername, "password: ", password);
     let jsonBody: string;
 
     // determining if the user is signing in with their email or username
-    validate(username)
+    validate(emailUsername)
       ? (jsonBody = JSON.stringify({
           username: null,
-          email: username,
+          email: emailUsername,
           password: password,
         }))
       : (jsonBody = JSON.stringify({
-          username: username,
+          username: emailUsername,
           email: null,
           password: password,
         }));
@@ -36,21 +36,31 @@ const Login = () => {
       .catch((e) => console.log(e));
   };
 
-  //TODO: add a JWT to forgot password emails so that they expire. this should also
+  // this should also
   // redirect the user to the login page after they change their password.
   //TODO: have the user enter their username in the box before fetching the endpoint
   const forgotPassword = () => {
-    validate(username)
-      ? fetch("/password-reset-req", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email: username }),
-        })
-          .then((res) => res.json())
-          .catch((e) => console.log(e))
-      : console.log("Please enter a valid email address");
+    let jsonBody: string;
+
+    validate(emailUsername)
+      ? (jsonBody = JSON.stringify({
+          username: null,
+          email: emailUsername,
+        }))
+      : (jsonBody = JSON.stringify({
+          username: emailUsername,
+          email: null,
+        }));
+
+    fetch("/password-reset-req", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonBody,
+    })
+      .then((res) => res.json())
+      .catch((e) => console.log(e));
   };
 
   return (
@@ -61,8 +71,8 @@ const Login = () => {
         <input
           type="text"
           placeholder="Email/Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={emailUsername}
+          onChange={(e) => setEmailUsername(e.target.value)}
         ></input>
       </form>
       <form>

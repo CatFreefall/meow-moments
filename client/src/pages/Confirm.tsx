@@ -10,7 +10,7 @@ const Confirm = () => {
   const { username, token } = useParams();
   useEffect(() => {
     fetch(`/confirm/${username}/${token}`, {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
@@ -19,7 +19,7 @@ const Confirm = () => {
 
   return (
     <div>
-      User verified! You may now login.
+      Check network to see if verified or not for now.
       <button onClick={() => nav("/login")}>Login</button>
     </div>
   );

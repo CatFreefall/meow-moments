@@ -9,6 +9,7 @@ import {
   getEntryByUsername,
   getEntryByEmail,
   changeVerifyStatus,
+  getUserEmail,
 } from "../queries/authQueries";
 
 // TODO: add a "didn't recieve the email, click to resend" function and rate limit
@@ -53,7 +54,31 @@ const sendConfirmationEmail = async (
   await transporter.sendMail(emailDetails);
 };
 
-// TODO: add a password reset feature.
+// helper function to send a password reset email to the user
+const sendPasswordResetEmail = async (email: string): Promise<void> => {
+  const resetToken = signJWT(email, verificationSecret);
+  const emailDetails: object = {
+    from: process.env.NODE_MAILER_HOST,
+    to: email,
+    subject: "Reset Your Meow Moments Account Password! 🐱",
+    html: `
+    <div>Hello, please click on the link provided below to reset your account password</div>
+    <a href="http://localhost:3000/password-reset-req/${resetToken}">Reset Password</a>
+    `,
+  };
+
+  await transporter.sendMail(emailDetails);
+};
+
+const validToken = (token: string, secret: Secret): boolean => {
+  try {
+    verify(token, secret);
+  } catch {
+    return false;
+  }
+  return true;
+};
+
 const addUser = async (req: Request, res: Response): Promise<any> => {
   const { username, password, email, account_creation_date } = req.body;
 
@@ -128,38 +153,47 @@ const verifyUser = async (req: Request, res: Response): Promise<void> => {
   // if yes, notify the user.
   const username = req.params.username;
 
-  try {
-    verify(req.params.token, verificationSecret);
-
+  if (validToken(req.params.token, verificationSecret)) {
     res.status(200).send("user verified");
     await pool.query(changeVerifyStatus, [username]);
-  } catch {
+  } else {
     res.status(200).send("verification link expired.");
   }
 };
 
 const resetPasswordReq = async (req: Request, res: Response): Promise<void> => {
-  const { email } = req.body;
-  const resetToken = signJWT(email, verificationSecret);
+  const { username, email } = req.body;
+  let emailRecipient: string = "";
 
-  const emailDetails: object = {
-    from: process.env.NODE_MAILER_HOST,
-    to: email,
-    subject: "Reset Your Meow Moments Account Password! 🐱",
-    html: `
-    <div>Hello, please click on the link provided below to reset your account password</div>
-    <a href="http://localhost:3000/password-reset-req/${resetToken}">Reset Password</a>
-    `,
-  };
-  await transporter.sendMail(emailDetails);
+  // getting the user email based on whether the user is logging in with their username or email
+  if (username === null) {
+    const emailExists = await pool.query(getEntryByEmail, [email]);
+
+    emailExists.rows.length ? (emailRecipient = email) : null;
+  } else {
+    const userEmail = await pool.query(getUserEmail, [username]);
+
+    userEmail.rows.length ? (emailRecipient = userEmail.rows[0].email) : null;
+  }
+
+  sendPasswordResetEmail(emailRecipient);
+
+  res
+    .status(200)
+    .send("If a user with that email exists, an email has been sent to them.");
 };
+
+const updateDBPassword = async () => {};
 
 const changePassword = (req: Request, res: Response) => {
   try {
-    const { token } = req.body;
+    validToken(req.params.token, verificationSecret)
+      ? res.status(200).send("password changed through email link!")
+      : res.status(200).send("JWT token expired.");
   } catch {
     //TODO: this means that the token is expired. change this later to use password reset function
     // in settings as well
+    console.log("password change through settings");
   }
 };
 
