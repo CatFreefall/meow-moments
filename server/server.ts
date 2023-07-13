@@ -7,14 +7,13 @@ import routes from "./routes/authRoutes";
 const app = express();
 const port = 5000;
 
-// rate limiting users at certain endpoints.
+// rate limiting users at all endpoints.
 const limit = rateLimit({
   windowMs: 5 * 60 * 1000,
-  max: 50,
+  max: 100,
   message: "You have made too many requests. Please try again in 5 minutes.",
 });
-app.use("/login", limit);
-app.use("/register", limit);
+app.use("*", limit);
 
 app.use(express.json());
 

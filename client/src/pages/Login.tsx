@@ -8,38 +8,42 @@ const Login = () => {
 
   const nav = useNavigate();
 
-  const login = () => {
-    console.log("username: ", emailUsername, "password: ", password);
+  const login = async (e: any) => {
+    e.preventDefault();
     let jsonBody: string;
 
     // determining if the user is signing in with their email or username
-    validate(emailUsername)
-      ? (jsonBody = JSON.stringify({
-          username: null,
-          email: emailUsername,
-          password: password,
-        }))
-      : (jsonBody = JSON.stringify({
-          username: emailUsername,
-          email: null,
-          password: password,
-        }));
+    try {
+      validate(emailUsername)
+        ? (jsonBody = JSON.stringify({
+            username: null,
+            email: emailUsername,
+            password: password,
+          }))
+        : (jsonBody = JSON.stringify({
+            username: emailUsername,
+            email: null,
+            password: password,
+          }));
 
-    fetch("/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: jsonBody,
-    })
-      .then((res) => res.json())
-      .catch((e) => console.log(e));
+      await fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: jsonBody,
+      })
+        .then((res) => res.json())
+        .catch((e) => console.log(e));
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   // this should also
   // redirect the user to the login page after they change their password.
   //TODO: have the user enter their username in the box before fetching the endpoint
-  const forgotPassword = () => {
+  const forgotPassword = async () => {
     let jsonBody: string;
 
     validate(emailUsername)
@@ -52,7 +56,7 @@ const Login = () => {
           email: null,
         }));
 
-    fetch("/password-reset-req", {
+    await fetch("/password-reset-req", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,23 +71,21 @@ const Login = () => {
     <>
       <button onClick={() => nav("/")}>Home Page</button>
       <button onClick={() => nav("/register")}>Register</button>
-      <form>
+      <form onSubmit={login}>
         <input
           type="text"
           placeholder="Email/Username"
           value={emailUsername}
           onChange={(e) => setEmailUsername(e.target.value)}
         ></input>
-      </form>
-      <form>
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         ></input>
+        <button onClick={login}>Submit</button>
       </form>
-      <button onClick={login}>Submit</button>
       <button onClick={forgotPassword}>Forgot Password?</button>
     </>
   );

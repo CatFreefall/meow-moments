@@ -4,16 +4,17 @@ import { createTransport } from "nodemailer";
 import { Secret, sign, verify } from "jsonwebtoken";
 
 import pool from "../db";
+
 import {
   registerUser,
   getEntryByUsername,
   getEntryByEmail,
   changeVerifyStatus,
   changeDBPassword,
+  setRefreshToken,
 } from "../queries/authQueries";
-import { QueryResult } from "pg";
 
-// TODO: add a "didn't recieve the email, click to resend" function and rate limit
+// TODO: add a "didn't recieve the email, click to resend" function
 const transporter = createTransport({
   service: "gmail",
   port: 465,
@@ -24,27 +25,32 @@ const transporter = createTransport({
   },
 });
 
-// casting the secret to type Secret so that it can be used to sign the JWT
+// casting the secrets to type Secret so that they can be used to sign JWT's
 const verificationSecret: Secret = process.env.EMAIL_VERIFY_SECRET as Secret;
+const forgotPasswordSecret: Secret = process.env
+  .FORGOT_PASSWORD_SECRET as Secret;
+const refreshTokenSecret: Secret = process.env.REFRESH_TOKEN_SECRET as Secret;
+const accessTokenSecret: Secret = process.env.ACCESS_TOKEN_SECRET as Secret;
 
 // this is the number of rounds bcrypt will use to generate a salt
 const saltRounds = 10;
 
-// helper function to sign a JWT. payload does not include iat and exp
-const signJWT = (payload: string, secret: Secret): string => {
+// helper function to sign a JWT. payload variable only includes email
+// this is only used for email verificationm, password reset request, and access tokens
+const signJWT = (payload: string, secret: Secret, expAfter: string): string => {
   const token = sign({ payload }, secret, {
-    expiresIn: "1h",
+    expiresIn: expAfter,
   });
   return token;
 };
 
-// TODO: create a proper email template and change link
+// TODO: create a proper email template
 // helper function to send a confirmation email to the user
 const sendConfirmationEmail = async (
   username: string,
   email: string
 ): Promise<void> => {
-  const verificationToken = signJWT(email, verificationSecret);
+  const verificationToken = signJWT(email, verificationSecret, "1h");
 
   const emailDetails: object = {
     from: process.env.NODE_MAILER_HOST,
@@ -63,7 +69,8 @@ const sendPasswordResetEmail = async (
   email: string,
   username: string
 ): Promise<void> => {
-  const resetToken = signJWT(email, verificationSecret);
+  const resetToken = signJWT(email, forgotPasswordSecret, "1h");
+
   const emailDetails: object = {
     from: process.env.NODE_MAILER_HOST,
     to: email,
@@ -78,6 +85,7 @@ const sendPasswordResetEmail = async (
   email === "" ? null : await transporter.sendMail(emailDetails);
 };
 
+//helper function to determine if a JWT is expired/invalid or valid
 const validToken = (token: string, secret: Secret): boolean => {
   try {
     verify(token, secret);
@@ -85,6 +93,11 @@ const validToken = (token: string, secret: Secret): boolean => {
     return false;
   }
   return true;
+};
+
+const getAndSetRefreshToken = (payload: string): void => {
+  const refreshToken = signJWT(payload, refreshTokenSecret, "7d");
+  pool.query(setRefreshToken, [refreshToken, payload]);
 };
 
 const addUser = async (req: Request, res: Response): Promise<any> => {
@@ -122,7 +135,6 @@ const addUser = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
-// this function is used to login a user with username/email and password.
 const loginUser = (req: Request, res: Response): void => {
   const { username, email, password } = req.body;
 
@@ -135,10 +147,12 @@ const loginUser = (req: Request, res: Response): void => {
         const password_hash = findUser.rows[0].password_hash;
         const isCorrectPassword = await compare(password, password_hash);
 
-        // sending back repsponses based on status codes.
-        isCorrectPassword
-          ? res.status(201).json("User successfully logged in")
-          : res.status(401).json("Password incorrect");
+        if (isCorrectPassword) {
+          getAndSetRefreshToken(findUser.rows[0].email);
+          res.status(201).json("Login successful!");
+        } else {
+          res.status(401).json("Password incorrect");
+        }
       } else {
         res.status(401).json("Username/Email does not exist");
       }
@@ -156,8 +170,6 @@ const loginUser = (req: Request, res: Response): void => {
 };
 
 const verifyUser = async (req: Request, res: Response): Promise<void> => {
-  // check if token is expired or not. If not, update status of user in database to verified
-  // if yes, notify the user.
   const username = req.params.username;
 
   if (validToken(req.params.token, verificationSecret)) {
@@ -190,7 +202,6 @@ const resetPasswordReq = async (req: Request, res: Response): Promise<void> => {
     }
   }
 
-  console.log(emailRecipient, userUsername);
   sendPasswordResetEmail(emailRecipient, userUsername);
 
   res
@@ -209,13 +220,18 @@ const updateDBPassword = async (
 };
 
 const changePassword = async (req: Request, res: Response): Promise<void> => {
+  // if a token is not provided, the user is changing their password through the settings page
   try {
-    if (validToken(req.params.token, verificationSecret)) {
-      updateDBPassword(req.params.user, req.body.newPassword);
+    if (validToken(req.params.token, forgotPasswordSecret)) {
+      await updateDBPassword(req.params.user, req.body.newPassword);
 
       res.status(200).send("password changed through email link!");
     } else {
-      res.status(200).send("JWT token expired.");
+      res
+        .status(200)
+        .send(
+          "This password reset link has expired. Please request a new one."
+        );
     }
   } catch {
     console.log("password change through settings");

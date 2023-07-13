@@ -17,31 +17,36 @@ const Register = () => {
   const currentDate: String =
     date.getMonth() + 1 + "-" + date.getDate() + "-" + date.getFullYear();
 
-  const register = () => {
+  const register = async (e: any) => {
+    e.preventDefault();
     // validating the email using the email-validator lib before querying the database.
-    validate(email)
-      ? fetch("/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: username,
-            password: password,
-            email: email,
-            account_creation_date: currentDate,
-          }),
-        })
-          .then((res) => res.json())
-          .catch((e) => console.log(e))
-      : console.log("invalid email");
+    try {
+      validate(email)
+        ? await fetch("/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: username,
+              password: password,
+              email: email,
+              account_creation_date: currentDate,
+            }),
+          })
+            .then((res) => res.json())
+            .catch((e) => console.log(e))
+        : console.log("invalid email");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
     <>
       <button onClick={() => nav("/login")}>Login</button>
       <button onClick={() => nav("/")}>Home</button>
-      <form>
+      <form onSubmit={register}>
         <input
           type="text"
           placeholder="username"
@@ -60,8 +65,8 @@ const Register = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         ></input>
+        <button onClick={register}>Click to register</button>
       </form>
-      <button onClick={register}>Click to register</button>
     </>
   );
 };

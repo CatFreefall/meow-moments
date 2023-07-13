@@ -10,10 +10,13 @@ const changeVerifyStatus =
 const changeDBPassword =
   "UPDATE users SET password_hash = $1, password_salt = $2 WHERE username = $3";
 
+const setRefreshToken = "UPDATE users SET refresh_token = $1 WHERE email = $2";
+
 export {
   registerUser,
   getEntryByUsername,
   getEntryByEmail,
   changeVerifyStatus,
   changeDBPassword,
+  setRefreshToken,
 };
