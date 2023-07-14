@@ -11,7 +11,6 @@ import {
   getEntryByEmail,
   changeVerifyStatus,
   changeDBPassword,
-  setRefreshToken,
 } from "../queries/authQueries";
 
 // TODO: add a "didn't recieve the email, click to resend" function
@@ -37,7 +36,7 @@ const saltRounds = 10;
 
 // helper function to sign a JWT. payload variable only includes email
 // this is only used for email verificationm, password reset request, and access tokens
-const signJWT = (payload: string, secret: Secret, expAfter: string): string => {
+const signJWT = (payload: object, secret: Secret, expAfter: string): string => {
   const token = sign({ payload }, secret, {
     expiresIn: expAfter,
   });
@@ -50,7 +49,7 @@ const sendConfirmationEmail = async (
   username: string,
   email: string
 ): Promise<void> => {
-  const verificationToken = signJWT(email, verificationSecret, "1h");
+  const verificationToken = signJWT({ email }, verificationSecret, "1h");
 
   const emailDetails: object = {
     from: process.env.NODE_MAILER_HOST,
@@ -69,7 +68,7 @@ const sendPasswordResetEmail = async (
   email: string,
   username: string
 ): Promise<void> => {
-  const resetToken = signJWT(email, forgotPasswordSecret, "1h");
+  const resetToken = signJWT({ email }, forgotPasswordSecret, "1h");
 
   const emailDetails: object = {
     from: process.env.NODE_MAILER_HOST,
@@ -95,9 +94,26 @@ const validToken = (token: string, secret: Secret): boolean => {
   return true;
 };
 
-const getAndSetRefreshToken = (payload: string): void => {
-  const refreshToken = signJWT(payload, refreshTokenSecret, "7d");
-  pool.query(setRefreshToken, [refreshToken, payload]);
+// generates a refresh token
+const getRefreshToken = (payload: object): string => {
+  const refreshToken = signJWT(payload, refreshTokenSecret, "1y");
+  return refreshToken;
+};
+
+const getAccessToken = async (
+  payload: object,
+  refreshToken: string
+): Promise<String> => {
+  // verifying the refresh token. if valid, generate and return a new access token
+  // if not valid, return an empty string
+  try {
+    verify(refreshToken, refreshTokenSecret);
+
+    const accessToken = signJWT(payload, accessTokenSecret, "15m");
+    return accessToken;
+  } catch {
+    return "";
+  }
 };
 
 const addUser = async (req: Request, res: Response): Promise<any> => {
@@ -139,16 +155,30 @@ const loginUser = (req: Request, res: Response): void => {
   const { username, email, password } = req.body;
 
   // querying  to ensure the username/email exists in the database
-  const findUser = async (query: string, usernameOrEmail: string) => {
+  const login = async (query: string, usernameOrEmail: string) => {
     try {
-      const findUser = await pool.query(query, [usernameOrEmail]);
+      const login = await pool.query(query, [usernameOrEmail]);
 
-      if (findUser.rows.length) {
-        const password_hash = findUser.rows[0].password_hash;
+      if (login.rows.length) {
+        const password_hash = login.rows[0].password_hash;
         const isCorrectPassword = await compare(password, password_hash);
 
         if (isCorrectPassword) {
-          getAndSetRefreshToken(findUser.rows[0].email);
+          const userEmail: string = login.rows[0].email;
+          const userUsername: string = login.rows[0].username;
+          const payload: object = {
+            username: userUsername,
+            email: userEmail,
+          };
+
+          const refreshToken = getRefreshToken(payload);
+          const accessToken = await getAccessToken(payload, refreshToken);
+
+          res.setHeader("set-Cookie", [
+            `user=${userUsername}; SameSite=Lax`,
+            `refresh_token=${refreshToken}; HttpOnly; Secure; SameSite=Lax`,
+            `access_token=${accessToken}; HttpOnly; Secure; SameSite=Lax`,
+          ]);
           res.status(201).json("Login successful!");
         } else {
           res.status(401).json("Password incorrect");
@@ -163,9 +193,9 @@ const loginUser = (req: Request, res: Response): void => {
 
   // a null username signifies that the user is logging in with their email
   if (username === null) {
-    findUser(getEntryByEmail, email);
+    login(getEntryByEmail, email);
   } else {
-    findUser(getEntryByUsername, username);
+    login(getEntryByUsername, username);
   }
 };
 
@@ -238,4 +268,18 @@ const changePassword = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export { addUser, loginUser, verifyUser, resetPasswordReq, changePassword };
+const logoutUser = (req: Request, res: Response): void => {
+  res.clearCookie("refresh_token", { sameSite: "lax" });
+  res.clearCookie("access_token", { sameSite: "lax" });
+  res.clearCookie("user", { sameSite: "lax" });
+  res.status(200).send("user logged out");
+};
+
+export {
+  addUser,
+  loginUser,
+  verifyUser,
+  resetPasswordReq,
+  changePassword,
+  logoutUser,
+};

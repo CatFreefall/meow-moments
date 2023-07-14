@@ -67,6 +67,15 @@ const Login = () => {
       .catch((e) => console.log(e));
   };
 
+  const logout = async () => {
+    await fetch("/logout", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
   return (
     <>
       <button onClick={() => nav("/")}>Home Page</button>
@@ -87,6 +96,7 @@ const Login = () => {
         <button onClick={login}>Submit</button>
       </form>
       <button onClick={forgotPassword}>Forgot Password?</button>
+      <button onClick={logout}>Logout</button>
     </>
   );
 };

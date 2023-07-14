@@ -5,6 +5,7 @@ import {
   verifyUser,
   resetPasswordReq,
   changePassword,
+  logoutUser,
 } from "../controllers/authControllers";
 
 const router = Router();
@@ -17,5 +18,7 @@ router.get("/confirm/:username/:token", verifyUser);
 
 router.post("/password-reset-req", resetPasswordReq);
 router.put("/password-reset/:user/:token", changePassword);
+
+router.get("/logout", logoutUser);
 
 export default router;
