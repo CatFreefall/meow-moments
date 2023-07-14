@@ -94,7 +94,6 @@ const validToken = (token: string, secret: Secret): boolean => {
   return true;
 };
 
-// generates a refresh token
 const getRefreshToken = (payload: object): string => {
   const refreshToken = signJWT(payload, refreshTokenSecret, "1y");
   return refreshToken;
@@ -114,6 +113,26 @@ const getAccessToken = async (
   } catch {
     return "";
   }
+};
+
+// generates cookie info specificly for authorization. may be altered to include other cookies later.
+const authCookieInfo = async (
+  userEntry: any
+): Promise<string | number | readonly string[]> => {
+  const userEmail: string = userEntry.rows[0].email;
+  const userUsername: string = userEntry.rows[0].username;
+  const payload: object = {
+    username: userUsername,
+    email: userEmail,
+  };
+  const refreshToken = getRefreshToken(payload);
+  const accessToken = await getAccessToken(payload, refreshToken);
+
+  return [
+    `user=${userUsername}; SameSite=Lax`,
+    `refresh_token=${refreshToken}; HttpOnly; Secure; SameSite=Lax`,
+    `access_token=${accessToken}; HttpOnly; Secure; SameSite=Lax`,
+  ];
 };
 
 const addUser = async (req: Request, res: Response): Promise<any> => {
@@ -151,51 +170,32 @@ const addUser = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
-const loginUser = (req: Request, res: Response): void => {
+const loginUser = async (req: Request, res: Response): Promise<void> => {
   const { username, email, password } = req.body;
 
-  // querying  to ensure the username/email exists in the database
-  const login = async (query: string, usernameOrEmail: string) => {
-    try {
-      const login = await pool.query(query, [usernameOrEmail]);
+  const loggedInWithEmail = username === null ? true : false;
 
-      if (login.rows.length) {
-        const password_hash = login.rows[0].password_hash;
-        const isCorrectPassword = await compare(password, password_hash);
+  try {
+    const userEntry = loggedInWithEmail
+      ? await pool.query(getEntryByEmail, [email])
+      : await pool.query(getEntryByUsername, [username]);
 
-        if (isCorrectPassword) {
-          const userEmail: string = login.rows[0].email;
-          const userUsername: string = login.rows[0].username;
-          const payload: object = {
-            username: userUsername,
-            email: userEmail,
-          };
+    // querying  to ensure the username/email exists in the database
+    if (userEntry.rows.length) {
+      const server_password_hash = userEntry.rows[0].password_hash;
+      const isCorrectPassword = await compare(password, server_password_hash);
 
-          const refreshToken = getRefreshToken(payload);
-          const accessToken = await getAccessToken(payload, refreshToken);
-
-          res.setHeader("set-Cookie", [
-            `user=${userUsername}; SameSite=Lax`,
-            `refresh_token=${refreshToken}; HttpOnly; Secure; SameSite=Lax`,
-            `access_token=${accessToken}; HttpOnly; Secure; SameSite=Lax`,
-          ]);
-          res.status(201).json("Login successful!");
-        } else {
-          res.status(401).json("Password incorrect");
-        }
+      if (isCorrectPassword) {
+        res.setHeader("set-Cookie", await authCookieInfo(userEntry));
+        res.status(201).json("Login successful!");
       } else {
-        res.status(401).json("Username/Email does not exist");
+        res.status(401).json("Password incorrect");
       }
-    } catch (err) {
-      res.status(500).json("Server error");
+    } else {
+      res.status(401).json("Username/Email does not exist");
     }
-  };
-
-  // a null username signifies that the user is logging in with their email
-  if (username === null) {
-    login(getEntryByEmail, email);
-  } else {
-    login(getEntryByUsername, username);
+  } catch (err) {
+    res.status(500).json("Login error");
   }
 };
 
@@ -224,10 +224,10 @@ const resetPasswordReq = async (req: Request, res: Response): Promise<void> => {
       userUsername = emailExists.rows[0].username;
     }
   } else {
-    const userEmail = await pool.query(getEntryByUsername, [username]);
+    const userEntry = await pool.query(getEntryByUsername, [username]);
 
-    if (userEmail.rows.length) {
-      emailRecipient = userEmail.rows[0].email;
+    if (userEntry.rows.length) {
+      emailRecipient = userEntry.rows[0].email;
       userUsername = username;
     }
   }
