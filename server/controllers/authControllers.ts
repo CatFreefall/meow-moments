@@ -216,20 +216,24 @@ const resetPasswordReq = async (req: Request, res: Response): Promise<void> => {
   let userUsername: string = "";
 
   // getting the user email based on whether the user is logging in with their username or email
-  if (username === null) {
-    const emailExists = await pool.query(getEntryByEmail, [email]);
+  try {
+    if (username === null) {
+      const emailExists = await pool.query(getEntryByEmail, [email]);
 
-    if (emailExists.rows.length) {
-      emailRecipient = email;
-      userUsername = emailExists.rows[0].username;
-    }
-  } else {
-    const userEntry = await pool.query(getEntryByUsername, [username]);
+      if (emailExists.rows.length) {
+        emailRecipient = email;
+        userUsername = emailExists.rows[0].username;
+      }
+    } else {
+      const userEntry = await pool.query(getEntryByUsername, [username]);
 
-    if (userEntry.rows.length) {
-      emailRecipient = userEntry.rows[0].email;
-      userUsername = username;
+      if (userEntry.rows.length) {
+        emailRecipient = userEntry.rows[0].email;
+        userUsername = username;
+      }
     }
+  } catch (err) {
+    res.status(500).json("Password reset request error");
   }
 
   sendPasswordResetEmail(emailRecipient, userUsername);
@@ -264,7 +268,7 @@ const changePassword = async (req: Request, res: Response): Promise<void> => {
         );
     }
   } catch {
-    console.log("password change through settings");
+    res.status(500).json("Password change through settings");
   }
 };
 

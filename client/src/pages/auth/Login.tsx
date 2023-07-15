@@ -74,6 +74,7 @@ const Login = () => {
         "Content-Type": "application/json",
       },
     });
+    nav("/");
   };
 
   return (

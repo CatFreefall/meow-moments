@@ -17,6 +17,7 @@ const Register = () => {
   const currentDate: String =
     date.getMonth() + 1 + "-" + date.getDate() + "-" + date.getFullYear();
 
+    //TODO: check existence of username and email with useStates
   const register = async (e: any) => {
     e.preventDefault();
     // validating the email using the email-validator lib before querying the database.
@@ -35,6 +36,7 @@ const Register = () => {
             }),
           })
             .then((res) => res.json())
+            .then(() => nav("/login"))
             .catch((e) => console.log(e))
         : console.log("invalid email");
     } catch (e) {
