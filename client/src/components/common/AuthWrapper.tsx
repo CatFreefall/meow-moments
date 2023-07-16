@@ -1,31 +1,35 @@
 import { useEffect, useState } from "react";
 
+import Login from "../../pages/auth/Login";
+
 // TODO: check for cookies and redirect to login if they DNE
 // TODO: If they do exist, send their values to server and verify.
 // TODO: include general page structure that applies to all wrapped pages here
-const AuthWrapper = (Component: any) => {
+const AuthWrapper = (Component: () => JSX.Element) => {
   const [authorized, setAuthorized] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    try {
-      fetch("/auth-request", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      })
-        .then((res) => res.json())
-        // .then((res) =>
-        //   res === "true" ? setAuthorized(true) : setAuthorized(false)
-        // )
-        .catch((e) => console.log(e));
-    } catch (e) {
-      console.log(e);
-    }
-  });
+    const fetchAuthRequest = () => {
+      try {
+        fetch("authorization-request", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => setAuthorized(res.status === 200 ? true : false))
+          .then(() => setLoading(false));
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+      }
+    };
+    fetchAuthRequest();
+  }, []);
 
-  return <div>{authorized ? <Component /> : null}</div>;
+  if (loading) return <></>;
+  else return authorized ? <Component /> : <Login />;
 };
 
 export default AuthWrapper;

@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { compare } from "bcrypt";
-import { Secret, verify } from "jsonwebtoken";
 
 import pool from "../../db";
 
@@ -9,16 +8,21 @@ import { getEntryByUsername, getEntryByEmail } from "../../queries/authQueries";
 import { getAccessToken, getRefreshToken } from "../../utils/authUtils";
 
 // generates cookie specificly for authorization. may be altered to include other cookies later.
-const setAuthCookie = async (
+const setCookies = async (
   userEntry: any
 ): Promise<string | number | readonly string[]> => {
-  const userEmail: string = userEntry.rows[0].email;
   const userUsername: string = userEntry.rows[0].username;
-  const payload: object = {
+  const userEmail: string = userEntry.rows[0].email;
+
+  const accessPayload: object = {
     username: userUsername,
   };
-  const refreshToken = getRefreshToken(payload);
-  const accessToken = await getAccessToken(payload);
+  const refreshPayload: object = {
+    username: userUsername,
+    email: userEmail,
+  };
+  const accessToken = await getAccessToken(accessPayload);
+  const refreshToken = getRefreshToken(refreshPayload);
 
   return [
     `user=${userUsername}; SameSite=lax`,
@@ -43,7 +47,7 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
       const isCorrectPassword = await compare(password, server_password_hash);
 
       if (isCorrectPassword) {
-        res.setHeader("set-Cookie", await setAuthCookie(userEntry));
+        res.setHeader("set-Cookie", await setCookies(userEntry));
         res.status(201).json("Login successful!");
       } else {
         res.status(401).json("Password incorrect");

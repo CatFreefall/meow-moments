@@ -18,6 +18,6 @@ router.put("/password-reset/:user/:token", changePassword);
 
 router.get("/logout", logoutUser);
 
-router.get("/auth-request", verifyCookies);
+router.get("/authorization-request", verifyCookies);
 
 export default router;
