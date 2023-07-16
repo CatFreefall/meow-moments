@@ -6,31 +6,7 @@ import pool from "../../db";
 
 import { getEntryByUsername, getEntryByEmail } from "../../queries/authQueries";
 
-const refreshTokenSecret: Secret = process.env.REFRESH_TOKEN_SECRET as Secret;
-const accessTokenSecret: Secret = process.env.ACCESS_TOKEN_SECRET as Secret;
-
-import { signJWT } from "../../utils/authUtils";
-
-const getRefreshToken = (payload: object): string => {
-  const refreshToken = signJWT(payload, refreshTokenSecret, "1y");
-  return refreshToken;
-};
-
-const getAccessToken = async (
-  payload: object,
-  refreshToken: string
-): Promise<String> => {
-  // verifying the refresh token. if valid, generate and return a new access token
-  // if not valid, return an empty string
-  try {
-    verify(refreshToken, refreshTokenSecret);
-
-    const accessToken = signJWT(payload, accessTokenSecret, "15m");
-    return accessToken;
-  } catch {
-    return "";
-  }
-};
+import { getAccessToken, getRefreshToken } from "../../utils/authUtils";
 
 // generates cookie specificly for authorization. may be altered to include other cookies later.
 const setAuthCookie = async (
@@ -40,13 +16,12 @@ const setAuthCookie = async (
   const userUsername: string = userEntry.rows[0].username;
   const payload: object = {
     username: userUsername,
-    email: userEmail,
   };
   const refreshToken = getRefreshToken(payload);
-  const accessToken = await getAccessToken(payload, refreshToken);
+  const accessToken = await getAccessToken(payload);
 
   return [
-    `user=${userUsername}; SameSite=Lax`,
+    `user=${userUsername}; SameSite=lax`,
     `refresh_token=${refreshToken}; HttpOnly; Secure; SameSite=Strict`,
     `access_token=${accessToken}; HttpOnly; Secure; SameSite=Strict`,
   ];

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { validate } from "email-validator";
+import LogoutButton from "../../components/common/LogoutButton";
 
 const Login = () => {
   const [emailUsername, setEmailUsername] = useState("");
@@ -33,7 +34,11 @@ const Login = () => {
         },
         body: jsonBody,
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.status === 200) {
+            nav("/");
+          }
+        })
         .catch((e) => console.log(e));
     } catch (e) {
       console.log(e);
@@ -67,16 +72,6 @@ const Login = () => {
       .catch((e) => console.log(e));
   };
 
-  const logout = async () => {
-    await fetch("/logout", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    nav("/");
-  };
-
   return (
     <>
       <button onClick={() => nav("/")}>Home Page</button>
@@ -97,7 +92,7 @@ const Login = () => {
         <button onClick={login}>Submit</button>
       </form>
       <button onClick={forgotPassword}>Forgot Password?</button>
-      <button onClick={logout}>Logout</button>
+      <LogoutButton />
     </>
   );
 };

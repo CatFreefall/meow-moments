@@ -1,5 +1,6 @@
 import express from "express";
 import rateLimit from "express-rate-limit";
+import cookieParser from "cookie-parser";
 
 import routes from "./routes/authRoutes";
 
@@ -16,6 +17,7 @@ const limit = rateLimit({
 app.use("*", limit);
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/", routes);
 

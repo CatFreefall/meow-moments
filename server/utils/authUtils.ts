@@ -1,6 +1,9 @@
 import { createTransport } from "nodemailer";
 import { Secret, sign, verify } from "jsonwebtoken";
 
+const refreshTokenSecret: Secret = process.env.REFRESH_TOKEN_SECRET as Secret;
+const accessTokenSecret: Secret = process.env.ACCESS_TOKEN_SECRET as Secret;
+
 // TODO: add a "didn't recieve the email, click to resend" function
 const transporter = createTransport({
   service: "gmail",
@@ -31,4 +34,14 @@ const validToken = (token: string, secret: Secret): boolean => {
   return true;
 };
 
-export { transporter, signJWT, validToken };
+const getRefreshToken = (payload: object): string => {
+  const refreshToken = signJWT(payload, refreshTokenSecret, "1y");
+  return refreshToken;
+};
+
+const getAccessToken = async (payload: object): Promise<String> => {
+  const accessToken = signJWT(payload, accessTokenSecret, "15m");
+  return accessToken;
+};
+
+export { transporter, signJWT, validToken, getRefreshToken, getAccessToken };
