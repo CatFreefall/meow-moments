@@ -41,12 +41,12 @@ const sendPasswordResetEmail = async (
 
 const updateDBPassword = async (
   username: string,
-  password: string
+  newPassword: string
 ): Promise<void> => {
   const newSalt = await genSalt(saltRounds);
-  const newPasswordHash = await hash(password, newSalt);
+  const newPasswordHash = await hash(newPassword, newSalt);
 
-  await pool.query(changeDBPassword, [newPasswordHash, username]);
+  pool.query(changeDBPassword, [newPasswordHash, username]);
 };
 
 const resetPasswordReq = async (req: Request, res: Response): Promise<void> => {

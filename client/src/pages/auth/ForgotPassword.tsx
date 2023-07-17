@@ -8,7 +8,9 @@ const ForgotPassword = () => {
   const token = useParams().token;
   const user = useParams().user;
 
-  const changePassword = () => {
+  const changePassword = (e: any) => {
+    e.preventDefault();
+
     newPassword === confirmNewPassword
       ? fetch(`/password-reset/${user}/${token}`, {
           method: "PUT",
@@ -22,23 +24,21 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <form>
+      <form onSubmit={changePassword}>
         <input
           type="password"
           placeholder="Password"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
         ></input>
-      </form>
-      <form>
         <input
           type="password"
           placeholder="Confirm Password"
           value={confirmNewPassword}
           onChange={(e) => setConfirmNewPassword(e.target.value)}
         ></input>
+        <button onClick={changePassword}>Change Password</button>
       </form>
-      <button onClick={changePassword}>Change Password</button>
     </>
   );
 };

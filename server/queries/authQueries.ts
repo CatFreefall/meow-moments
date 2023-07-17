@@ -8,7 +8,7 @@ const changeVerifyStatus =
   "UPDATE users SET is_verified = true WHERE username = $1";
 
 const changeDBPassword =
-  "UPDATE users SET password_hash = $1, WHERE username = $2";
+  "UPDATE users SET password_hash = $1 WHERE username = $2";
 
 export {
   registerUser,

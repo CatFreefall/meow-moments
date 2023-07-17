@@ -77,10 +77,10 @@ const verifyUser = async (req: Request, res: Response): Promise<void> => {
   const username = req.params.username;
 
   if (validToken(req.params.token, verificationSecret)) {
-    res.status(200).send("user verified");
+    res.status(200).send(true);
     await pool.query(changeVerifyStatus, [username]);
   } else {
-    res.status(200).send("verification link expired.");
+    res.status(200).send(false);
   }
 };
 

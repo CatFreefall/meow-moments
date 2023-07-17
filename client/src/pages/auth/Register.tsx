@@ -2,6 +2,9 @@ import { useNavigate } from "react-router";
 import { useState } from "react";
 import { validate } from "email-validator";
 
+import LoginButton from "../../components/LoginButton";
+import HomeButton from "../../components/common/HomeButton";
+
 const Register = () => {
   const nav = useNavigate();
 
@@ -47,8 +50,8 @@ const Register = () => {
 
   return (
     <>
-      <button onClick={() => nav("/login")}>Login</button>
-      <button onClick={() => nav("/")}>Home</button>
+      <LoginButton />
+      <HomeButton />
       <form onSubmit={register}>
         <input
           type="text"

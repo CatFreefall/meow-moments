@@ -1,5 +1,5 @@
 import LogoutButton from "../../components/common/LogoutButton";
-import UnauthorizedPage from "../../components/common/UnauthorizedPage";
+import UnauthorizedPage from "../auth/UnauthorizedPage";
 
 const PhotosComponents = () => {
   return (

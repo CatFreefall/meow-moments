@@ -2,6 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { validate } from "email-validator";
 
+import HomeButton from "../../components/common/HomeButton";
+import RegisterButton from "../../components/RegisterButton";
+
 const Login = () => {
   const [emailUsername, setEmailUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -10,21 +13,20 @@ const Login = () => {
 
   const login = async (e: any) => {
     e.preventDefault();
-    let jsonBody: string;
 
     // determining if the user is signing in with their email or username
     try {
-      validate(emailUsername)
-        ? (jsonBody = JSON.stringify({
+      const jsonBody = validate(emailUsername)
+        ? JSON.stringify({
             username: null,
             email: emailUsername,
             password: password,
-          }))
-        : (jsonBody = JSON.stringify({
+          })
+        : JSON.stringify({
             username: emailUsername,
             email: null,
             password: password,
-          }));
+          });
 
       await fetch("/login", {
         method: "POST",
@@ -48,17 +50,15 @@ const Login = () => {
   // redirect the user to the login page after they change their password.
   //TODO: have the user enter their username in the box before fetching the endpoint
   const forgotPassword = async () => {
-    let jsonBody: string;
-
-    validate(emailUsername)
-      ? (jsonBody = JSON.stringify({
+    const jsonBody = validate(emailUsername)
+      ? JSON.stringify({
           username: null,
           email: emailUsername,
-        }))
-      : (jsonBody = JSON.stringify({
+        })
+      : JSON.stringify({
           username: emailUsername,
           email: null,
-        }));
+        });
 
     await fetch("/password-reset-req", {
       method: "POST",
@@ -66,15 +66,13 @@ const Login = () => {
         "Content-Type": "application/json",
       },
       body: jsonBody,
-    })
-      .then((res) => res.json())
-      .catch((e) => console.log(e));
+    }).catch((e) => console.log(e));
   };
 
   return (
     <>
-      <button onClick={() => nav("/")}>Home Page</button>
-      <button onClick={() => nav("/register")}>Register</button>
+      <HomeButton />
+      <RegisterButton />
       <form onSubmit={login}>
         <input
           type="text"

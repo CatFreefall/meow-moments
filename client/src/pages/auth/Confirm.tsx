@@ -1,28 +1,48 @@
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+import LoginButton from "../../components/LoginButton";
 
 //TODO: change this fetch request to point to /login instead of /confirm. a message
 // will appear on the page saying that the user has confirmed their email
 const Confirm = () => {
-  const nav = useNavigate();
+  const [verified, setVerified] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   // getting the username and token from the url and passing them to the server through url
   const { username, token } = useParams();
   useEffect(() => {
-    fetch(`/confirm/${username}/${token}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  });
+    try {
+      fetch(`/confirm/${username}/${token}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => setVerified(res))
+        .then(() => setLoading(false))
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  }, [token, username, verified]);
 
-  return (
-    <div>
-      Check network to see if verified or not for now.
-      <button onClick={() => nav("/login")}>Login</button>
-    </div>
-  );
+  if (loading) {
+    return null;
+  } else {
+    return (
+      <div>
+        {verified ? (
+          <div>User verified.</div>
+        ) : (
+          <div>User not verified. Please request a new verification link</div>
+        )}
+        <LoginButton />
+      </div>
+    );
+  }
 };
 
 export default Confirm;

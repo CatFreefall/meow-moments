@@ -1,3 +1,5 @@
+// this button logs the user out and refreshes the page. it does not 
+// have the same functionality as components like LoginButton and RegisterButton
 const LogoutButton = () => {
   const logout = async () => {
     try {

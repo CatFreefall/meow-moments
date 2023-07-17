@@ -33,7 +33,7 @@ const AuthWrapper = ({ Component }: AuthWrapperProps) => {
     fetchAuthRequest();
   }, []);
 
-  if (loading) return <></>;
+  if (loading) return null;
   else return <Component isAuthorized={authorized} />;
 };
 
