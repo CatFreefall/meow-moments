@@ -1,7 +1,13 @@
 import AuthWrapper from "../../components/common/AuthWrapper";
+import LogoutButton from "../../components/common/LogoutButton";
 
 const VideoComponents = () => {
-  return <div>Illustrations</div>;
+  return (
+    <div>
+      Videos
+      <LogoutButton />
+    </div>
+  );
 };
 
 const Photos = () => {

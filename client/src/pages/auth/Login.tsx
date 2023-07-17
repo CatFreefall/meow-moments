@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { validate } from "email-validator";
-import LogoutButton from "../../components/common/LogoutButton";
 
 const Login = () => {
   const [emailUsername, setEmailUsername] = useState("");
@@ -35,7 +34,7 @@ const Login = () => {
         body: jsonBody,
       })
         .then((res) => {
-          if (res.status === 200) {
+          if (res.status === 201) {
             nav("/");
           }
         })
@@ -92,7 +91,6 @@ const Login = () => {
         <button onClick={login}>Submit</button>
       </form>
       <button onClick={forgotPassword}>Forgot Password?</button>
-      <LogoutButton />
     </>
   );
 };

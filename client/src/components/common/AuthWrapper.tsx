@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 
-import Login from "../../pages/auth/Login";
-
 // TODO: check for cookies and redirect to login if they DNE
 // TODO: If they do exist, send their values to server and verify.
 // TODO: include general page structure that applies to all wrapped pages here
@@ -29,7 +27,7 @@ const AuthWrapper = (Component: () => JSX.Element) => {
   }, []);
 
   if (loading) return <></>;
-  else return authorized ? <Component /> : <Login />;
+  else return authorized ? <Component /> : <></>;
 };
 
 export default AuthWrapper;

@@ -65,6 +65,7 @@ const logoutUser = (req: Request, res: Response): void => {
   res.clearCookie("access_token", { sameSite: "strict" });
   res.clearCookie("user", { sameSite: "lax" });
   res.status(200).send("user logged out");
+  res.redirect("/");
 };
 
 export { loginUser, logoutUser };
