@@ -1,17 +1,25 @@
-import AuthWrapper from "../../components/common/AuthWrapper";
 import LogoutButton from "../../components/common/LogoutButton";
+import UnauthorizedPage from "../../components/common/UnauthorizedPage";
 
-const IllustrationComponents = () => {
+const IllustrationsComponents = () => {
   return (
     <div>
-      Illustrations
+      Illustrations Authorized
       <LogoutButton />
     </div>
   );
 };
 
-const Illustrations = () => {
-  return <div>{AuthWrapper(IllustrationComponents)}</div>;
+type IllustrationsProps = {
+  isAuthorized: Boolean;
+};
+
+const Illustrations = ({ isAuthorized }: IllustrationsProps): JSX.Element => {
+  if (isAuthorized) {
+    return <IllustrationsComponents />;
+  } else {
+    return <UnauthorizedPage />;
+  }
 };
 
 export default Illustrations;

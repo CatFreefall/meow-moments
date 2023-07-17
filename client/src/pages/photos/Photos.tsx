@@ -1,7 +1,7 @@
-import AuthWrapper from "../../components/common/AuthWrapper";
 import LogoutButton from "../../components/common/LogoutButton";
+import UnauthorizedPage from "../../components/common/UnauthorizedPage";
 
-const PhotoComponents = () => {
+const PhotosComponents = () => {
   return (
     <div>
       Photos
@@ -10,8 +10,16 @@ const PhotoComponents = () => {
   );
 };
 
-const Photos = () => {
-  return <div>{AuthWrapper(PhotoComponents)}</div>;
+type PhotosProps = {
+  isAuthorized: Boolean;
+};
+
+const Photos = ({ isAuthorized }: PhotosProps): JSX.Element => {
+  if (isAuthorized) {
+    return <PhotosComponents />;
+  } else {
+    return <UnauthorizedPage />;
+  }
 };
 
 export default Photos;

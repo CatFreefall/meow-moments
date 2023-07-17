@@ -1,29 +1,27 @@
-import AuthWrapper from "./AuthWrapper";
-
-const LogoutButtonComponents = () => {
-
+const LogoutButton = () => {
   const logout = async () => {
-    await fetch("/logout", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      await fetch("/logout", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <button
-      onClick={() => {
-        logout();
+      onClick={async () => {
+        await logout();
+        window.location.reload();
       }}
     >
       Logout
     </button>
   );
-};
-
-const LogoutButton = () => {
-  return <div>{AuthWrapper(LogoutButtonComponents)}</div>;
 };
 
 export default LogoutButton;

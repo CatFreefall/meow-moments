@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 
-// TODO: check for cookies and redirect to login if they DNE
-// TODO: If they do exist, send their values to server and verify.
-// TODO: include general page structure that applies to all wrapped pages here
-const AuthWrapper = (Component: () => JSX.Element) => {
+// most pages on this site are displayed conditionally based on if the
+// user is authorized or not (meaning that they are logged in and
+// have the required VALID cookies). this component is passed though
+// those pages to check for valid user authorization. for example, if an
+// unauthorized user tries to visit /illustrations, they will be redirected
+// to the login page.
+type AuthWrapperProps = {
+  Component: React.ComponentType<any>;
+};
+
+const AuthWrapper = ({ Component }: AuthWrapperProps) => {
   const [authorized, setAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -27,7 +34,7 @@ const AuthWrapper = (Component: () => JSX.Element) => {
   }, []);
 
   if (loading) return <></>;
-  else return authorized ? <Component /> : <></>;
+  else return <Component isAuthorized={authorized} />;
 };
 
 export default AuthWrapper;

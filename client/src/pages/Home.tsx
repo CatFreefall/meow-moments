@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router";
 
-import LogoutButton from "../components/common/LogoutButton";
-
 const Home = () => {
   const nav = useNavigate();
 
@@ -9,7 +7,6 @@ const Home = () => {
     <>
       <button onClick={() => nav("/login")}>Log In</button>
       <button onClick={() => nav("/register")}>Register </button>
-      <LogoutButton />
     </>
   );
 };

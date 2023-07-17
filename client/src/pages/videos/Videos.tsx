@@ -1,7 +1,7 @@
-import AuthWrapper from "../../components/common/AuthWrapper";
 import LogoutButton from "../../components/common/LogoutButton";
+import UnauthorizedPage from "../../components/common/UnauthorizedPage";
 
-const VideoComponents = () => {
+const VideosComponents = () => {
   return (
     <div>
       Videos
@@ -10,8 +10,16 @@ const VideoComponents = () => {
   );
 };
 
-const Photos = () => {
-  return <div>{AuthWrapper(VideoComponents)}</div>;
+type VideosProps = {
+  isAuthorized: Boolean;
 };
 
-export default Photos;
+const Videos = ({ isAuthorized }: VideosProps): JSX.Element => {
+  if (isAuthorized) {
+    return <VideosComponents />;
+  } else {
+    return <UnauthorizedPage />;
+  }
+};
+
+export default Videos;
