@@ -1,8 +1,21 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [],
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   theme: {
-    extend: {},
+    screens: {
+      mobile: "766px",
+    },
+    extend: {
+      fontFamily: {
+        display: ["Quicksand", "sans-serif"],
+      },
+      colors: {
+        darkgrey: "#2B303A",
+        lightgrey: "#40454E",
+        white: "#F1F4E9",
+        skyblue: "#BFDBF7",
+      },
+    },
   },
   plugins: [],
 };
