@@ -7,7 +7,8 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        display: ["Quicksand", "sans-serif"],
+        header: ["Fredoka", "sans-serif"],
+        body: ["Quicksand", "sans-serif"],
       },
       colors: {
         darkgrey: "#2B303A",
