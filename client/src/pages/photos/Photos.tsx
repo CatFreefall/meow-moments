@@ -1,11 +1,10 @@
-import LogoutButton from "../../components/common/LogoutButton";
+
 import UnauthorizedPage from "../auth/UnauthorizedPage";
 
 const PhotosComponents = () => {
   return (
     <div>
       Photos
-      <LogoutButton />
     </div>
   );
 };

@@ -5,6 +5,7 @@ const Home = () => {
 
   return (
     <>
+    <div>Homepage contents go here:</div>
       <button onClick={() => nav("/login")}>Log In</button>
       <button onClick={() => nav("/register")}>Register </button>
     </>

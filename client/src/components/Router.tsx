@@ -14,6 +14,7 @@ import Photos from "../pages/photos/Photos";
 import Videos from "../pages/videos/Videos";
 
 import NoPage from "../pages/NoPage";
+import Navbar from "./common/NavBar/Navbar";
 
 const Router = () => {
   return (
@@ -38,6 +39,7 @@ const Router = () => {
 
         <Route path="*" element={<NoPage />} />
       </Routes>
+      <Navbar />
     </BrowserRouter>
   );
 };

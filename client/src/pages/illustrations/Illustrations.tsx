@@ -1,11 +1,9 @@
-import LogoutButton from "../../components/common/LogoutButton";
 import UnauthorizedPage from "../auth/UnauthorizedPage";
 
 const IllustrationsComponents = () => {
   return (
     <div>
       Illustrations Authorized
-      <LogoutButton />
     </div>
   );
 };

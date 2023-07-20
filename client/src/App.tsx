@@ -1,14 +1,11 @@
 import Router from "./components/Router";
-import Navbar from "./components/common/NavBar/Navbar";
 
 function App() {
   return (
     <>
       <div className="App">
-        <Navbar />
-
         <Router />
-        <div>
+        <>
           <p>temp</p>
           <p>temp</p>
           <p>temp</p>
@@ -112,7 +109,7 @@ function App() {
           <p>temp</p>
           <p>temp</p>
           <p>temp</p>
-        </div>
+        </>
       </div>
     </>
   );

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import Menu from "./Menu";
+import { Menu } from "./MenuComponents/Menu";
 
 const Navbar = () => {
   const [showNavBar, setShowNavBar] = useState(true);

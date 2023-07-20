@@ -1,11 +1,9 @@
-import LogoutButton from "../../components/common/LogoutButton";
 import UnauthorizedPage from "../auth/UnauthorizedPage";
 
 const VideosComponents = () => {
   return (
     <div>
       Videos
-      <LogoutButton />
     </div>
   );
 };
