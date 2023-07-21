@@ -2,9 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { validate } from "email-validator";
 
-import HomeButton from "../../components/common/HomeButton";
-import RegisterButton from "../../components/RegisterButton";
-
 const Login = () => {
   const [emailUsername, setEmailUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -71,8 +68,6 @@ const Login = () => {
 
   return (
     <>
-      <HomeButton />
-      <RegisterButton />
       <form onSubmit={login}>
         <input
           type="text"

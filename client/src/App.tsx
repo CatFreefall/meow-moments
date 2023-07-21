@@ -1,117 +1,21 @@
-import Router from "./components/Router";
+import { BrowserRouter } from "react-router-dom";
+
+import Router from "./util/Routes";
+
+import Navbar from "./components/navbar/Navbar";
+
+import { AuthStateProvider } from "./util/AuthState";
 
 function App() {
   return (
-    <>
-      <div className="App">
-        <Router />
-        <>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-          <p>temp</p>
-        </>
+    <BrowserRouter>
+      <div>
+        <AuthStateProvider>
+          <Navbar />
+          <Router />
+        </AuthStateProvider>
       </div>
-    </>
+    </BrowserRouter>
   );
 }
 

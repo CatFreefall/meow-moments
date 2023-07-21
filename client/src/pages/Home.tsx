@@ -1,13 +1,20 @@
 import { useNavigate } from "react-router";
+import { useContext } from "react";
+import { useAuthContext } from "../util/AuthState";
 
 const Home = () => {
+  const [authState, setAuthState] = useAuthContext();
+
   const nav = useNavigate();
 
   return (
     <>
-    <div>Homepage contents go here:</div>
-      <button onClick={() => nav("/login")}>Log In</button>
-      <button onClick={() => nav("/register")}>Register </button>
+      <div>Homepage contents go here:
+        <button onClick={() => {
+          setAuthState("logged in");
+          console.log(authState);
+        }}>a</button>
+      </div>
     </>
   );
 };

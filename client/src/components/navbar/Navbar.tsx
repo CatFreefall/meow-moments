@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Menu } from "./MenuComponents/Menu";
+import { Menu } from "./menu_components/Menu";
 
 const Navbar = () => {
   const [showNavBar, setShowNavBar] = useState(true);
@@ -28,7 +28,7 @@ const Navbar = () => {
       } transition duration-300 ease-out`}
     >
       <Menu />
-      <img src="../../../pet.webp" alt="" className="w-20 ml-7 mr-3" />
+      <img src="/pet.webp" alt="" className="w-20 ml-7 mr-3" />
       <h1 className="text-5xl">MeowMoments</h1>
     </nav>
   );

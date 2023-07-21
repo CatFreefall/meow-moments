@@ -6,11 +6,10 @@ import pool from "../../db";
 import { getEntryByUsername, getEntryByEmail } from "../../queries/authQueries";
 
 import { getAccessToken, getRefreshToken } from "../../utils/authUtils";
+import { QueryResult } from "pg";
 
 // generates cookie specificly for authorization. may be altered to include other cookies later.
-const setCookies = async (
-  userEntry: any
-): Promise<string | number | readonly string[]> => {
+const setCookies = async (userEntry: QueryResult): Promise<string[]> => {
   const userUsername: string = userEntry.rows[0].username;
   const userEmail: string = userEntry.rows[0].email;
 
@@ -21,7 +20,7 @@ const setCookies = async (
     username: userUsername,
     email: userEmail,
   };
-  const accessToken = await getAccessToken(accessPayload);
+  const accessToken = getAccessToken(accessPayload);
   const refreshToken = getRefreshToken(refreshPayload);
 
   return [

@@ -8,7 +8,7 @@ const CloseMenuButton = () => {
   return (
     <button>
       <img
-        src="../../../assets/icons/left-arrow-icon.webp"
+        src="/assets/icons/left-arrow-icon.webp"
         className="w-12 ml-4"
         alt=""
         onClick={() => collapseMenu()}

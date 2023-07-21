@@ -1,6 +1,15 @@
-// this button logs the user out and refreshes the page. it does not 
+import { useNavigate } from "react-router-dom";
+
+import { useContext } from "react";
+
+import { MenuStateContext } from "../navbar/menu_components/Menu";
+
+// this button logs the user out and refreshes the page. it does not
 // have the same functionality as components like LoginButton and RegisterButton
 const LogoutButton = () => {
+  const nav = useNavigate();
+  const collapseMenu = useContext(MenuStateContext);
+
   const logout = async () => {
     try {
       await fetch("/logout", {
@@ -18,7 +27,8 @@ const LogoutButton = () => {
     <button
       onClick={async () => {
         await logout();
-        window.location.reload();
+        nav("/");
+        collapseMenu();
       }}
     >
       Logout

@@ -39,8 +39,8 @@ const getRefreshToken = (payload: object): string => {
   return refreshToken;
 };
 
-const getAccessToken = async (payload: object): Promise<String> => {
-  const accessToken = signJWT(payload, accessTokenSecret, "15m");
+const getAccessToken = (payload: object): string => {
+  const accessToken = signJWT(payload, accessTokenSecret, "30m");
   return accessToken;
 };
 

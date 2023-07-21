@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import Home from "../pages/Home";
 
@@ -7,18 +7,15 @@ import Register from "../pages/auth/Register";
 import Confirm from "../pages/auth/Confirm";
 import ForgotPassword from "../pages/auth/ForgotPassword";
 
-import AuthWrapper from "../components/common/AuthWrapper";
-
 import Illustrations from "../pages/illustrations/Illustrations";
 import Photos from "../pages/photos/Photos";
 import Videos from "../pages/videos/Videos";
 
 import NoPage from "../pages/NoPage";
-import Navbar from "./common/NavBar/Navbar";
+import Hashtags from "../pages/hashtags/Hashtags";
 
 const Router = () => {
   return (
-    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -32,15 +29,17 @@ const Router = () => {
 
         <Route
           path="/illustrations"
-          element={<AuthWrapper Component={Illustrations} />}
+          element={<Illustrations />}
         />
-        <Route path="/photos" element={<AuthWrapper Component={Photos} />} />
-        <Route path="/videos" element={<AuthWrapper Component={Videos} />} />
+        <Route path="/photos" element={<Photos />} />
+        <Route path="/videos" element={<Videos />} />
+        <Route
+          path="/hashtags"
+          element={<Hashtags />}
+        />
 
         <Route path="*" element={<NoPage />} />
       </Routes>
-      <Navbar />
-    </BrowserRouter>
   );
 };
 

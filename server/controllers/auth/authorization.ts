@@ -25,7 +25,7 @@ const verifyCookies = async (req: Request, res: Response): Promise<void> => {
         const payload: object = {
           username: user,
         };
-        const newAccessToken = await getAccessToken(payload);
+        const newAccessToken = getAccessToken(payload);
         res.setHeader(
           "set-Cookie",
           `access_token=${newAccessToken}; HttpOnly; Secure; SameSite=Strict`
