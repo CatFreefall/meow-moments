@@ -19,11 +19,11 @@ const VideosButton = () => {
         <img
           src="/assets/icons/video-icon.webp"
           alt=""
-          className="w-10 mx-4"
+          className="w-5 h-5 mx-3"
         ></img>
         Videos
       </button>
-      <button className="w-10 ml-auto mr-6">
+      <button className="w-5 ml-auto mr-6">
         <img
           src="/assets/icons/downwards-arrow-icon.webp"
           alt=""

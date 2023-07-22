@@ -19,7 +19,7 @@ const HomeButton = () => {
         <img
           src="/assets/icons/home-icon.webp"
           alt=""
-          className="w-10 mx-4"
+          className="w-5 h-5 mx-3"
         ></img>
         Home
       </button>

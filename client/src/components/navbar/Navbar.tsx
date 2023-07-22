@@ -31,16 +31,16 @@ const Navbar = () => {
   return (
     <div>
       <nav
-        className={`bg-lightgrey p-4 flex items-center font-header fixed w-full top-0 transition duration-300 ease-out z-10 ${
+        className={`bg-lightgrey p-3 flex items-center font-header fixed w-full top-0 transition duration-300 ease-out z-10 ${
           showNavBar ? "translate-y-0" : "-translate-y-full"
         }`}
       >
         <Menu />
-        <img src="/pet.webp" alt="" className="w-20 ml-7 mr-3" />
-        <h1 className="text-5xl">MeowMoments</h1>
+        <img src="/pet.webp" alt="" className="w-9 ml-4 mr-2" />
+        <h1 className="text-2xl">MeowMoments</h1>
       </nav>
 
-      <div className={`transition duration-100 ease-in fixed top-28 ${showNavBar ? "translate-y-0" : "-translate-y-28"}`}>
+      <div className={`transition duration-100 ease-in fixed top-16 ${showNavBar ? "translate-y-0" : "-translate-y-16"}`}>
         {authenticated && !verified ? <AccountNotVerified /> : null}
       </div>
     </div>

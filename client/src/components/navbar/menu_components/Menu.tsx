@@ -31,14 +31,14 @@ const Menu = () => {
         )}
 
         <div
-          className={`fixed top-0 left-0 bg-darkgrey border-r-2 border-lightgrey h-screen w-3/4 transition duration-300 ease-in-out ${
+          className={`fixed top-0 left-0 bg-darkgrey border-r-2 border-lightgrey h-screen transition duration-300 ease-in-out ${
             showMenu ? null : "-translate-x-full"
-          }`}
+          } w-fill`}
         >
-          <div className="bg-lightgrey flex items-center font-header p-4">
+          <div className="bg-lightgrey flex items-center font-header p-3">
             <CloseMenuButton />
-            <img src="/pet.webp" alt="" className="w-20 ml-7 mr-3" />
-            <h1 className="text-5xl">MeowMoments</h1>
+            <img src="/pet.webp" alt="" className="w-9 ml-4 mr-2" />
+            <h1 className="text-2xl">MeowMoments</h1>
           </div>
           <MenuContents />
         </div>

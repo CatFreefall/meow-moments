@@ -18,7 +18,7 @@ const MenuContents = () => {
   } = useAuthContext();
 
   return (
-    <div className="flex flex-col items-center text-4xl font-body mt-16 h-5/6">
+    <div className="flex flex-col items-center text-md font-body mt-4 h-5/6">
       <IllustrationsButton />
       <MenuSectionDivider />
       <PhotosButton />
@@ -26,19 +26,19 @@ const MenuContents = () => {
       <VideosButton />
       <MenuSectionDivider />
       <HashtagsButton />
-      
+      <MenuSectionDivider />
       <HomeButton />
       <img
         src="/assets/images/cat-1.webp"
         alt=""
-        className="opacity-60 w-96 my-auto"
+        className="opacity-60 w-32 my-auto"
       ></img>
       {authenticated ? (
         <LogoutButton />
       ) : (
         <div className="mt-auto flex">
           <LoginButton />
-          <div className="h-14 w-2 bg-white rounded-full mx-4"></div>
+          <div className="h-8 w-2 bg-white rounded-full mx-2"></div>
           <RegisterButton />
         </div>
       )}

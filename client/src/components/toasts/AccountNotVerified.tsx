@@ -1,13 +1,10 @@
 const AccountNotVerified = () => {
   return (
-    <div
-      className={`w-full bg-orange flex p-3 text-2xl`}
-      id="toast"
-    >
-      <img src="/assets/icons/info-icon.webp" alt="" className="w-10 h-10 self-center ml-2 mr-6" />
+    <div className={` bg-orange flex p-2 text-sm w-screen`} id="toast">
+      <div className="text-4xl self-center mr-3">ⓘ</div>
       Account Unverified! Please visit your settings to verify your account.
       <button
-        className="ml-auto p-0 place-self-start text-3xl hover:opacity-90 pl-7 pr-2"
+        className="ml-auto p-0 place-self-start text-lg hover:opacity-90 pl-5"
         onClick={() => document.getElementById("toast")?.remove()}
       >
         X

@@ -9,7 +9,7 @@ const CloseMenuButton = () => {
     <button>
       <img
         src="/assets/icons/left-arrow-icon.webp"
-        className="w-12 ml-4"
+        className="ml-1 w-5 font-bold my-1"
         alt=""
         onClick={() => collapseMenu()}
       />
