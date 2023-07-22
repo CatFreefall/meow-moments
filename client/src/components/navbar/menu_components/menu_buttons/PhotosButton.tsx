@@ -1,27 +1,27 @@
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 
-import { MenuStateContext } from "./Menu";
+import { MenuStateContext } from "../Menu";
 
-const IllustrationsButton = () => {
+const PhotosButton = () => {
   const collapseMenu = useContext(MenuStateContext);
 
   const nav = useNavigate();
   return (
-    <div className="flex items-center">
+    <div className="flex items-center mobile-menu-element">
       <button
         onClick={() => {
-          nav("/illustrations");
+          nav("/photos");
           collapseMenu();
         }}
         className="flex my-3"
       >
         <img
-          src="/assets/icons/paintbrush-icon.webp"
+          src="/assets/icons/photo-icon.webp"
           alt=""
           className="w-10 mx-4"
         ></img>
-        Illustrations
+        Photos
       </button>
       <button className="w-10 ml-auto mr-6">
         <img
@@ -34,4 +34,4 @@ const IllustrationsButton = () => {
   );
 };
 
-export default IllustrationsButton;
+export default PhotosButton;

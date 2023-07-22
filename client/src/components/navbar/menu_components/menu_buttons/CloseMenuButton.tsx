@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import { MenuStateContext } from "./Menu";
+import { MenuStateContext } from "../Menu";
 
 const CloseMenuButton = () => {
   const collapseMenu = useContext(MenuStateContext);

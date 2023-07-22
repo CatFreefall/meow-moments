@@ -1,6 +1,9 @@
 import { createTransport } from "nodemailer";
 import { Secret, sign, verify } from "jsonwebtoken";
 
+import pool from "../db";
+import { getEntryByUsername } from "../queries/authQueries";
+
 const refreshTokenSecret: Secret = process.env.REFRESH_TOKEN_SECRET as Secret;
 const accessTokenSecret: Secret = process.env.ACCESS_TOKEN_SECRET as Secret;
 
@@ -44,4 +47,16 @@ const getAccessToken = (payload: object): string => {
   return accessToken;
 };
 
-export { transporter, signJWT, validToken, getRefreshToken, getAccessToken };
+const userVerified = async (username: string): Promise<boolean> => {
+  const user = await pool.query(getEntryByUsername, [username]);
+  return user.rows[0].is_verified ? true : false;
+};
+
+export {
+  transporter,
+  signJWT,
+  validToken,
+  getRefreshToken,
+  getAccessToken,
+  userVerified,
+};

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import MenuButton from "./MenuButton";
-import CloseMenuButton from "./CloseMenuButton";
+import MenuButton from "./menu_buttons/MenuButton";
+import CloseMenuButton from "./menu_buttons/CloseMenuButton";
 import MenuContents from "./MenuContents";
 
 // used to determine whether the menu is open or not

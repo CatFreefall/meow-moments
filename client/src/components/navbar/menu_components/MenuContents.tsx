@@ -3,41 +3,45 @@ import RegisterButton from "../../common/RegisterButton";
 
 import MenuSectionDivider from "./MenuSectionDivider";
 
-import IllustrationsButton from "./IllustrationsButton";
-import PhotosButton from "./PhotosButton";
-import VideosButton from "./VideosButton";
-import HashtagsButton from "./HashtagsButton";
+import IllustrationsButton from "./menu_buttons/IllustrationsButton";
+import PhotosButton from "./menu_buttons/PhotosButton";
+import VideosButton from "./menu_buttons/VideosButton";
+import HashtagsButton from "./menu_buttons/HashtagsButton";
+import HomeButton from "./menu_buttons/HomeButton";
 import LogoutButton from "../../common/LogoutButton";
 
+import { useAuthContext } from "../../../util/AuthState";
+
 const MenuContents = () => {
+  const {
+    authentication: [authenticated],
+  } = useAuthContext();
+
   return (
     <div className="flex flex-col items-center text-4xl font-body mt-16 h-5/6">
-      <div className="mobile-menu-element">
-        <IllustrationsButton />
-      </div>
+      <IllustrationsButton />
       <MenuSectionDivider />
-      <div className="mobile-menu-element">
-        <PhotosButton />
-      </div>
+      <PhotosButton />
       <MenuSectionDivider />
-      <div className="mobile-menu-element">
-        <VideosButton />
-      </div>
+      <VideosButton />
       <MenuSectionDivider />
-      <div className="mobile-menu-element">
-        <HashtagsButton />
-      </div>
+      <HashtagsButton />
+      <MenuSectionDivider />
+      <HomeButton />
       <img
         src="/assets/images/cat-1.webp"
         alt=""
         className="opacity-60 w-96 my-auto"
       ></img>
-      <LogoutButton />
-      <div className="mt-auto flex">
-        <LoginButton />
-        <div className="h-14 w-2 bg-white rounded-full mx-4"></div>
-        <RegisterButton />
-      </div>
+      {authenticated ? (
+        <LogoutButton />
+      ) : (
+        <div className="mt-auto flex">
+          <LoginButton />
+          <div className="h-14 w-2 bg-white rounded-full mx-4"></div>
+          <RegisterButton />
+        </div>
+      )}
     </div>
   );
 };

@@ -8,6 +8,7 @@ import { MenuStateContext } from "../navbar/menu_components/Menu";
 // have the same functionality as components like LoginButton and RegisterButton
 const LogoutButton = () => {
   const nav = useNavigate();
+
   const collapseMenu = useContext(MenuStateContext);
 
   const logout = async () => {
@@ -27,9 +28,10 @@ const LogoutButton = () => {
     <button
       onClick={async () => {
         await logout();
-        nav("/");
         collapseMenu();
+        nav("/");
       }}
+      className="auth-menu-buttons"
     >
       Logout
     </button>

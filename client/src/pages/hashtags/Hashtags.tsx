@@ -6,13 +6,13 @@ const HashtagsComponents = () => {
 };
 
 const Hashtags = () => {
-  const [authState] = useAuthContext();
+  const {authentication: [authenticated]} = useAuthContext();
 
-  if (authState === "logged out") {
+  if (authenticated === true) {
     return <UnauthorizedPage />;
-  } else if (authState === "logged in") {
+  } else if (authenticated === false) {
     return <HashtagsComponents />;
-  } else if (authState === "unverified") {
+  } else if (authenticated === "unverified") {
     return <UnauthorizedPage />;
   } else return <div>Something went wrong</div>;
 };

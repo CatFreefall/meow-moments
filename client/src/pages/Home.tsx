@@ -1,19 +1,23 @@
-import { useNavigate } from "react-router";
-import { useContext } from "react";
+import AccountNotVerified from "../components/toasts/AccountNotVerified";
 import { useAuthContext } from "../util/AuthState";
 
 const Home = () => {
-  const [authState, setAuthState] = useAuthContext();
-
-  const nav = useNavigate();
+  const {
+    authentication: [authenticated],
+  } = useAuthContext();
 
   return (
     <>
-      <div>Homepage contents go here:
-        <button onClick={() => {
-          setAuthState("logged in");
-          console.log(authState);
-        }}>a</button>
+      <div>
+        <AccountNotVerified />
+        Homepage contents go here:
+        <button
+          onClick={() => {
+            console.log(authenticated);
+          }}
+        >
+          a
+        </button>
       </div>
     </>
   );

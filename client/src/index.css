@@ -7,7 +7,7 @@
 
 @layer components {
   .mobile-menu-element {
-    @apply hover:bg-lightgrey transition duration-200 ease-out w-4/5;
+    @apply hover:bg-lightgrey transition w-4/5;
   }
 
   .auth-menu-buttons {

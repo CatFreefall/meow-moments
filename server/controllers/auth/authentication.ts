@@ -12,6 +12,7 @@ import { QueryResult } from "pg";
 const setCookies = async (userEntry: QueryResult): Promise<string[]> => {
   const userUsername: string = userEntry.rows[0].username;
   const userEmail: string = userEntry.rows[0].email;
+  const userVerified: boolean = userEntry.rows[0].is_verified;
 
   const accessPayload: object = {
     username: userUsername,
@@ -25,6 +26,7 @@ const setCookies = async (userEntry: QueryResult): Promise<string[]> => {
 
   return [
     `user=${userUsername}; SameSite=lax`,
+    `verified=${userVerified}; SameSite=lax`,
     `refresh_token=${refreshToken}; HttpOnly; Secure; SameSite=Strict`,
     `access_token=${accessToken}; HttpOnly; Secure; SameSite=Strict`,
   ];
@@ -63,6 +65,7 @@ const logoutUser = (req: Request, res: Response): void => {
   res.clearCookie("refresh_token", { sameSite: "strict" });
   res.clearCookie("access_token", { sameSite: "strict" });
   res.clearCookie("user", { sameSite: "lax" });
+  res.clearCookie("verified", { sameSite: "lax" });
   res.status(200).send("user logged out");
 };
 
