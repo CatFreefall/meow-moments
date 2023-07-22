@@ -22,7 +22,7 @@ const Menu = () => {
         {showMenu ? (
           <div
             className={
-              "fixed top-0 left-0 h-screen w-screen transition duration-500 bg-darkgrey bg-opacity-50 ease-out"
+              "fixed top-0 left-0 h-screen w-screen transition duration-200 bg-darkgrey bg-opacity-50 ease-out"
             }
             onClick={() => collapseMenu()}
           ></div>

@@ -30,6 +30,7 @@ const LogoutButton = () => {
         await logout();
         collapseMenu();
         nav("/");
+        window.location.reload();
       }}
       className="auth-menu-buttons"
     >

@@ -1,23 +1,166 @@
-import AccountNotVerified from "../components/toasts/AccountNotVerified";
 import { useAuthContext } from "../util/AuthState";
 
 const Home = () => {
   const {
     authentication: [authenticated],
+    verification: [verified],
   } = useAuthContext();
 
   return (
     <>
       <div>
-        <AccountNotVerified />
         Homepage contents go here:
         <button
           onClick={() => {
-            console.log(authenticated);
+            console.log(authenticated, verified);
           }}
         >
           a
         </button>
+        <div>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+          <p>TEMP</p>
+        </div>
       </div>
     </>
   );

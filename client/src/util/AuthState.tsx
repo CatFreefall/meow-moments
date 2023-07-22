@@ -20,7 +20,7 @@ const AuthStateProvider = ({ children }: any) => {
   // this is done to maintain authentication and verification state on page refresh
   useEffect(() => {
     setAuthenticated(document.cookie.indexOf("verified") !== -1 ? true : false);
-    setVerified(document.cookie.indexOf("verified==true") !== -1 ? true : false);
+    setVerified(document.cookie.indexOf("verified=true") !== -1 ? true : false);
   }, []);
 
   return (

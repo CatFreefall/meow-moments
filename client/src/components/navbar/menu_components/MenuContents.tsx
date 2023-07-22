@@ -26,7 +26,7 @@ const MenuContents = () => {
       <VideosButton />
       <MenuSectionDivider />
       <HashtagsButton />
-      <MenuSectionDivider />
+      
       <HomeButton />
       <img
         src="/assets/images/cat-1.webp"

@@ -36,6 +36,7 @@ const Login = () => {
         .then((res) => {
           if (res.status === 201) {
             nav("/");
+            window.location.reload();
           }
         })
         .catch((e) => console.log(e));

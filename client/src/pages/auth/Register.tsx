@@ -1,9 +1,11 @@
-import { useNavigate } from "react-router";
 import { useState } from "react";
 import { validate } from "email-validator";
 
+import EmailVerificationSent from "../../components/toasts/EmailVerificationSent";
+
 const Register = () => {
-  const nav = useNavigate();
+
+  const [userRegistered, setUserRegistered] = useState(false);
 
   // TODO: utilize these states later to check for correct input after each change in the text box
   // TODO: also utilize username and email to check if they are already in the database on change
@@ -36,7 +38,9 @@ const Register = () => {
             }),
           })
             .then((res) => {
-              if (res.status === 201) nav("/login");
+              if (res.status === 201) {
+                setUserRegistered(true);
+              }
             })
             .catch((e) => console.log(e))
         : console.log("invalid email");
@@ -47,6 +51,7 @@ const Register = () => {
 
   return (
     <>
+      {userRegistered ? <EmailVerificationSent /> : null}
       <form onSubmit={register}>
         <input
           type="text"
