@@ -19,6 +19,7 @@ module.exports = {
         darkblue: "#1E6FD9",
         orange: "#F77000",
         green: "#23A923",
+        red: "#F74F4F",
       },
       spacing: {
         18: "4.5rem",

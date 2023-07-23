@@ -107,7 +107,7 @@ const Login = () => {
         <img
           src="/assets/images/cat-divider.webp"
           alt=""
-          className="self-center w-3/4"
+          className="self-center w-56"
         ></img>
         <div className="text-xs flex justify-center items-center">
           <div className="pr-1">Don't have an account?</div>
