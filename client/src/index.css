@@ -7,10 +7,10 @@
 
 @layer components {
   .mobile-menu-element {
-    @apply hover:bg-lightgrey transition w-4/5;
+    @apply active:bg-lightgrey transition w-4/5;
   }
 
   .auth-menu-buttons {
-    @apply bg-blue hover:bg-darkblue text-white font-bold rounded w-24 h-8 transition;
+    @apply bg-blue active:bg-darkblue text-white font-bold rounded w-24 h-8 transition flex justify-center items-center;
   }
 }

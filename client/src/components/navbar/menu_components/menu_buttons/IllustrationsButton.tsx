@@ -8,13 +8,13 @@ const IllustrationsButton = () => {
 
   const nav = useNavigate();
   return (
-    <div className="flex items-center mobile-menu-element">
+    <div className="flex mobile-menu-element">
       <button
         onClick={() => {
           nav("/illustrations");
           collapseMenu();
         }}
-        className="flex my-3"
+        className="flex my-3 items-center"
       >
         <img
           src="/assets/icons/paintbrush-icon.webp"

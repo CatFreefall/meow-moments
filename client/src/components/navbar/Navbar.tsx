@@ -40,7 +40,7 @@ const Navbar = () => {
         <h1 className="text-2xl">MeowMoments</h1>
       </nav>
 
-      <div className={`transition duration-100 ease-in fixed top-16 ${showNavBar ? "translate-y-0" : "-translate-y-16"}`}>
+      <div className={`transition duration-100 ease-in fixed top-14 ${showNavBar ? "translate-y-0" : "-translate-y-14"}`}>
         {authenticated && !verified ? <AccountNotVerified /> : null}
       </div>
     </div>

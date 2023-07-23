@@ -2,14 +2,14 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   theme: {
-    screens: {
-      mobile: "768px",
-      desktop: "1537px",
-    },
     extend: {
       fontFamily: {
         header: ["Fredoka", "sans-serif"],
         body: ["Quicksand", "sans-serif"],
+      },
+      height: {
+        "7/8": "87.5%",
+        "9/10": "90%",
       },
       colors: {
         darkgrey: "#2B303A",

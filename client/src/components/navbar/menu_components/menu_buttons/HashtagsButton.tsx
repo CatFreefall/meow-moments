@@ -14,7 +14,7 @@ const HashtagsButton = () => {
           nav("/hashtags");
           collapseMenu();
         }}
-        className="flex my-3"
+        className="flex my-3 items-center"
       >
         <img
           src="/assets/icons/hashtag-icon.webp"

@@ -14,12 +14,12 @@ const PhotosButton = () => {
           nav("/photos");
           collapseMenu();
         }}
-        className="flex my-3"
+        className="flex my-3 items-center"
       >
         <img
           src="/assets/icons/photo-icon.webp"
           alt=""
-          className="w-5 h-5 mx-3"
+          className="w-5 h-5 mx-3 "
         ></img>
         Photos
       </button>
