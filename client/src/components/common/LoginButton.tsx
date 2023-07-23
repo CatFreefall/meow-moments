@@ -13,7 +13,7 @@ const LoginButton = () => {
         nav("/login");
         collapseMenu();
       }}
-      className="auth-menu-buttons"
+      className="button"
     >
       Login
     </button>

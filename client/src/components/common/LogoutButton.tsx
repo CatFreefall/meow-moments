@@ -32,7 +32,7 @@ const LogoutButton = () => {
         nav("/");
         window.location.reload();
       }}
-      className="auth-menu-buttons"
+      className="button"
     >
       Logout
     </button>

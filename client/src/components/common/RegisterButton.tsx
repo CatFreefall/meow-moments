@@ -13,7 +13,7 @@ const RegisterButton = () => {
         nav("/register");
         collapseMenu();
       }}
-      className="auth-menu-buttons"
+      className="button"
     >
       Register
     </button>

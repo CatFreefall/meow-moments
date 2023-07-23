@@ -10,7 +10,11 @@
     @apply active:bg-lightgrey transition w-4/5;
   }
 
-  .auth-menu-buttons {
+  .button {
     @apply bg-blue active:bg-darkblue text-white font-bold rounded w-24 h-8 transition flex justify-center items-center;
+  }
+
+  .input-box {
+    @apply w-4/5 text-white bg-transparent border-b-2 focus:outline-none;
   }
 }

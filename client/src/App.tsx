@@ -2,8 +2,6 @@ import { BrowserRouter } from "react-router-dom";
 
 import Router from "./util/Router";
 
-import Navbar from "./components/navbar/Navbar";
-
 import { AuthStateProvider } from "./util/AuthState";
 
 function App() {
@@ -11,7 +9,6 @@ function App() {
     <BrowserRouter>
       <div>
         <AuthStateProvider>
-          <Navbar />
           <Router />
         </AuthStateProvider>
       </div>
