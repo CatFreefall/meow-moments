@@ -44,11 +44,11 @@ const Login = () => {
       })
         .then((res) => res.json())
         .then((res) => {
-          if (res.status === 201) {
+          if (res === "Login successful!") {
+            console.log(res);
             nav("/");
             window.location.reload();
-          }
-          return res;
+          } else return res;
         })
         .then((data) => setErrorMessage(data))
         .catch((e) => console.log(e));
