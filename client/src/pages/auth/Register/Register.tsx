@@ -1,14 +1,11 @@
 import { useState, useEffect } from "react";
 import { validate } from "email-validator";
 
-import EmailVerificationSent from "../../components/toasts/EmailVerificationSent";
-import Navbar from "../../components/navbar/Navbar";
-import LoginButton from "../../components/common/LoginButton";
+import EmailVerificationSent from "../../../components/toasts/EmailVerificationSent";
+import Navbar from "../../../components/navbar/Navbar";
+import LoginButton from "../../../components/common/LoginButton";
 
 const Register = () => {
-  // TODO: utilize these states later to check for correct input after each change in the text box
-  // TODO: also utilize username and email to check if they are already in the database on change
-  // instead of having the user submitting to find out
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -52,14 +49,11 @@ const Register = () => {
   const [usernameExists, setUsernameExists] = useState(false);
   useEffect(() => {
     if (username.length > 0) {
-      fetch("/register", {
-        method: "POST",
+      fetch(`/validate-username/${username}`, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username: username,
-        }),
       })
         .then((res) => res.json())
         .then((data) =>
@@ -77,26 +71,18 @@ const Register = () => {
   const [emailExists, setEmailExists] = useState(false);
   useEffect(() => {
     if (validate(email))
-      fetch("/register", {
-        method: "POST",
+      fetch(`/validate-email/${email}`, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email: email,
-        }),
       })
         .then((res) => res.json())
         .then((data) => {
-          data === "Email Already Exists"
-            ? setEmailExists(true)
-            : setEmailExists(false);
-        })
-        .then(() => {
-          setErrorMessage(emailExists ? "Email Already Exists" : "");
+          setErrorMessage(data === "Email Already Exists" ? data : "");
         })
         .catch((e) => console.log(e));
-  }, [email, emailExists]);
+  }, [email]);
 
   useEffect(() => {
     if (password.length > 0 && confirmPassword.length > 0) {
@@ -161,9 +147,7 @@ const Register = () => {
             <button
               onClick={register}
               className="button rounded-lg w-3/5 disabled:bg-darkblue"
-              disabled={
-                !emailExists && !usernameExists && passwordsMatch ? false : true
-              }
+              disabled={errorMessage !== "" ? false : true}
             >
               Register
             </button>
