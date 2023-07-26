@@ -4,10 +4,10 @@ import { validate } from "email-validator";
 
 import Navbar from "../../../components/navbar/Navbar";
 import RegisterButton from "../../../components/common/RegisterButton";
-import ForgotPasswordButton from "./ForgotPasswordButton";
+import ForgotPasswordButton from "./components/ForgotPasswordButton";
 import PasswordChangeEmailSent from "../../../components/toasts/PasswordChangeEmailSent";
-import EmailUsernameInput from "./UsernameEmailInput";
-import PasswordInput from "./PasswordInput";
+import EmailUsernameInput from "./components/UsernameEmailInput";
+import PasswordInput from "./components/PasswordInput";
 
 const Login = () => {
   const [emailUsername, setEmailUsername] = useState<string>("");
@@ -65,7 +65,7 @@ const Login = () => {
         <img
           src="/assets/images/cat-16.webp"
           alt=""
-          className="w-5/12 self-center pt-16"
+          className="w-5/12 self-center mt-16"
         ></img>
         <div>
           <div className="flex flex-col items-center">

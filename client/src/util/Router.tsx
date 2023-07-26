@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 
-import Home from "../pages/Home";
+import Home from "../pages/home/Home";
 
 import Login from "../pages/auth/Login/Login";
-import Register from "../pages/auth/Register/Register";
+import Register from "../pages/auth/register/Register";
 import Confirm from "../pages/auth/Confirm";
 import ForgotPassword from "../pages/auth/ForgotPassword";
 
