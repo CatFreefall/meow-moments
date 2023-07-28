@@ -5,6 +5,7 @@ const post = async (req: any, res: any) => {
   try {
     if (req.files.length > 0) {
       const fileArray: Array<File> = req.files;
+      const { user } = req.cookies;
 
       // generating a post ID for the user's post. this will be used create a folder
       // containing all image/video files the user uploaded for the post. this will later
@@ -16,12 +17,14 @@ const post = async (req: any, res: any) => {
       // subdirectories: "illustrations", "videos", and "photos".
 
       // uploading all files given by the uer to the bucket one at a time
-      for (let fileIndex = 0; fileIndex < fileArray.length; fileIndex++) {
-        // creating the path the file will be stored in in the bucket (including the file name)
-        const { user } = req.cookies;
-        const fileDestination = `${user}/${req.params.postType}/post-${postID}/${req.files[fileIndex].originalname}`;
+      for (const fileIndex in fileArray) {
+        // TODO: formatting the image to webp without losing quality for consistency and
+        // faster loading on the client
 
-        const blob = meowMomentsBucket.file(fileDestination);
+        // creating the path the file will be stored in in the bucket (with the file included)
+        const filePath = `${user}/${req.params.postType}/post-${postID}/${req.files[fileIndex].originalname}`;
+
+        const blob = meowMomentsBucket.file(filePath);
         const blobStream = blob.createWriteStream();
         blobStream
           .on("finish", () => {

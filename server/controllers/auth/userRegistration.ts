@@ -3,6 +3,7 @@ import { genSalt, hash } from "bcrypt";
 import { Secret } from "jsonwebtoken";
 
 import pool from "../../db";
+import { meowMomentsBucket } from "../../utils/bucketUtils";
 
 import {
   registerUser,
@@ -67,6 +68,13 @@ const addUser = async (req: Request, res: Response): Promise<any> => {
           "Confirmation email sent. Please check your email and verify your account."
         );
       sendConfirmationEmail(username, email);
+
+      // creating empty directories in the bucket for the user upon registration
+      const directories = ["illustrations", "videos", "photos"];
+      for (const directory of directories) {
+        const directoryPath = `${username}/${directory}/`;
+        await meowMomentsBucket.file(directoryPath).save("");
+      }
     }
   } catch (err) {
     res.status(500).json("User registration error");
