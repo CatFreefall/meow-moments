@@ -1,10 +1,11 @@
 import { meowMomentsBucket } from "../../utils/bucketUtils";
+import formatImage from "../../utils/formatImage";
 import generatePostID from "../../utils/generatePostID";
 
 const post = async (req: any, res: any) => {
   try {
     if (req.files.length > 0) {
-      const fileArray: Array<File> = req.files;
+      const fileArray: Array<Express.Multer.File> = req.files;
       const { user } = req.cookies;
 
       // generating a post ID for the user's post. this will be used create a folder
@@ -12,17 +13,15 @@ const post = async (req: any, res: any) => {
       // also be saved in the db to manipulate the post.
       const postID = generatePostID();
 
-      // TODO: when a user registers an account, create a directory named
-      // after their username in the bucket. The folder should contain 3
-      // subdirectories: "illustrations", "videos", and "photos".
-
       // uploading all files given by the uer to the bucket one at a time
-      for (const fileIndex in fileArray) {
-        // TODO: formatting the image to webp without losing quality for consistency and
-        // faster loading on the client
-
+      for (const file in fileArray) {
         // creating the path the file will be stored in in the bucket (with the file included)
-        const filePath = `${user}/${req.params.postType}/post-${postID}/${req.files[fileIndex].originalname}`;
+
+        const filePath = `${user}/${req.params.postType}/post-${postID}/${req.files[file].originalname}.webp`;
+
+        // formatting the image to webp and changing aspect ratio 
+        // for consistency, slower file sizes, and faster loading on the client
+        const webpBuffer = await formatImage(fileArray[file]);
 
         const blob = meowMomentsBucket.file(filePath);
         const blobStream = blob.createWriteStream();
@@ -33,7 +32,7 @@ const post = async (req: any, res: any) => {
           .on("error", (error) => {
             console.log(error);
           })
-          .end(req.files[fileIndex].buffer);
+          .end(webpBuffer);
       }
       res.status(200).json("file uploading complete");
     } else {
