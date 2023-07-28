@@ -2,7 +2,8 @@ import express from "express";
 import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 
-import routes from "./routes/authRoutes";
+import * as authRoutes from "./routes/authRoutes";
+import * as bucketRoutes from "./routes/bucketRoutes";
 
 //TODO: generate a self signed certificate and use HTTPS
 const app = express();
@@ -25,7 +26,8 @@ app.use("/authorization-request", limit);
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/", routes);
+app.use("/", authRoutes.default);
+app.use("/", bucketRoutes.default);
 
 app.listen(port, () => {
   console.log(`Server running on port http://www.localhost:${port}`);

@@ -1,12 +1,16 @@
-import { Router } from "express";
+import router from "../router";
 
-import { addUser, verifyUser } from "../controllers/auth/userRegistration"
-import { emailExists, usernameExists } from "../controllers/auth/checkExistingCredentials";
-import { loginUser, logoutUser } from "../controllers/auth/authentication"
-import { resetPasswordReq, changePassword } from "../controllers/auth/passwordReset"
-import { verifyCookies } from "../controllers/auth/authorization"
-
-const router = Router();
+import { addUser, verifyUser } from "../controllers/auth/userRegistration";
+import {
+  emailExists,
+  usernameExists,
+} from "../controllers/auth/checkExistingCredentials";
+import { loginUser, logoutUser } from "../controllers/auth/authentication";
+import {
+  resetPasswordReq,
+  changePassword,
+} from "../controllers/auth/passwordReset";
+import { verifyCookies } from "../controllers/auth/authorization";
 
 router.post("/register", addUser);
 router.get("/validate-username/:username", usernameExists);
