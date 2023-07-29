@@ -47,9 +47,9 @@ const Post = () => {
         ></textarea>
         <input
           type="text"
-          placeholder="Hashtags (optional)"
+          placeholder="Hashtags (Max - 3, optional)"
           ref={hashtags}
-          className="text-darkgrey"
+          className="w-full text-darkgrey px-2"
         />
         <button className="button w-fit" onClick={submitFile}>
           Post!

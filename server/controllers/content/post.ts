@@ -2,8 +2,14 @@ import { meowMomentsBucket } from "../../utils/bucketUtils";
 import formatImage from "../../utils/formatImage";
 import generateUUID from "../../utils/generateUUID";
 import pool from "../../db";
-import { postContent } from "../../queries/contentQueries";
+import {
+  postContent,
+  addTag,
+  addPostHashtags,
+} from "../../queries/contentQueries";
 import { getEntryByUsername } from "../../queries/generalQueries";
+import formatHashtags from "../../utils/formatHashtags";
+import { format } from "path";
 
 const post = async (req: any, res: any) => {
   try {
@@ -26,6 +32,16 @@ const post = async (req: any, res: any) => {
         `${user}/${postType}/post-${postID}/`,
         postDescription,
       ]);
+
+      // adding the posts hashtags to db.
+      const hashtags = formatHashtags(req.body.hashtags);
+      hashtags.forEach((hashtag) => {
+        try {
+          pool.query(addTag, [generateUUID(), hashtag]);
+        } catch (err) {
+          console.log(err);
+        }
+      });
 
       // uploading all files given by the uer to the bucket one at a time
       for (const file in fileArray) {
