@@ -1,5 +1,4 @@
 import Footer from "../../components/common/Footer";
-import Navbar from "../../components/navbar/Navbar";
 import CatASCII from "./components/CatASCII";
 import CatSlogan from "./components/CatSlogan";
 import LoginContainer from "./components/LoginContainer";
@@ -11,7 +10,6 @@ const Home = () => {
   return (
     <div>
       <div className="h-screen flex">
-        <Navbar />
 
         <div className="flex flex-col mx-5 w-screen">
           <div className="flex flex-col flex-grow justify-center items-center">

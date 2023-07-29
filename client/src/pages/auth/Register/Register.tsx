@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { validate } from "email-validator";
 
 import EmailVerificationSent from "../../../components/toasts/EmailVerificationSent";
-import Navbar from "../../../components/navbar/Navbar";
 import LoginButton from "../../../components/common/LoginButton";
 import EmailInputBox from "./EmailInputBox";
 
@@ -101,7 +100,6 @@ const Register = () => {
 
   return (
     <div className="h-screen">
-      <Navbar />
       {userCreated ? <EmailVerificationSent /> : <></>}
       <div className="flex flex-col h-full justify-evenly">
         <img

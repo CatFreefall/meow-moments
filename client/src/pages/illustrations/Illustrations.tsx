@@ -1,9 +1,7 @@
-const IllustrationsComponents = () => {
-  return <div>Illustrations Authorized</div>;
-};
-
 const Illustrations = () => {
-  return <IllustrationsComponents />;
+  return <div className="mt-16">
+    
+  </div>;
 };
 
 export default Illustrations;

@@ -13,6 +13,10 @@ import Videos from "../pages/videos/Videos";
 
 import NoPage from "../pages/NoPage";
 import Hashtags from "../pages/hashtags/Hashtags";
+import Post from "../pages/post/Post";
+import TrendingIllustrations from "../pages/illustrations/TrendingIllustrations";
+import TrendingPhotos from "../pages/photos/TrendingPhotos";
+import TrendingVideos from "../pages/videos/TrendingVideos";
 
 const Router = () => {
   return (
@@ -27,10 +31,28 @@ const Router = () => {
         element={<ForgotPassword />}
       />
 
+      {/* TODO: add pages for when the user clicks to focus a post */}
       <Route path="/illustrations" element={<Illustrations />} />
+      <Route path="/illustrations/:id" element={<Illustrations />} />
+      <Route path="/illustrations/recent" element={<Illustrations />} />
+      <Route
+        path="/illustrations/trending"
+        element={<TrendingIllustrations />}
+      />
+
       <Route path="/photos" element={<Photos />} />
+      <Route path="/photos/:id" element={<Photos />} />
+      <Route path="/photos/recent" element={<Photos />} />
+      <Route path="/photos/trending" element={<TrendingPhotos />} />
+
       <Route path="/videos" element={<Videos />} />
+      <Route path="/videos/:id" element={<Videos />} />
+      <Route path="/videos/recent" element={<Videos />} />
+      <Route path="/videos/trending" element={<TrendingVideos />} />
+
       <Route path="/hashtags" element={<Hashtags />} />
+
+      <Route path="/post" element={<Post />} />
 
       <Route path="*" element={<NoPage />} />
     </Routes>

@@ -8,27 +8,20 @@ const IllustrationsButton = () => {
 
   const nav = useNavigate();
   return (
-    <div className="flex mobile-menu-element">
-      <button
-        onClick={() => {
-          nav("/illustrations");
-          collapseMenu();
-        }}
-        className="flex my-3 items-center"
-      >
+    <div
+      className="flex mobile-menu-element"
+      onClick={() => {
+        nav("/illustrations");
+        collapseMenu();
+      }}
+    >
+      <button className="flex my-3 items-center">
         <img
           src="/assets/icons/paintbrush-icon.webp"
           alt=""
           className="w-5 h-5 mx-3"
         ></img>
         Illustrations
-      </button>
-      <button className="w-5 ml-auto mr-6">
-        <img
-          src="/assets/icons/downwards-arrow-icon.webp"
-          alt=""
-          onClick={() => collapseMenu()}
-        ></img>
       </button>
     </div>
   );

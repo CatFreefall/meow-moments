@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { validate } from "email-validator";
 
-import Navbar from "../../../components/navbar/Navbar";
 import RegisterButton from "../../../components/common/RegisterButton";
 import ForgotPasswordButton from "./components/ForgotPasswordButton";
 import PasswordChangeEmailSent from "../../../components/toasts/PasswordChangeEmailSent";
@@ -59,7 +58,6 @@ const Login = () => {
 
   return (
     <div className="h-screen">
-      <Navbar />
       {userEvent ? <PasswordChangeEmailSent /> : null}
       <div className="flex flex-col h-full justify-evenly">
         <img
