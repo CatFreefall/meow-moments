@@ -1,8 +1,8 @@
 import { v4 } from "uuid";
 
-const generatePostID = (): string => {
+const generateUUID = (): string => {
   const newFileName = v4();
   return newFileName;
 };
 
-export default generatePostID;
+export default generateUUID;

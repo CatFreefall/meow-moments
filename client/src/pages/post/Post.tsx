@@ -6,6 +6,7 @@ const Post = () => {
   const fileInput = useRef<HTMLInputElement>(null);
   const postType = useRef<HTMLSelectElement>(null);
   const postDescription = useRef<HTMLTextAreaElement>(null);
+  const hashtags = useRef<HTMLInputElement>(null);
 
   const submitFile = () => {
     const files = fileInput.current?.files;
@@ -15,6 +16,7 @@ const Post = () => {
     const formData = new FormData();
     fileArray.map((file) => formData.append("files", file));
     formData.append("description", postDescription.current?.value as string);
+    formData.append("hashtags", hashtags.current?.value as string);
 
     try {
       fetch(`/post/${postType?.current?.value}s`, {
@@ -43,6 +45,12 @@ const Post = () => {
           placeholder="Post description (optional)"
           ref={postDescription}
         ></textarea>
+        <input
+          type="text"
+          placeholder="Hashtags (optional)"
+          ref={hashtags}
+          className="text-darkgrey"
+        />
         <button className="button w-fit" onClick={submitFile}>
           Post!
         </button>

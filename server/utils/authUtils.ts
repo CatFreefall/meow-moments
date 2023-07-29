@@ -2,7 +2,7 @@ import { createTransport } from "nodemailer";
 import { Secret, sign, verify } from "jsonwebtoken";
 
 import pool from "../db";
-import { getEntryByUsername } from "../queries/authQueries";
+import { getEntryByUsername } from "../queries/generalQueries";
 
 const refreshTokenSecret: Secret = process.env.REFRESH_TOKEN_SECRET as Secret;
 const accessTokenSecret: Secret = process.env.ACCESS_TOKEN_SECRET as Secret;

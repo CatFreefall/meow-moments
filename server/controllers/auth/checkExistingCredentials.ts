@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { getEntryByEmail, getEntryByUsername } from "../../queries/authQueries";
+import { getEntryByEmail, getEntryByUsername } from "../../queries/generalQueries";
 import pool from "../../db";
 
 const usernameExists = async (req: Request, res: Response): Promise<void> => {

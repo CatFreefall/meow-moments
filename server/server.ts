@@ -3,7 +3,7 @@ import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 
 import * as authRoutes from "./routes/authRoutes";
-import * as bucketRoutes from "./routes/bucketRoutes";
+import * as bucketRoutes from "./routes/contentRoutes";
 
 //TODO: generate a self signed certificate and use HTTPS
 const app = express();

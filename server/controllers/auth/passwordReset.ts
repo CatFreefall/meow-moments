@@ -4,11 +4,8 @@ import { Secret } from "jsonwebtoken";
 
 import pool from "../../db";
 
-import {
-  getEntryByUsername,
-  getEntryByEmail,
-  changeDBPassword,
-} from "../../queries/authQueries";
+import { changeDBPassword } from "../../queries/authQueries";
+import { getEntryByEmail, getEntryByUsername } from "../../queries/generalQueries";
 
 import { transporter, signJWT, validToken } from "../../utils/authUtils";
 

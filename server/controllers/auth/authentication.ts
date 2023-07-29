@@ -3,7 +3,7 @@ import { compare } from "bcrypt";
 
 import pool from "../../db";
 
-import { getEntryByUsername, getEntryByEmail } from "../../queries/authQueries";
+import { getEntryByUsername, getEntryByEmail } from "../../queries/generalQueries";
 
 import { getAccessToken, getRefreshToken } from "../../utils/authUtils";
 import { QueryResult } from "pg";

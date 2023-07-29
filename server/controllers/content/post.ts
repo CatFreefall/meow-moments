@@ -1,6 +1,9 @@
 import { meowMomentsBucket } from "../../utils/bucketUtils";
 import formatImage from "../../utils/formatImage";
-import generatePostID from "../../utils/generatePostID";
+import generateUUID from "../../utils/generateUUID";
+import pool from "../../db";
+import { postContent } from "../../queries/contentQueries";
+import { getEntryByUsername } from "../../queries/generalQueries";
 
 const post = async (req: any, res: any) => {
   try {
@@ -9,17 +12,28 @@ const post = async (req: any, res: any) => {
       const { user } = req.cookies;
 
       // generating a post ID for the user's post. this will be used create a folder
-      // containing all image/video files the user uploaded for the post. this will later
-      // also be saved in the db to manipulate the post.
-      const postID = generatePostID();
+      // containing all image/video files the user uploaded for the post. this will
+      // also be saved in the db to reference the post when needed.
+      const postID = generateUUID();
+
+      const userID = (await pool.query(getEntryByUsername, [user])).rows[0].id;
+      const postDescription = req.body.description;
+      const postType = req.params.postType;
+      await pool.query(postContent, [
+        postID,
+        userID,
+        postType,
+        `${user}/${postType}/post-${postID}/`,
+        postDescription,
+      ]);
 
       // uploading all files given by the uer to the bucket one at a time
       for (const file in fileArray) {
         // creating the path the file will be stored in in the bucket (with the file included)
 
-        const filePath = `${user}/${req.params.postType}/post-${postID}/${req.files[file].originalname}.webp`;
+        const filePath = `${user}/${postType}/post-${postID}/${req.files[file].originalname}.webp`;
 
-        // formatting the image to webp and changing aspect ratio 
+        // formatting the image to webp and changing aspect ratio
         // for consistency, slower file sizes, and faster loading on the client
         const webpBuffer = await formatImage(fileArray[file]);
 

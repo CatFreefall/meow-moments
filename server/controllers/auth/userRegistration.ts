@@ -5,12 +5,8 @@ import { Secret } from "jsonwebtoken";
 import pool from "../../db";
 import { meowMomentsBucket } from "../../utils/bucketUtils";
 
-import {
-  registerUser,
-  getEntryByUsername,
-  getEntryByEmail,
-  changeVerifyStatus,
-} from "../../queries/authQueries";
+import { registerUser, changeVerifyStatus } from "../../queries/authQueries";
+import { getEntryByEmail, getEntryByUsername } from "../../queries/generalQueries";
 
 import { signJWT, transporter, validToken } from "../../utils/authUtils";
 

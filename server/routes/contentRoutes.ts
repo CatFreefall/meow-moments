@@ -1,7 +1,7 @@
 import { Router } from "express";
 import Multer from "multer";
 
-import { post } from "../controllers/bucket/post";
+import { post } from "../controllers/content/post";
 
 const router = Router();
 
