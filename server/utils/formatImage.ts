@@ -6,7 +6,7 @@ const formatImage = async (input: Express.Multer.File) => {
     // maintaining aspect ratio to keep image file sizes not too
     // big while maintaining significant quality
     const { width, height } = await sharp(input.buffer).metadata();
-    const desiredWidth = 1000;
+    const desiredWidth = 800;
     const desiredHeight = Math.round(
       (desiredWidth / (width || 0)) * (height || 0)
     );
