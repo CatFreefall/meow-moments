@@ -4,12 +4,12 @@ import generateUUID from "../../utils/generateUUID";
 import pool from "../../db";
 import {
   postContent,
+  getTag,
   addTag,
   addPostHashtags,
 } from "../../queries/contentQueries";
 import { getEntryByUsername } from "../../queries/generalQueries";
 import formatHashtags from "../../utils/formatHashtags";
-import { format } from "path";
 
 const post = async (req: any, res: any) => {
   try {
@@ -33,13 +33,18 @@ const post = async (req: any, res: any) => {
         postDescription,
       ]);
 
-      // adding the posts hashtags to db.
+      // adding the posts hashtags to db. I check if the tag already exists
+      // before adding it to prevent a duplicate key error. then, I use the
+      // post and tag IDs to create a new entry in the post_tags table.
       const hashtags = formatHashtags(req.body.hashtags);
-      hashtags.forEach((hashtag) => {
-        try {
-          pool.query(addTag, [generateUUID(), hashtag]);
-        } catch (err) {
-          console.log(err);
+      hashtags.map(async (hashtag) => {
+        const tag = await pool.query(getTag, [hashtag]);
+        if (tag.rows.length === 0) {
+          const tagID = generateUUID();
+          await pool.query(addTag, [tagID, hashtag]);
+          await pool.query(addPostHashtags, [postID, tagID]);
+        } else {
+          await pool.query(addPostHashtags, [postID, tag.rows[0].tag_id]);
         }
       });
 

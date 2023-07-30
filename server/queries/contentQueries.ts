@@ -3,5 +3,6 @@ const postContent =
 
 const addTag = "INSERT INTO tags (tag_id, tag_name) VALUES ($1, $2)";
 const addPostHashtags = "INSERT INTO post_tags (post_id, tag_id) VALUES ($1, $2)";
+const getTag = "SELECT * FROM tags WHERE tag_name = $1";
 
-export { postContent, addTag, addPostHashtags };
+export { postContent, addTag, addPostHashtags, getTag };
