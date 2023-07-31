@@ -21,7 +21,6 @@ const post = async (req: any, res: any) => {
       // containing all image/video files the user uploaded for the post. this will
       // also be saved in the db to reference the post when needed.
       const postID = generateUUID();
-
       const userID = (await pool.query(getEntryByUsername, [user])).rows[0].id;
       const postDescription = req.body.description;
       const postType = req.params.postType;
@@ -78,4 +77,4 @@ const post = async (req: any, res: any) => {
   }
 };
 
-export { post };
+export default post;

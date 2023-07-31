@@ -2,6 +2,7 @@ import { useRef } from "react";
 
 import FileInput from "./components/FileInput";
 
+// TODO: do file format checking before sending to server
 const Post = () => {
   const fileInput = useRef<HTMLInputElement>(null);
   const postType = useRef<HTMLSelectElement>(null);
