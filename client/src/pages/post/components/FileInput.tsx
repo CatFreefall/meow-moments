@@ -13,8 +13,10 @@ const FileInput = ({ fileInput }: FileInputProps) => {
         ref={fileInput}
         multiple
         onChange={() =>
-          console.log(fileInput.current?.files?.[0].name) +
-          " change this later to display all files currently chosen on the page"
+          console.log(
+            fileInput.current?.files?.[0].name +
+              " change this later to display all files currently chosen on the page"
+          )
         }
       />
       <div>{}</div>

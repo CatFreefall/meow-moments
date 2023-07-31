@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import fetchContent from "../../util/fetchContent";
 import FormatPost from "./components/FormatPost";
+import LikePost from "./components/LikePost";
 
 const Illustrations = () => {
   const [loading, isLoading] = useState(true);
@@ -21,8 +22,9 @@ const Illustrations = () => {
     <div>
       {illustrationsArray.map((item, index) => {
         return (
-          <div className="mt-16">
-            {<FormatPost post={illustrationsArray[index]} key={item} />}
+          <div className="mt-16" key={index}>
+            {<FormatPost post={illustrationsArray[index]} />}
+            <LikePost post={illustrationsArray[index]} />
           </div>
         );
       })}
