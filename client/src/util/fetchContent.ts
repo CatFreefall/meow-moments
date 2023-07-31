@@ -5,7 +5,8 @@ type contentType = "illustrations" | "videos" | "photos";
 // photos.
 const fetchContent = async (
   contentType: contentType,
-  sortBy: sortBy = "recent"
+  sortBy: sortBy = "recent",
+  setContentArray: React.Dispatch<React.SetStateAction<never[]>>
 ) => {
   await fetch(`/getContent/${contentType}/${sortBy}`, {
     method: "GET",
@@ -15,8 +16,10 @@ const fetchContent = async (
   })
     .then((res) => res.json())
     .then(async (data) => {
-      console.log(data);
+      setContentArray(data)
+      return data;
     })
+    .then((data) => console.log(data))
     .catch((err) => console.log(err));
 };
 
