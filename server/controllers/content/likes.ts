@@ -42,9 +42,8 @@ const toggleLiked = async (req: Request, res: Response) => {
     else {
       const like_id = generateUUID();
       await pool.query(addPostLike, [like_id, postId, userId]);
-
-      res.status(200).json(!isLiked);
     }
+    res.sendStatus(204);
   } catch (err) {
     res.status(500).json(`Server Error: ${err}`);
   }

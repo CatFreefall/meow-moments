@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 
-const LikePost = ({ post }: any) => {
+import { postProps } from "../../util/mediaArrayType";
+
+const LikePost = ({ post }: postProps) => {
   const [liked, setLiked] = useState<boolean>(false);
 
   const toggleLiked = () => {

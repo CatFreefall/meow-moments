@@ -1,24 +1,20 @@
 import { useEffect, useState } from "react";
 
 import fetchContent from "../../util/fetchContent";
-import FormatPost from "./components/FormatPost";
-import LikePost from "./components/likes/LikePost";
+import FormatPost from "../../components/post/FormatPost";
+import LikePost from "../../components/post/LikePost";
+import { mediaArrayType } from "../../util/mediaArrayType";
 
 const Illustrations = () => {
-  const [loading, isLoading] = useState(true);
-  const [illustrationsArray, setIllustrationsArray] = useState([]);
-
-  const setLoaded = () => {
-    isLoading(false);
-  };
+  const [illustrationsArray, setIllustrationsArray] = useState<
+    mediaArrayType[]
+  >([]);
 
   useEffect(() => {
-    fetchContent("illustrations", "recent", setIllustrationsArray).then(() =>
-      setLoaded()
-    );
+    fetchContent("illustrations", "recent", setIllustrationsArray);
   }, []);
 
-  return loading === true ? null : (
+  return (
     <div>
       {illustrationsArray.map((item, index) => {
         return (

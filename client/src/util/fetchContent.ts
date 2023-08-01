@@ -1,12 +1,14 @@
-type sortBy = "recent" | "popular";
+import { mediaArrayType } from "./mediaArrayType";
+
+type sortByType = "recent" | "popular";
 type contentType = "illustrations" | "videos" | "photos";
 
 // This function is used to fetch any type of content like illustrations, videos
 // photos.
 const fetchContent = async (
   contentType: contentType,
-  sortBy: sortBy = "recent",
-  setContentArray: React.Dispatch<React.SetStateAction<never[]>>
+  sortBy: sortByType,
+  setContentArray: React.Dispatch<React.SetStateAction<mediaArrayType[]>>
 ) => {
   await fetch(`/getContent/${contentType}/${sortBy}`, {
     method: "GET",
@@ -16,10 +18,8 @@ const fetchContent = async (
   })
     .then((res) => res.json())
     .then(async (data) => {
-      setContentArray(data)
-      return data;
+      setContentArray(data);
     })
-    .then((data) => console.log(data))
     .catch((err) => console.log(err));
 };
 
