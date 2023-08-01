@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import Footer from "../../components/common/Footer";
 import CatASCII from "./components/CatASCII";
 import CatSlogan from "./components/CatSlogan";
@@ -7,10 +9,15 @@ import TrendingIconsContainer from "./components/TrendingIconsContainer";
 import Welcome from "./components/Welcome";
 
 const Home = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const setLoaded = () => {
+    setIsLoading(false);
+  };
+
   return (
     <div>
       <div className="h-screen flex">
-
         <div className="flex flex-col mx-5 w-screen">
           <div className="flex flex-col flex-grow justify-center items-center">
             <Welcome />
@@ -18,8 +25,14 @@ const Home = () => {
             <CatSlogan />
           </div>
           <img
-            src="assets/images/peeking-cat-waving.svg"
+            src={
+              isLoading
+                ? "assets/images/peeking-cat-waving-lazy.webp"
+                : "assets/images/peeking-cat-waving.svg"
+            }
             alt=""
+            loading="lazy"
+            onLoad={() => setLoaded()}
             className="w-56 mt-auto mb-2 self-center"
           />
         </div>
