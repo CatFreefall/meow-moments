@@ -8,6 +8,7 @@ import {
   addPostLike,
 } from "../../queries/contentQueries";
 import { getEntryByUsername } from "../../queries/generalQueries";
+import { getPostLikes } from "../../queries/contentQueries";
 
 const getLikedState = async (req: Request, res: Response) => {
   try {
@@ -49,4 +50,11 @@ const toggleLiked = async (req: Request, res: Response) => {
   }
 };
 
-export { toggleLiked, getLikedState };
+const getTotalLikes = async (req: Request, res: Response) => {
+  const postID = req.params.postId;
+  const totalPostLikes = ((await (pool.query(getPostLikes, [postID]))).rows.length);
+
+  res.status(200).json(totalPostLikes);
+}
+
+export { toggleLiked, getLikedState, getTotalLikes };

@@ -33,7 +33,6 @@ const FormatPost = ({ post }: postProps) => {
         })}
       </div>
       <div>{post.description}</div>
-      <div>Total Likes: {post.totalPostLikes}</div>
     </section>
   );
 };
