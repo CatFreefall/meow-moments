@@ -4,6 +4,7 @@ type mediaArrayType = {
   description: string,
   mediaFileURLs: string[],
   post_id: string,
+  totalPostLikes: number,
 }
 
 type postProps = {

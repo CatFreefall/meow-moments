@@ -3,7 +3,7 @@ import generateUUID from "../../utils/generateUUID";
 
 import pool from "../../db";
 import {
-  getPostLikes,
+  postLikedByUser,
   deletePostLike,
   addPostLike,
 } from "../../queries/contentQueries";
@@ -17,7 +17,7 @@ const getLikedState = async (req: Request, res: Response) => {
     // getting the user_id then checking if they have liked the post or not.
     const userId = (await pool.query(getEntryByUsername, [user])).rows[0].id;
     const isLiked =
-      (await pool.query(getPostLikes, [postId, userId])).rows.length === 0
+      (await pool.query(postLikedByUser, [postId, userId])).rows.length === 0
         ? false
         : true;
 
@@ -35,7 +35,7 @@ const toggleLiked = async (req: Request, res: Response) => {
     // getting user_id and checking if user has already liked the post
     const userId = (await pool.query(getEntryByUsername, [user])).rows[0].id;
     const isLiked =
-      (await pool.query(getPostLikes, [postId, userId])).rows.length > 0;
+      (await pool.query(postLikedByUser, [postId, userId])).rows.length > 0;
 
     // toggling the like based on if the user has already liked the post
     if (isLiked) await pool.query(deletePostLike, [postId, userId]);

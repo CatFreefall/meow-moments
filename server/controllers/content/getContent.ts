@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 
 import pool from "../../db";
-import { getPostsByRecent } from "../../queries/contentQueries";
+import { getPostsByRecent, getPostLikes } from "../../queries/contentQueries";
 import { getEntryByID } from "../../queries/generalQueries";
 import { meowMomentsBucket } from "../../utils/bucketUtils";
-import { exit } from "process";
 
 const getContent = async (req: Request, res: Response) => {
   try {
@@ -43,9 +42,10 @@ const getContent = async (req: Request, res: Response) => {
       );
       const description = post.description;
       const post_id = post.post_id;
+      const totalPostLikes = ((await (pool.query(getPostLikes, [post_id]))).rows.length);
 
-      return { username, date_posted, mediaFileURLs, description, post_id };
-    });
+      return { username, date_posted, mediaFileURLs, description, post_id, totalPostLikes };
+    });``
     const formattedContent = await Promise.all(formattedContentPromises);
 
     res.json(formattedContent);
