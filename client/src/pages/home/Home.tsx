@@ -16,7 +16,7 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <section>
       <div className="h-screen flex">
         <div className="flex flex-col mx-5 w-screen">
           <div className="flex flex-col flex-grow justify-center items-center">
@@ -53,7 +53,7 @@ const Home = () => {
         ></img>
       </div>
       <Footer />
-    </div>
+    </section>
   );
 };
 

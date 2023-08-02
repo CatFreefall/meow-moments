@@ -1,5 +1,5 @@
 const MenuSectionDivider = () => {
-  return <div className="bg-white w-1/2 rounded-lg h-1"></div>;
+  return <section className="bg-darkishgrey w-full rounded-sm h-0.5"></section>;
 };
 
 export default MenuSectionDivider;

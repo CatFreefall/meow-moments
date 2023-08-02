@@ -13,7 +13,7 @@ const Photos = () => {
   }, []);
 
   return (
-    <div>
+    <section>
       {photosArray.map((item, index) => {
         return (
           <div className="mt-16" key={index}>
@@ -22,7 +22,7 @@ const Photos = () => {
           </div>
         );
       })}
-    </div>
+    </section>
   );
 };
 

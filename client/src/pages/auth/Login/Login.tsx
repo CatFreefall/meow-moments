@@ -57,9 +57,9 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen">
+    <section className="h-screen">
       {userEvent ? <PasswordChangeEmailSent /> : null}
-      <div className="flex flex-col h-full justify-evenly">
+      <section className="flex flex-col h-full justify-evenly">
         <img
           src="/assets/images/cat-16.webp"
           alt=""
@@ -99,8 +99,8 @@ const Login = () => {
             <RegisterButton />
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </section>
   );
 };
 

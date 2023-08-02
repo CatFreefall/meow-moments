@@ -3,28 +3,28 @@ import { useContext } from "react";
 
 import { MenuStateContext } from "../Menu";
 
-const PhotosButton = () => {
+const VideosButton = () => {
   const collapseMenu = useContext(MenuStateContext);
 
   const nav = useNavigate();
   return (
-    <div
+    <section
       className="flex items-center mobile-menu-element"
       onClick={() => {
-        nav("/photos");
+        nav("/videos");
         collapseMenu();
       }}
     >
       <button className="flex my-3 items-center">
         <img
-          src="/assets/icons/photo-icon.webp"
+          src="/assets/icons/video-icon.webp"
           alt=""
           className="w-5 h-5 mx-3 "
         ></img>
-        Photos
+        Videos
       </button>
-    </div>
+    </section>
   );
 };
 
-export default PhotosButton;
+export default VideosButton;

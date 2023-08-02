@@ -1,6 +1,6 @@
 const TrendingPhotos = () => {
   return (
-    <div>TrendingPhotos</div>
+    <section>TrendingPhotos</section>
   )
 }
 

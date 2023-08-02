@@ -31,7 +31,7 @@ const SubmitFile = () => {
   };
 
   return (
-    <div className="flex flex-col mt-16 items-center justify-items-center">
+    <section className="flex flex-col mt-16 items-center justify-items-center">
       <FileInput fileInput={fileInput} />
       <select className="text-black" ref={postType}>
         <option value="illustration">Illustration</option>
@@ -41,7 +41,7 @@ const SubmitFile = () => {
       <button className="button w-fit" onClick={submitFile}>
         Post Illustration
       </button>
-    </div>
+    </section>
   );
 };
 

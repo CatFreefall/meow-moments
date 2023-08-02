@@ -49,14 +49,14 @@ const Confirm = () => {
     return null;
   } else {
     return (
-      <div>
+      <section>
         {isVerified ? (
           <UserVerified />
         ) : (
           <div>User not verified. Please request a new verification link</div>
         )}
         <LoginButton />
-      </div>
+      </section>
     );
   }
 };

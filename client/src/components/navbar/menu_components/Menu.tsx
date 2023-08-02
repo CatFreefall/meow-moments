@@ -17,7 +17,7 @@ const Menu = () => {
 
   return (
     <MenuStateContext.Provider value={collapseMenu}>
-      <div>
+      <section>
         <MenuButton menuActive={setShowMenu} />
         {showMenu ? (
           <div
@@ -27,7 +27,7 @@ const Menu = () => {
             onClick={() => collapseMenu()}
           ></div>
         ) : (
-          <div></div>
+          ""
         )}
 
         <div
@@ -42,7 +42,7 @@ const Menu = () => {
           </div>
           <MenuContents />
         </div>
-      </div>
+      </section>
     </MenuStateContext.Provider>
   );
 };

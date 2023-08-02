@@ -4,7 +4,7 @@ type FileInputProps = {
 
 const FileInput = ({ fileInput }: FileInputProps) => {
   return (
-    <div>
+    <section>
       <input
         type="file"
         accept="image/*, video/*"
@@ -19,11 +19,10 @@ const FileInput = ({ fileInput }: FileInputProps) => {
           )
         }
       />
-      <div>{}</div>
-      <label htmlFor="input-box" className="button">
-        Choose File
+      <label htmlFor="input-box" className="button w-fit">
+        Choose File (Max: 10)
       </label>
-    </div>
+    </section>
   );
 };
 

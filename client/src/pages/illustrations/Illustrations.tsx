@@ -15,7 +15,7 @@ const Illustrations = () => {
   }, []);
 
   return (
-    <div>
+    <section>
       {illustrationsArray.map((item, index) => {
         return (
           <div className="mt-16" key={index}>
@@ -24,7 +24,7 @@ const Illustrations = () => {
           </div>
         );
       })}
-    </div>
+    </section>
   );
 };
 

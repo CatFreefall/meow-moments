@@ -1,6 +1,6 @@
 const PasswordChanged = () => {
   return (
-    <div className={`w-screen bg-orange flex p-3 text-2xl`} id="toast">
+    <section className={`w-screen bg-orange flex p-3 text-2xl`} id="toast">
       <div className="text-6xl self-center ml-2 mr-6">ⓘ</div>
       Password changed successfully! You may now log in with your new password.
       <button
@@ -9,7 +9,7 @@ const PasswordChanged = () => {
       >
         X
       </button>
-    </div>
+    </section>
   );
 };
 

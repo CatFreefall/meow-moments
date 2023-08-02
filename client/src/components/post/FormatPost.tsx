@@ -14,7 +14,7 @@ const FormatPost = ({ post }: postProps) => {
   const datePosted = new Date(post.date_posted).toUTCString();
 
   return (
-    <div>
+    <section>
       <div>{post.username}</div>
       <div>{datePosted}</div>
       <div>
@@ -33,7 +33,7 @@ const FormatPost = ({ post }: postProps) => {
         })}
       </div>
       <div>{post.description}</div>
-    </div>
+    </section>
   );
 };
 

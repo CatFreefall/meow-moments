@@ -1,6 +1,6 @@
 const TrendingIllustrations = () => {
   return (
-    <div>TrendingIllustrations</div>
+    <section>TrendingIllustrations</section>
   )
 }
 

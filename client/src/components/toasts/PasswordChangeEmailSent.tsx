@@ -1,6 +1,6 @@
 const PasswordChangeEmailSent = () => {
   return (
-    <div className={`w-screen bg-green flex p-2 text-xs mt-15`} id="toast">
+    <section className={`w-screen bg-green flex p-2 text-xs mt-15`} id="toast">
       <div className="text-4xl self-center mr-3">ⓘ</div>
       If a user with that username/email address exists, an password reset email will be sent to them!
       <button
@@ -9,7 +9,7 @@ const PasswordChangeEmailSent = () => {
       >
         X
       </button>
-    </div>
+    </section>
   );
 };
 

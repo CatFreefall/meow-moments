@@ -33,7 +33,7 @@ const Post = () => {
   };
 
   return (
-    <div className="h-screen">
+    <section className="h-screen">
       <div className="mx-5 flex flex-col h-full items-center justify-evenly">
         <FileInput fileInput={fileInput} />
         <select className="text-darkgrey" ref={postType}>
@@ -56,7 +56,7 @@ const Post = () => {
           Post!
         </button>
       </div>
-    </div>
+    </section>
   );
 };
 

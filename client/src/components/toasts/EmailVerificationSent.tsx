@@ -1,6 +1,6 @@
 const EmailVerificationSent = () => {
   return (
-    <div className={`w-screen bg-green flex p-2 text-sm mt-14`} id="toast">
+    <section className={`w-screen bg-green flex p-2 text-sm mt-14`} id="toast">
       <div className="text-4xl self-center mr-3">ⓘ</div>
       Email Verification sent! Please check your email and verify your account.
       <button
@@ -9,7 +9,7 @@ const EmailVerificationSent = () => {
       >
         X
       </button>
-    </div>
+    </section>
   );
 };
 

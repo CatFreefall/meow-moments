@@ -8,11 +8,16 @@ module.exports = {
         body: ["Quicksand", "sans-serif"],
       },
       height: {
+        "0.5": "0.125rem",
         "7/8": "87.5%",
         "9/10": "90%",
       },
+      right: {
+        "1/10": "10%",
+      },
       colors: {
         darkgrey: "#2B303A",
+        darkishgrey: "#383D46",
         lightgrey: "#40454E",
         verylightgrey: "#919191",
         white: "#F1F4E9",
