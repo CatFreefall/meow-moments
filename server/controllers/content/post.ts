@@ -7,6 +7,7 @@ import {
   getTag,
   addTag,
   addPostHashtags,
+  updateLastPosted,
 } from "../../queries/contentQueries";
 import { getEntryByUsername } from "../../queries/generalQueries";
 import formatHashtags from "../../utils/formatHashtags";
@@ -68,6 +69,10 @@ const post = async (req: any, res: any) => {
           })
           .end(webpBuffer);
       }
+
+      // updating the user's last_posted date in the database
+      await pool.query(updateLastPosted, [new Date(), userID]);
+
       res.status(200).json("file uploading complete");
     } else {
       res.status(400).json("file not provided");

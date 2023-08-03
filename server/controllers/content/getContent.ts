@@ -31,6 +31,7 @@ const getContent = async (req: Request, res: Response) => {
       const mediaFiles = await meowMomentsBucket.getFiles({
         prefix: post.post_folder_path,
       });
+      
       const mediaFileURLs = await Promise.all(
         mediaFiles[0].map(async (file) => {
           const signedURL = await file.getSignedUrl({

@@ -6,7 +6,10 @@ import pool from "../../db";
 import { meowMomentsBucket } from "../../utils/bucketUtils";
 
 import { registerUser, changeVerifyStatus } from "../../queries/authQueries";
-import { getEntryByEmail, getEntryByUsername } from "../../queries/generalQueries";
+import {
+  getEntryByEmail,
+  getEntryByUsername,
+} from "../../queries/generalQueries";
 
 import { signJWT, transporter, validToken } from "../../utils/authUtils";
 
@@ -65,12 +68,12 @@ const addUser = async (req: Request, res: Response): Promise<any> => {
         );
       sendConfirmationEmail(username, email);
 
-      // creating empty directories in the bucket for the user upon registration
-      const directories = ["illustrations", "videos", "photos"];
-      for (const directory of directories) {
-        const directoryPath = `${username}/${directory}/`;
-        await meowMomentsBucket.file(directoryPath).save("");
-      }
+      // creating a default profile picture for newly registered user
+      const photo = "profile-picture.webp";
+      const directoryPath = `${username}/profile/profile-picture.webp`;
+      await meowMomentsBucket.upload(photo, {
+        destination: directoryPath,
+      });
     }
   } catch (err) {
     res.status(500).json("User registration error");
