@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
-
 import { useParams } from "react-router-dom";
+
+import UserPosts from "./UserPosts";
+import MenuSectionDivider from "../../components/navbar/menu_components/MenuSectionDivider";
+import { mediaArrayType } from "../../util/mediaArrayType";
 
 type userDetailsType = {
   account_creation_date: Date;
@@ -15,6 +18,7 @@ const UserProfile = () => {
   const [userDetails, setUserDetails] = useState<userDetailsType>(
     {} as userDetailsType
   );
+  const [userPosts, setUserPosts] = useState<mediaArrayType[]>([]);
 
   useEffect(() => {
     try {
@@ -33,7 +37,7 @@ const UserProfile = () => {
       <img
         src={`${userDetails.profile_picture}`}
         alt=""
-        className="rounded-full hover:opacity-70 hover:cursor-pointer"
+        className="rounded-full hover:opacity-90 hover:cursor-pointer"
       />
       {username}
       <br />
@@ -45,7 +49,8 @@ const UserProfile = () => {
       <br />
       {`Biography: ${userDetails.biography}`}
       <br />
-      Posts: 
+      Posts:
+      <UserPosts username={username as String} setUserPosts={setUserPosts} />
     </section>
   );
 };

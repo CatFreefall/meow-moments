@@ -3,8 +3,12 @@ import Multer from "multer";
 
 import post from "../controllers/content/post";
 import getContent from "../controllers/content/getContent";
-import { toggleLiked, getLikedState, getTotalLikes } from "../controllers/content/likes";
-import getProfile from "../controllers/content/getProfile";
+import {
+  toggleLiked,
+  getLikedState,
+  getTotalLikes,
+} from "../controllers/content/likes";
+import { getProfile, getUserPosts } from "../controllers/content/profile";
 
 const router = Router();
 
@@ -21,5 +25,6 @@ router.get("/get-liked-state/:postId", getLikedState);
 router.get("/get-total-likes/:postId", getTotalLikes);
 
 router.get("/profile/:username", getProfile);
+router.get("/user-posts/:username", getUserPosts);
 
 export default router;

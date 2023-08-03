@@ -12,9 +12,6 @@ const fetchContent = async (
 ) => {
   await fetch(`/getContent/${contentType}/${sortBy}`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
   })
     .then((res) => res.json())
     .then(async (data) => {

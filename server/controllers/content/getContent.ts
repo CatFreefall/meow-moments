@@ -45,7 +45,7 @@ const getContent = async (req: Request, res: Response) => {
       const post_id = post.post_id;
 
       return { username, date_posted, mediaFileURLs, description, post_id };
-    });``
+    });
     const formattedContent = await Promise.all(formattedContentPromises);
 
     res.json(formattedContent);

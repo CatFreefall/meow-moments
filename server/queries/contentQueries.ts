@@ -9,6 +9,7 @@ const addPostHashtags =
 
 const getPostsByRecent =
   "SELECT * FROM posts WHERE post_type = $1 ORDER BY date_posted DESC";
+const getPostsByUserID = "SELECT * FROM posts WHERE user_id = $1 ORDER BY date_posted DESC";
 
 const postLikedByUser =
   "SELECT * FROM post_likes WHERE post_id = $1 AND user_id = $2";
@@ -24,6 +25,7 @@ export {
   addPostHashtags,
   getTag,
   getPostsByRecent,
+  getPostsByUserID,
   postLikedByUser,
   deletePostLike,
   addPostLike,

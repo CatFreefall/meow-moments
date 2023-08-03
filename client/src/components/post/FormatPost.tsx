@@ -5,12 +5,6 @@ import { postProps } from "../../util/mediaArrayType";
 // folder and replaced with the post image once loaded for lazy loading
 // and a better user experience.
 const FormatPost = ({ post }: postProps) => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  const setLoaded = () => {
-    setIsLoading(false);
-  };
-
   const datePosted = new Date(post.date_posted).toUTCString();
 
   return (
@@ -22,10 +16,9 @@ const FormatPost = ({ post }: postProps) => {
           return (
             <div key={index}>
               <img
-                src={isLoading ? "assets/images/cat-tap.webp" : url}
+                src={url}
                 alt="illustration"
                 loading="lazy"
-                onLoad={() => setLoaded()}
                 className="w-screen"
               />
             </div>
