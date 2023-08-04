@@ -8,7 +8,8 @@ import {
   getLikedState,
   getTotalLikes,
 } from "../controllers/content/likes";
-import { getProfile, getUserPosts } from "../controllers/content/profile";
+import { getProfile, getUserPosts } from "../controllers/content/getProfileInfo";
+import { changeProfilePicture } from "../controllers/content/changeProfileInfo";
 
 const router = Router();
 
@@ -26,5 +27,6 @@ router.get("/get-total-likes/:postId", getTotalLikes);
 
 router.get("/profile/:username", getProfile);
 router.get("/user-posts/:username", getUserPosts);
+router.post("/change-profile-picture", multer.single("new-profile-picture"), changeProfilePicture)
 
 export default router;

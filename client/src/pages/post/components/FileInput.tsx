@@ -9,7 +9,7 @@ const FileInput = ({ fileInput }: FileInputProps) => {
         type="file"
         accept="image/*, video/*"
         className="hidden"
-        id="input-box"
+        id="file-input-button"
         ref={fileInput}
         multiple
         onChange={() =>
@@ -19,7 +19,7 @@ const FileInput = ({ fileInput }: FileInputProps) => {
           )
         }
       />
-      <label htmlFor="input-box" className="button w-fit">
+      <label htmlFor="file-input-button" className="button w-fit hover:cursor-pointer">
         Choose File (Max: 10)
       </label>
     </section>

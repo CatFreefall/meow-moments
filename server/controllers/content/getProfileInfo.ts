@@ -69,7 +69,7 @@ const getUserPosts = async (req: Request, res: Response) => {
 
     res.json(formattedPosts);
   } catch (err) {
-    res.status(500).send({ message: "No posts." });
+    res.status(500).send([{ post_id: null }]);
   }
 };
 
