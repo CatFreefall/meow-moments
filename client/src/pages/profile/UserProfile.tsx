@@ -1,23 +1,18 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import UserPosts from "./UserPosts";
 import MenuSectionDivider from "../../components/navbar/menu_components/MenuSectionDivider";
 import ProfilePicture from "./components/ProfilePicture";
+import userDetailsType from "./userDetailsType";
 
-type userDetailsType = {
-  account_creation_date: Date;
-  last_posted_date: Date;
-  biography: String;
-  account_status: Boolean;
-  profile_picture: String;
-};
-
+// TODO: MEMOIZE THIS
 const UserProfile = () => {
   const { username } = useParams();
   const [userDetails, setUserDetails] = useState<userDetailsType>(
     {} as userDetailsType
   );
+  const nav = useNavigate();
 
   useEffect(() => {
     try {
@@ -48,6 +43,12 @@ const UserProfile = () => {
       <br />
       {`Biography: ${userDetails.biography}`}
       <br />
+      <button
+        className="button w-fit"
+        onClick={() => nav(`/profile/${username}/change-profile`)}
+      >
+        Change Profile
+      </button>
       <MenuSectionDivider />
       Posts:
       <UserPosts username={username as String} />

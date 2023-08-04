@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 type ProfilePictureProps = {
   profileURL: string;
@@ -10,6 +11,7 @@ type ProfilePictureProps = {
 
 const ProfilePicture = ({ profileURL, username }: ProfilePictureProps) => {
   const newProfilePicture = useRef<HTMLInputElement>(null);
+  const nav = useNavigate();
 
   const changeProfilePicture = () => {
     const formData = new FormData();
@@ -22,12 +24,12 @@ const ProfilePicture = ({ profileURL, username }: ProfilePictureProps) => {
       method: "POST",
       credentials: "include",
       body: formData,
-    }).then(() => window.location.reload());
+    }).then(() => nav(`/profile/${username}`));
   };
 
   return (
     <section className="w-screen flex flex-col items-center">
-      <img src={`${profileURL}`} alt="" className="rounded-full w-60 h-auto" />
+      <img src={`${profileURL}`} alt="" className="rounded-full w-60 h-60" />
       <input
         type="file"
         accept="image/*, video/*"

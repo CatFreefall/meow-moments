@@ -17,6 +17,7 @@ import TrendingVideos from "../pages/videos/TrendingVideos";
 import Hashtags from "../pages/hashtags/Hashtags";
 import Post from "../pages/post/Post";
 import UserProfile from "../pages/profile/UserProfile";
+import ChangeProfilePage from "../pages/profile/components/ChangeProfilePage";
 
 import NoPage from "../pages/NoPage";
 
@@ -57,6 +58,7 @@ const Router = () => {
       <Route path="/post" element={<Post />} />
 
       <Route path="/profile/:username" element={<UserProfile />} />
+      <Route path="/profile/:username/change-profile" element={<ChangeProfilePage />} />
 
       <Route path="*" element={<NoPage />} />
     </Routes>

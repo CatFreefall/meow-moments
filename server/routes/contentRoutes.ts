@@ -27,6 +27,6 @@ router.get("/get-total-likes/:postId", getTotalLikes);
 
 router.get("/profile/:username", getProfile);
 router.get("/user-posts/:username", getUserPosts);
-router.post("/change-profile-picture", multer.single("new-profile-picture"), changeProfilePicture)
+router.post("/change-profile", multer.single("new-profile-picture"), changeProfilePicture)
 
 export default router;
