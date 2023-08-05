@@ -8,6 +8,8 @@ import {
   addTag,
   addPostHashtags,
   updateLastPosted,
+  getPost,
+  removePost,
 } from "../../queries/contentQueries";
 import { getEntryByUsername } from "../../queries/generalQueries";
 import formatHashtags from "../../utils/formatHashtags";
@@ -82,4 +84,19 @@ const post = async (req: any, res: any) => {
   }
 };
 
-export default post;
+const deletePost = async (req: any, res: any) => {
+  const { postId } = req.params;
+  const { user } = req.cookies;
+
+  const postType = (await pool.query(getPost, [postId])).rows[0].post_type;
+  await pool.query(removePost, [postId]);
+
+  const filePath = `${user}/${postType}/post-${postId}/`;
+  meowMomentsBucket.deleteFiles({
+    prefix: filePath,
+  });
+
+  res.send("success");
+};
+
+export { post, deletePost };

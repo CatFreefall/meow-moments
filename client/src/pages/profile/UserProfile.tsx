@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-import UserPosts from "./UserPosts";
+import UserPosts from "./components/UserPosts";
 import MenuSectionDivider from "../../components/navbar/menu_components/MenuSectionDivider";
 import ProfilePicture from "./components/ProfilePicture";
 import userDetailsType from "./userDetailsType";

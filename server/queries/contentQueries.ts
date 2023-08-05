@@ -18,6 +18,8 @@ const deletePostLike =
 const addPostLike =
   "INSERT INTO post_likes (like_id, post_id, user_id) VALUES ($1, $2, $3)";
 const getPostLikes = "SELECT * FROM post_likes WHERE post_id = $1";
+const getPost = "SELECT * FROM posts WHERE post_id = $1";
+const removePost = "DELETE FROM posts WHERE post_id = $1";
 
 export {
   postContent,
@@ -31,4 +33,6 @@ export {
   addPostLike,
   getPostLikes,
   updateLastPosted,
+  getPost,
+  removePost,
 };

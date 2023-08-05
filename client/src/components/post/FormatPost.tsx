@@ -1,4 +1,4 @@
-import { Key, useState } from "react";
+import { Key } from "react";
 import { postProps } from "../../util/mediaArrayType";
 
 // post areas are initially rendered with an image located in the public

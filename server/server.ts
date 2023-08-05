@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 
 import * as authRoutes from "./routes/authRoutes";
 import * as bucketRoutes from "./routes/contentRoutes";
+import * as otherRoutes from "./routes/otherRoutes";
 
 //TODO: generate a self signed certificate and use HTTPS
 const app = express();
@@ -29,6 +30,7 @@ app.use(cookieParser());
 
 app.use("/", authRoutes.default);
 app.use("/", bucketRoutes.default);
+app.use("/", otherRoutes.default);
 
 app.listen(port, () => {
   console.log(`Server running on port http://www.localhost:${port}`);

@@ -11,9 +11,6 @@ const LikePost = ({ post }: postProps) => {
     fetch(`/toggle-liked-post/${postId}`, {
       method: "PUT",
       credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
     }).then(() => setLiked(!liked));
   };
 
