@@ -20,7 +20,7 @@ const Register = () => {
   const currentDate: String =
     date.getMonth() + 1 + "-" + date.getDate() + "-" + date.getFullYear();
 
-  //TODO: check existence of username and email with useStates
+  //TODO: check existence of username and email and use a useReducer hook here
   const register = async () => {
     // validating the email using the email-validator lib before querying the database.
     try {

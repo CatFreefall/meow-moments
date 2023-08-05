@@ -62,14 +62,7 @@ const post = async (req: any, res: any) => {
 
         const blob = meowMomentsBucket.file(filePath);
         const blobStream = blob.createWriteStream();
-        blobStream
-          .on("finish", () => {
-            console.log("file uploaded successfully");
-          })
-          .on("error", (error) => {
-            console.log(error);
-          })
-          .end(webpBuffer);
+        blobStream.end(webpBuffer);
       }
 
       // updating the user's last_posted date in the database

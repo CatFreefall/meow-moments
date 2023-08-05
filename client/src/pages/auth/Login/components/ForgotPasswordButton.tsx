@@ -1,11 +1,11 @@
 import { validate } from "email-validator";
 
-type ForgotPasswordButtonProps = {
+type ResetPasswordButtonProps = {
   emailUsername: string;
+  text: string;
 };
 
-const ForgotPasswordButton = ({ emailUsername }: ForgotPasswordButtonProps) => {
-
+const ResetPasswordButton = ({ emailUsername, text }: ResetPasswordButtonProps) => {
   // differentiating between the user entering in with their email or
   // username before sending the request to the server.
   const sendPasswordResetEmail = async (emailUsername: string) => {
@@ -33,9 +33,9 @@ const ForgotPasswordButton = ({ emailUsername }: ForgotPasswordButtonProps) => {
       onClick={() => sendPasswordResetEmail(emailUsername)}
       className="self-center text-xs"
     >
-      Forgot Password?
+      {text}
     </button>
   );
 };
 
-export default ForgotPasswordButton;
+export default ResetPasswordButton;

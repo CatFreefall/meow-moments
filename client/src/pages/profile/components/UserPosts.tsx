@@ -22,9 +22,7 @@ const UserPosts = ({ username }: userPostsProps) => {
     })
       .then((res) => res.json())
       .then((data) =>
-        data[0]?.post_id === null
-          ? nav(`/profile/${username}/user-not-found`)
-          : (userPosts.current = data)
+        data[0]?.post_id === null ? null : (userPosts.current = data)
       );
   }, [username, nav]);
 

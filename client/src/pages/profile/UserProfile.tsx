@@ -30,7 +30,6 @@ const UserProfile = () => {
     <section className="mt-16">
       <ProfilePicture
         profileURL={userDetails.profile_picture as string}
-        username={username as string}
       />
       <MenuSectionDivider />
       {username}

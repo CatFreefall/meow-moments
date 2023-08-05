@@ -5,7 +5,7 @@ import Home from "../pages/home/Home";
 import Login from "../pages/auth/Login/Login";
 import Register from "../pages/auth/register/Register";
 import Confirm from "../pages/auth/Confirm";
-import ForgotPassword from "../pages/auth/ForgotPassword";
+import ResetPassword from "../pages/auth/ResetPasssword";
 
 import Illustrations from "../pages/illustrations/Illustrations";
 import Photos from "../pages/photos/Photos";
@@ -20,6 +20,7 @@ import UserProfile from "../pages/profile/UserProfile";
 import ChangeProfilePage from "../pages/profile/components/ChangeProfilePage";
 
 import NoPage from "../pages/NoPage";
+import Settings from "../pages/Settings/Settings";
 
 const Router = () => {
   return (
@@ -31,7 +32,7 @@ const Router = () => {
       <Route path="/confirm/:username/:token" element={<Confirm />} />
       <Route
         path="/password-reset-req/:user/:token"
-        element={<ForgotPassword />}
+        element={<ResetPassword />}
       />
 
       {/* TODO: add pages for when the user clicks to focus a post */}
@@ -58,7 +59,12 @@ const Router = () => {
       <Route path="/post" element={<Post />} />
 
       <Route path="/profile/:username" element={<UserProfile />} />
-      <Route path="/profile/:username/change-profile" element={<ChangeProfilePage />} />
+      <Route
+        path="/profile/:username/change-profile"
+        element={<ChangeProfilePage />}
+      />
+
+      <Route path="settings" element={<Settings />} />
 
       <Route path="*" element={<NoPage />} />
     </Routes>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 //TODO: provide the user with minimum password requirements
-const ForgotPassword = () => {
+const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const token = useParams().token;
@@ -23,7 +23,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <>
+    <section className="mt-16">
       <form onSubmit={changePassword}>
         <input
           type="password"
@@ -39,8 +39,8 @@ const ForgotPassword = () => {
         ></input>
         <button onClick={changePassword}>Change Password</button>
       </form>
-    </>
+    </section>
   );
 };
 
-export default ForgotPassword;
+export default ResetPassword;

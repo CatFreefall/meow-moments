@@ -3,7 +3,7 @@ import { useState } from "react";
 import { validate } from "email-validator";
 
 import RegisterButton from "../../../components/common/RegisterButton";
-import ForgotPasswordButton from "./components/ForgotPasswordButton";
+import ResetPasswordButton from "./components/ForgotPasswordButton";
 import PasswordChangeEmailSent from "../../../components/toasts/PasswordChangeEmailSent";
 import EmailUsernameInput from "./components/UsernameEmailInput";
 import PasswordInput from "./components/PasswordInput";
@@ -84,7 +84,7 @@ const Login = () => {
               Submit
             </button>
             <div onClick={() => setUserEvent(true)}>
-              <ForgotPasswordButton emailUsername={emailUsername} />
+              <ResetPasswordButton emailUsername={emailUsername} text="Forgot Password?" />
             </div>
           </div>
         </div>

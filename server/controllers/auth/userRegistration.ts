@@ -21,10 +21,10 @@ const saltRounds = 10;
 
 // TODO: create a proper email template
 // helper function to send a confirmation email to the user
-const sendConfirmationEmail = async (
-  username: string,
-  email: string
-): Promise<void> => {
+const sendConfirmationEmail = async (username: string): Promise<void> => {
+  const email = (await pool.query(getEntryByUsername, [username])).rows[0]
+    .email;
+
   const verificationToken = signJWT({ email }, verificationSecret, "1h");
 
   const emailDetails: object = {
@@ -37,6 +37,20 @@ const sendConfirmationEmail = async (
     `,
   };
   await transporter.sendMail(emailDetails);
+};
+
+const sendVerificationEmail = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  const { username } = req.params;
+
+  try {
+    sendConfirmationEmail(username);
+    res.status(200).json("Verification email sent");
+  } catch (err) {
+    res.status(500).json("Error sending verification email");
+  }
 };
 
 const addUser = async (req: Request, res: Response): Promise<any> => {
@@ -66,7 +80,7 @@ const addUser = async (req: Request, res: Response): Promise<any> => {
         .json(
           "Confirmation email sent. Please check your email and verify your account."
         );
-      sendConfirmationEmail(username, email);
+      sendConfirmationEmail(username);
 
       // creating a default profile picture for newly registered user
       const photo = "profile-picture.webp";
@@ -91,4 +105,4 @@ const verifyUser = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export { addUser, verifyUser };
+export { addUser, verifyUser, sendVerificationEmail };
