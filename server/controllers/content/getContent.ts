@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 
 import pool from "../../db";
-import { getPostsByRecent } from "../../queries/contentQueries";
+import { getPostsByRecent } from "../../queries/postsQueries";
 import { getEntryByID } from "../../queries/generalQueries";
-import { meowMomentsBucket } from "../../utils/bucketUtils";
+import { meowMomentsBucket } from "../../utils/bucket";
 
 const getContent = async (req: Request, res: Response) => {
   try {
@@ -31,7 +31,7 @@ const getContent = async (req: Request, res: Response) => {
       const mediaFiles = await meowMomentsBucket.getFiles({
         prefix: post.post_folder_path,
       });
-      
+
       const mediaFileURLs = await Promise.all(
         mediaFiles[0].map(async (file) => {
           const signedURL = await file.getSignedUrl({

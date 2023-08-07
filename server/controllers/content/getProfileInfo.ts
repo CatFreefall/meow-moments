@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 
 import pool from "../../db";
 import { getEntryByUsername } from "../../queries/generalQueries";
-import { getPostsByUserID } from "../../queries/contentQueries";
-import { meowMomentsBucket } from "../../utils/bucketUtils";
+import { getPostsByUserID } from "../../queries/postsQueries";
+import { meowMomentsBucket } from "../../utils/bucket";
 
 const getProfile = async (req: Request, res: Response) => {
   try {

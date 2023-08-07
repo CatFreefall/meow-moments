@@ -3,15 +3,19 @@ import { genSalt, hash } from "bcrypt";
 import { Secret } from "jsonwebtoken";
 
 import pool from "../../db";
-import { meowMomentsBucket } from "../../utils/bucketUtils";
+import { meowMomentsBucket } from "../../utils/bucket";
 
-import { registerUser, changeVerifyStatus } from "../../queries/authQueries";
+import {
+  registerUser,
+  changeVerificationStatus,
+} from "../../queries/authQueries";
 import {
   getEntryByEmail,
   getEntryByUsername,
 } from "../../queries/generalQueries";
 
-import { signJWT, transporter, validToken } from "../../utils/authUtils";
+import { signJWT, isValidToken } from "../../utils/authUtils";
+import transporter from "../../utils/transporter";
 
 // casting the secrets to type Secret so that they can be used to sign JWT's
 const verificationSecret: Secret = process.env.EMAIL_VERIFY_SECRET as Secret;
@@ -97,9 +101,9 @@ const addUser = async (req: Request, res: Response): Promise<any> => {
 const verifyUser = async (req: Request, res: Response): Promise<void> => {
   const username = req.params.username;
 
-  if (validToken(req.params.token, verificationSecret)) {
+  if (isValidToken(req.params.token, verificationSecret)) {
     res.status(200).send(true);
-    await pool.query(changeVerifyStatus, [username]);
+    await pool.query(changeVerificationStatus, [username]);
   } else {
     res.status(200).send(false);
   }

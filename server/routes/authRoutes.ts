@@ -1,6 +1,10 @@
 import router from "../router";
 
-import { addUser, verifyUser } from "../controllers/auth/userRegistration";
+import {
+  addUser,
+  verifyUser,
+  sendVerificationEmail,
+} from "../controllers/auth/userRegistration";
 import {
   emailExists,
   usernameExists,
@@ -17,14 +21,14 @@ router.get("/validate-username/:username", usernameExists);
 router.get("/validate-email/:email", emailExists);
 
 router.post("/login", loginUser);
+router.get("/logout", logoutUser);
 
 router.get("/confirm/:username/:token", verifyUser);
 
 router.post("/password-reset-req", resetPasswordReq);
 router.put("/password-reset/:user/:token", changePassword);
 
-router.get("/logout", logoutUser);
-
 router.get("/authorization-request", verifyCookies);
+router.post("/send-confirmation-email/:username", sendVerificationEmail);
 
 export default router;

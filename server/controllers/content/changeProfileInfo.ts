@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import formatImage from "../../utils/formatImage";
-import { meowMomentsBucket } from "../../utils/bucketUtils";
+import { meowMomentsBucket } from "../../utils/bucket";
 import { changeBiography } from "../../queries/otherQueries";
 import pool from "../../db";
 
@@ -20,10 +20,10 @@ const changeProfilePicture = async (req: Request, res: Response) => {
   const blobStream = blob.createWriteStream();
   blobStream.end(webpBuffer);
 
-  // changing the user biography in the database.
+  // changing the user biography path in the database.
   await pool.query(changeBiography, [newBiography, user]);
 
-  res.send("success");
+  res.send("profile picture change success");
 };
 
 export { changeProfilePicture };

@@ -1,20 +1,20 @@
-import { meowMomentsBucket } from "../../utils/bucketUtils";
+import { meowMomentsBucket } from "../../utils/bucket";
 import formatImage from "../../utils/formatImage";
 import generateUUID from "../../utils/generateUUID";
 import pool from "../../db";
 import {
-  postContent,
+  post,
   getTag,
   addTag,
   addPostHashtags,
   updateLastPosted,
   getPost,
   removePost,
-} from "../../queries/contentQueries";
+} from "../../queries/postsQueries";
 import { getEntryByUsername } from "../../queries/generalQueries";
 import formatHashtags from "../../utils/formatHashtags";
 
-const post = async (req: any, res: any) => {
+const addPost = async (req: any, res: any) => {
   try {
     if (req.files.length > 0) {
       const fileArray: Array<Express.Multer.File> = req.files;
@@ -27,7 +27,7 @@ const post = async (req: any, res: any) => {
       const userID = (await pool.query(getEntryByUsername, [user])).rows[0].id;
       const postDescription = req.body.description;
       const postType = req.params.postType;
-      await pool.query(postContent, [
+      await pool.query(post, [
         postID,
         userID,
         postType,
@@ -92,4 +92,4 @@ const deletePost = async (req: any, res: any) => {
   res.send("success");
 };
 
-export { post, deletePost };
+export { addPost, deletePost };

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import Multer from "multer";
 
-import { post } from "../controllers/content/posts";
+import { addPost, deletePost } from "../controllers/content/posts";
 import getContent from "../controllers/content/getContent";
 import {
   toggleLiked,
@@ -15,7 +15,8 @@ const multer = Multer({
   storage: Multer.memoryStorage(),
 });
 
-router.post("/post/:postType", multer.array("files"), post);
+router.post("/post/:postType", multer.array("files"), addPost);
+router.delete("/delete-post/:postId", deletePost);
 
 router.get("/getContent/:contentType/:sortBy", getContent);
 

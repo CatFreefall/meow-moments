@@ -4,10 +4,11 @@ import { Secret } from "jsonwebtoken";
 
 import pool from "../../db";
 
-import { changeDBPassword } from "../../queries/authQueries";
+import { changeDBPasswordHash } from "../../queries/authQueries";
 import { getEntryByEmail, getEntryByUsername } from "../../queries/generalQueries";
 
-import { transporter, signJWT, validToken } from "../../utils/authUtils";
+import { signJWT, isValidToken } from "../../utils/authUtils";
+import transporter from "../../utils/transporter";
 
 const forgotPasswordSecret: Secret = process.env
   .FORGOT_PASSWORD_SECRET as Secret;
@@ -43,7 +44,7 @@ const updateDBPassword = async (
   const newSalt = await genSalt(saltRounds);
   const newPasswordHash = await hash(newPassword, newSalt);
 
-  pool.query(changeDBPassword, [newPasswordHash, username]);
+  pool.query(changeDBPasswordHash, [newPasswordHash, username]);
 };
 
 const resetPasswordReq = async (req: Request, res: Response): Promise<void> => {
@@ -82,7 +83,7 @@ const resetPasswordReq = async (req: Request, res: Response): Promise<void> => {
 const changePassword = async (req: Request, res: Response): Promise<void> => {
   // if a token is not provided, the user is changing their password through the settings page
   try {
-    if (validToken(req.params.token, forgotPasswordSecret)) {
+    if (isValidToken(req.params.token, forgotPasswordSecret)) {
       await updateDBPassword(req.params.user, req.body.newPassword);
 
       res.status(200).send("password changed through email link!");

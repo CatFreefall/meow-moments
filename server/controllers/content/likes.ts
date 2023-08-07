@@ -4,11 +4,11 @@ import generateUUID from "../../utils/generateUUID";
 import pool from "../../db";
 import {
   postLikedByUser,
-  deletePostLike,
+  removePostLike,
   addPostLike,
-} from "../../queries/contentQueries";
+} from "../../queries/postsQueries";
 import { getEntryByUsername } from "../../queries/generalQueries";
-import { getPostLikes } from "../../queries/contentQueries";
+import { getPostLikes } from "../../queries/postsQueries";
 
 const getLikedState = async (req: Request, res: Response) => {
   try {
@@ -39,7 +39,7 @@ const toggleLiked = async (req: Request, res: Response) => {
       (await pool.query(postLikedByUser, [postId, userId])).rows.length > 0;
 
     // toggling the like based on if the user has already liked the post
-    if (isLiked) await pool.query(deletePostLike, [postId, userId]);
+    if (isLiked) await pool.query(removePostLike, [postId, userId]);
     else {
       const like_id = generateUUID();
       await pool.query(addPostLike, [like_id, postId, userId]);
@@ -52,9 +52,9 @@ const toggleLiked = async (req: Request, res: Response) => {
 
 const getTotalLikes = async (req: Request, res: Response) => {
   const postID = req.params.postId;
-  const totalPostLikes = ((await (pool.query(getPostLikes, [postID]))).rows.length);
+  const totalPostLikes = (await pool.query(getPostLikes, [postID])).rows.length;
 
   res.status(200).json(totalPostLikes);
-}
+};
 
 export { toggleLiked, getLikedState, getTotalLikes };
