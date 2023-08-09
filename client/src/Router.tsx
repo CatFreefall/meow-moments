@@ -4,12 +4,13 @@ import Home from "./pages/home/Home";
 
 import Login from "./pages/auth/Login/Login";
 import Register from "./pages/auth/register/Register";
-import Confirm from "./pages/auth/Confirm";
+import VerificationPage from "./pages/auth/verification/VerificationPage";
 import ResetPassword from "./pages/auth/ResetPasssword";
 
 import Illustrations from "./pages/illustrations/Illustrations";
 import Photos from "./pages/photos/Photos";
 import Videos from "./pages/videos/Videos";
+import TrendingIllustrations from "./pages/illustrations/TrendingIllustrations";
 import TrendingPhotos from "./pages/photos/TrendingPhotos";
 import TrendingVideos from "./pages/videos/TrendingVideos";
 
@@ -28,7 +29,7 @@ const Router = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      <Route path="/confirm/:username/:token" element={<Confirm />} />
+      <Route path="/confirm/:username/:token" element={<VerificationPage />} />
       <Route
         path="/password-reset-req/:user/:token"
         element={<ResetPassword />}
@@ -36,6 +37,10 @@ const Router = () => {
 
       {/* TODO: add pages for when the user clicks to focus a post */}
       <Route path="/illustrations" element={<Illustrations />} />
+      <Route
+        path="/illustrations/trending"
+        element={<TrendingIllustrations />}
+      />
       {/* <Route path="/illustrations/:id" element={<Illustrations />} /> */}
       <Route path="/illustrations/recent" element={<Illustrations />} />
 

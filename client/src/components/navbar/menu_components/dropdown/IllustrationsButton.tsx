@@ -16,6 +16,12 @@ const IllustrationsButton = () => {
   };
 
   const nav = useNavigate();
+  const navigateTo = (endpoint: string) => {
+    collapseMenu();
+    toggleDropdown();
+    nav(endpoint);
+  };
+
   return (
     <section className=" bg-lightgrey mobile-menu-element">
       <DropdownLabel
@@ -32,20 +38,16 @@ const IllustrationsButton = () => {
         className={`w-full overflow-hidden ${dropdownActive ? "h-fit" : "h-0"}`}
       >
         <MenuSectionDivider />
-        <RecentButton
-          collapseMenu={collapseMenu}
-          toggleDropdown={toggleDropdown}
-          nav={nav}
-        />
+        <span onClick={() => navigateTo("/illustrations/recent")}>
+          <RecentButton />
+        </span>
       </ul>
       <ul
         className={`w-full overflow-hidden ${dropdownActive ? "h-fit" : "h-0"}`}
       >
-        <TrendingButton
-          collapseMenu={collapseMenu}
-          toggleDropdown={toggleDropdown}
-          nav={nav}
-        />
+        <span onClick={() => navigateTo("/illustrations/trending")}>
+          <TrendingButton />
+        </span>
       </ul>
     </section>
   );

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Menu } from "./menu_components/Menu";
 import AccountNotVerified from "../toasts/AccountNotVerified";
-import { useAuthContext } from "../../AuthState";
+import { useAuthContext } from "../../hooks/useAuthState";
 
 const Navbar = () => {
   const [showNavBar, setShowNavBar] = useState(true);
@@ -29,7 +29,7 @@ const Navbar = () => {
   } = useAuthContext();
 
   return (
-    <div>
+    <section>
       <nav
         className={`bg-lightgrey p-3 flex items-center font-header fixed w-full top-0 transition duration-300 ease-out z-10 ${
           showNavBar ? "translate-y-0" : "-translate-y-full"
@@ -47,7 +47,7 @@ const Navbar = () => {
       >
         {authenticated && !verified ? <AccountNotVerified /> : null}
       </div>
-    </div>
+    </section>
   );
 };
 

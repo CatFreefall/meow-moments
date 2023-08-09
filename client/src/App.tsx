@@ -1,20 +1,16 @@
 import { BrowserRouter } from "react-router-dom";
 import Router from "./Router";
-import { Provider } from "react-redux";
 
-import store from "./app/store";
-import { AuthStateProvider } from "./AuthState";
+import { AuthStateProvider } from "./hooks/useAuthState";
 import Navbar from "./components/navbar/Navbar";
 
 function App() {
   return (
     <BrowserRouter>
-      <div>
-        <AuthStateProvider>
-          <Router />
-          <Navbar />
-        </AuthStateProvider>
-      </div>
+      <AuthStateProvider>
+        <Router />
+        <Navbar />
+      </AuthStateProvider>
     </BrowserRouter>
   );
 }
