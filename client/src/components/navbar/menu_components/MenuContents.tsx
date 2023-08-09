@@ -9,8 +9,7 @@ import HomeButton from "./menu_buttons/HomeButton";
 import LogoutButton from "../../common/LogoutButton";
 import PostButton from "./menu_buttons/PostButton";
 
-import { useAuthContext } from "../../../util/AuthState";
-
+import { useAuthContext } from "../../../AuthState";
 
 const MenuContents = () => {
   const {

@@ -1,26 +1,25 @@
 import { Route, Routes } from "react-router-dom";
 
-import Home from "../pages/home/Home";
+import Home from "./pages/home/Home";
 
-import Login from "../pages/auth/Login/Login";
-import Register from "../pages/auth/register/Register";
-import Confirm from "../pages/auth/Confirm";
-import ResetPassword from "../pages/auth/ResetPasssword";
+import Login from "./pages/auth/Login/Login";
+import Register from "./pages/auth/register/Register";
+import Confirm from "./pages/auth/Confirm";
+import ResetPassword from "./pages/auth/ResetPasssword";
 
-import Illustrations from "../pages/illustrations/Illustrations";
-import Photos from "../pages/photos/Photos";
-import Videos from "../pages/videos/Videos";
-import TrendingIllustrations from "../pages/illustrations/TrendingIllustrations";
-import TrendingPhotos from "../pages/photos/TrendingPhotos";
-import TrendingVideos from "../pages/videos/TrendingVideos";
+import Illustrations from "./pages/illustrations/Illustrations";
+import Photos from "./pages/photos/Photos";
+import Videos from "./pages/videos/Videos";
+import TrendingPhotos from "./pages/photos/TrendingPhotos";
+import TrendingVideos from "./pages/videos/TrendingVideos";
 
-import Hashtags from "../pages/hashtags/Hashtags";
-import Post from "../pages/post/Post";
-import UserProfile from "../pages/profile/UserProfile";
-import ChangeProfilePage from "../pages/profile/components/ChangeProfilePage";
+import Hashtags from "./pages/hashtags/Hashtags";
+import Post from "./pages/post/Post";
+import UserProfile from "./pages/profile/UserProfile";
+import ChangeProfilePage from "./pages/profile/components/ChangeProfilePage";
 
-import NoPage from "../pages/NoPage";
-import Settings from "../pages/Settings/Settings";
+import NoPage from "./pages/NoPage";
+import Settings from "./pages/Settings/Settings";
 
 const Router = () => {
   return (
@@ -39,10 +38,6 @@ const Router = () => {
       <Route path="/illustrations" element={<Illustrations />} />
       {/* <Route path="/illustrations/:id" element={<Illustrations />} /> */}
       <Route path="/illustrations/recent" element={<Illustrations />} />
-      <Route
-        path="/illustrations/trending"
-        element={<TrendingIllustrations />}
-      />
 
       <Route path="/photos" element={<Photos />} />
       {/* <Route path="/photos/:id" element={<Photos />} /> */}

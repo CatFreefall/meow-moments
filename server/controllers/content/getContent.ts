@@ -1,19 +1,31 @@
 import { Request, Response } from "express";
 
 import pool from "../../db";
-import { getPostsByRecent } from "../../queries/postsQueries";
+import { getEntryByUsername } from "../../queries/generalQueries";
+import { getPostsByRecent, getPostsByUserID } from "../../queries/postsQueries";
 import { getEntryByID } from "../../queries/generalQueries";
 import { meowMomentsBucket } from "../../utils/bucket";
+import { QueryResult } from "pg";
+import { exit } from "process";
 
 const getContent = async (req: Request, res: Response) => {
   try {
     // TODO: add a getPostsByPopular query
     // determining if the user requested to sort by recent or popular.
-    const { contentType, sortBy } = req.params;
-    const dbPostsRows =
-      sortBy === "recent"
-        ? await pool.query(getPostsByRecent, [contentType])
-        : await pool.query(getPostsByRecent, [contentType]);
+    const { sortBy } = req.params;
+
+    let dbPostsRows: QueryResult;
+    if (
+      sortBy !== "illustrations" &&
+      sortBy !== "photos" &&
+      sortBy !== "videos"
+    ) {
+      const userID = (await pool.query(getEntryByUsername, [sortBy])).rows[0]
+        .id;
+      dbPostsRows = await pool.query(getPostsByUserID, [userID]);
+    } else {
+      dbPostsRows = await pool.query(getPostsByRecent, [sortBy]);
+    }
 
     // iterating through all rows in the array and putting all the data together to
     // send back to the client

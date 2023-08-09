@@ -1,9 +1,9 @@
 import { BrowserRouter } from "react-router-dom";
-import Router from "./util/Router";
+import Router from "./Router";
 import { Provider } from "react-redux";
 
 import store from "./app/store";
-import { AuthStateProvider } from "./util/AuthState";
+import { AuthStateProvider } from "./AuthState";
 import Navbar from "./components/navbar/Navbar";
 
 function App() {

@@ -45,7 +45,7 @@ const userIsVerified = async (username: string): Promise<boolean> => {
 
 // generates cookie specificly for authorization. may be altered to include other cookies later.
 const setCookies = async (userEntry: QueryResult): Promise<string[]> => {
-  const { username, email, isVerified } = userEntry.rows[0];
+  const { username, email, is_verified } = userEntry.rows[0];
 
   const accessPayload: object = {
     username: username,
@@ -59,7 +59,7 @@ const setCookies = async (userEntry: QueryResult): Promise<string[]> => {
 
   return [
     `user=${username}; SameSite=lax`,
-    `verified=${isVerified}; SameSite=lax`,
+    `verified=${is_verified}; SameSite=lax`,
     `refresh_token=${refreshToken}; HttpOnly; Secure; SameSite=Strict`,
     `access_token=${accessToken}; HttpOnly; Secure; SameSite=Strict`,
   ];

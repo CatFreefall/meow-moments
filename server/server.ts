@@ -13,7 +13,7 @@ const port = 5000;
 // rate limiting users at all endpoints.
 const limit = rateLimit({
   windowMs: 5 * 60 * 1000,
-  max: 1000,
+  max: 10000,
   message: "You have made too many requests. Please try again in 5 minutes.",
 });
 app.use("*", limit);

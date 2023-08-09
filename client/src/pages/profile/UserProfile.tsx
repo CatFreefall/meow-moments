@@ -50,7 +50,7 @@ const UserProfile = () => {
       </button>
       <MenuSectionDivider />
       Posts:
-      <UserPosts username={username as String} />
+      <UserPosts username={username as string} />
     </section>
   );
 };

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Menu } from "./menu_components/Menu";
 import AccountNotVerified from "../toasts/AccountNotVerified";
-import { useAuthContext } from "../../util/AuthState";
+import { useAuthContext } from "../../AuthState";
 
 const Navbar = () => {
   const [showNavBar, setShowNavBar] = useState(true);
@@ -40,7 +40,11 @@ const Navbar = () => {
         <h1 className="text-2xl">MeowMoments</h1>
       </nav>
 
-      <div className={`transition duration-100 ease-in fixed top-14 ${showNavBar ? "translate-y-0" : "-translate-y-14"}`}>
+      <div
+        className={`transition duration-100 ease-in fixed top-14 ${
+          showNavBar ? "translate-y-0" : "-translate-y-14"
+        }`}
+      >
         {authenticated && !verified ? <AccountNotVerified /> : null}
       </div>
     </div>

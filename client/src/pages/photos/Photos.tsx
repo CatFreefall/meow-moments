@@ -1,24 +1,17 @@
-import { useEffect, useState } from "react";
-
-import fetchContent from "../../util/fetchContent";
+import usePosts from "../../hooks/usePosts";
 import FormatPost from "../../components/post/FormatPost";
 import LikePost from "../../components/post/LikePost";
-import { mediaArrayType } from "../../util/mediaArrayType";
 
 const Photos = () => {
-  const [photosArray, setPhotosArray] = useState<mediaArrayType[]>([]);
-
-  useEffect(() => {
-    fetchContent("photos", "recent", setPhotosArray);
-  }, []);
+  const { content } = usePosts("photos");
 
   return (
     <section>
-      {photosArray.map((item, index) => {
+      {content.map((item: any, index: number) => {
         return (
           <div className="mt-16" key={index}>
-            <FormatPost post={photosArray[index]} />
-            <LikePost post={photosArray[index]} />
+            <FormatPost post={content[index]} />
+            <LikePost post={content[index]} />
           </div>
         );
       })}

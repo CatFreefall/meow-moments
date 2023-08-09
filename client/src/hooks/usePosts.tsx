@@ -1,12 +1,21 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import { mediaArrayType } from "../util/mediaArrayType";
 
-const usePosts = () => {
-  const [posts, setPosts] = useState([])
+const usePosts = (sortBy: string) => {
+  const [content, setContent] = useState<mediaArrayType[]>([]);
 
+  useEffect(() => {
+    fetch(`/getContent/${sortBy}/`, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then(async (data) => {
+        setContent(data);
+      })
+      .catch((err) => console.log(err));
+  }, [sortBy]);
 
-  return (
-    <div>usePosts</div>
-  )
-}
+  return { content };
+};
 
-export default usePosts
+export default usePosts;

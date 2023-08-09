@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import LoginButton from "../../components/common/LoginButton";
-import { useAuthContext } from "../../util/AuthState";
+import { useAuthContext } from "../../AuthState";
 
 //TODO: change this fetch request to point to /login instead of /confirm. a message
 // will appear on the page saying that the user has confirmed their email
