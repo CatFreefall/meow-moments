@@ -1,28 +1,51 @@
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 import { MenuStateContext } from "../Menu";
+import MenuSectionDivider from "../MenuSectionDivider";
+import PhotosDropdown from "./components/PhotosDropdown";
+import TrendingButton from "./components/TrendingButton";
+import RecentButton from "./components/RecentButton";
 
 const PhotosButton = () => {
   const collapseMenu = useContext(MenuStateContext);
+  const [dropdownActive, setDropdownActive] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownActive(!dropdownActive);
+  };
 
   const nav = useNavigate();
+  const navigateTo = (endpoint: string) => {
+    collapseMenu();
+    toggleDropdown();
+    nav(endpoint);
+  };
+
   return (
-    <section
-      className="flex items-center mobile-menu-element"
-      onClick={() => {
-        nav("/photos");
-        collapseMenu();
-      }}
-    >
-      <button className="flex my-3 items-center">
-        <img
-          src="/assets/icons/photo-icon.webp"
-          alt=""
-          className="w-5 h-5 mx-3"
-        ></img>
-        Photos
-      </button>
+    <section className=" bg-lightgrey mobile-menu-element mb-2">
+      <PhotosDropdown dropdownActive={dropdownActive} contentType="Photos" />
+      <input
+        type="checkbox"
+        id="photos-dropdown"
+        className="absolute opacity-0 h-0 checked:h-fit"
+        onChange={toggleDropdown}
+      />
+      <ul
+        className={`w-full overflow-hidden ${dropdownActive ? "h-fit" : "h-0"}`}
+      >
+        <MenuSectionDivider />
+        <span onClick={() => navigateTo("/videos/recent")}>
+          <RecentButton />
+        </span>
+      </ul>
+      <ul
+        className={`w-full overflow-hidden ${dropdownActive ? "h-fit" : "h-0"}`}
+      >
+        <span onClick={() => navigateTo("/videos/trending")}>
+          <TrendingButton />
+        </span>
+      </ul>
     </section>
   );
 };

@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 
 import { MenuStateContext } from "../Menu";
 import MenuSectionDivider from "../MenuSectionDivider";
-import DropdownLabel from "./components/DropdownLabel";
+import IllustrationsDropdown from "./components/IllustrationsDropdown";
 import TrendingButton from "./components/TrendingButton";
 import RecentButton from "./components/RecentButton";
 
@@ -23,14 +23,14 @@ const IllustrationsButton = () => {
   };
 
   return (
-    <section className=" bg-lightgrey mobile-menu-element">
-      <DropdownLabel
+    <section className=" bg-lightgrey mobile-menu-element mb-2">
+      <IllustrationsDropdown
         dropdownActive={dropdownActive}
         contentType="Illustrations"
       />
       <input
         type="checkbox"
-        id="dropdown"
+        id="illustrations-dropdown"
         className="absolute opacity-0 h-0 checked:h-fit"
         onChange={toggleDropdown}
       />

@@ -1,18 +1,21 @@
 type DropdownLabelProps = {
   dropdownActive: boolean;
-  contentType: string
-}
+  contentType: string;
+};
 
-const DropdownLabel = ({ dropdownActive, contentType }: DropdownLabelProps) => {
+const VideosDropdown = ({
+  dropdownActive,
+  contentType,
+}: DropdownLabelProps) => {
   return (
-    <label htmlFor="dropdown">
+    <label htmlFor="videos-dropdown">
       <div
         className={`hover: cursor-pointer flex py-3 items-center ${
           dropdownActive ? "bg-lightgrey" : "bg-darkgrey"
         }`}
       >
         <img
-          src="/assets/icons/paintbrush-icon.webp"
+          src="/assets/icons/video-icon.webp"
           alt=""
           className="w-5 h-5 mx-3"
         ></img>
@@ -32,4 +35,4 @@ const DropdownLabel = ({ dropdownActive, contentType }: DropdownLabelProps) => {
   );
 };
 
-export default DropdownLabel;
+export default VideosDropdown;

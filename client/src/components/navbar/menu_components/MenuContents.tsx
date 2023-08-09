@@ -23,7 +23,6 @@ const MenuContents = () => {
       <VideosButton />
 
       {authenticated ? <PostButton /> : null}
-
       <HashtagsButton />
       <HomeButton />
       <img

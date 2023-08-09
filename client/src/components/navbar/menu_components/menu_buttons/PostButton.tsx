@@ -9,7 +9,7 @@ const PostButton = () => {
   const nav = useNavigate();
   return (
     <div
-      className="flex items-center mobile-menu-element"
+      className="flex items-center mobile-menu-element mt-2"
       onClick={() => {
         nav("/post");
         collapseMenu();
