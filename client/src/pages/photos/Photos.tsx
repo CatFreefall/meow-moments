@@ -1,17 +1,15 @@
 import usePosts from "../../hooks/usePosts";
 import FormatPost from "../../components/post/FormatPost";
-import LikePost from "../../components/post/LikePost";
 
 const Photos = () => {
   const { content } = usePosts("photos");
 
   return (
-    <section>
+    <section className="mt-16">
       {content.map((item: any, index: number) => {
         return (
-          <div className="mt-16" key={index}>
+          <div key={index} className="flex justify-center">
             <FormatPost post={content[index]} />
-            <LikePost post={content[index]} />
           </div>
         );
       })}

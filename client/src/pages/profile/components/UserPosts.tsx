@@ -1,5 +1,5 @@
 import FormatPost from "../../../components/post/FormatPost";
-import LikePost from "../../../components/post/LikePost";
+import LikePost from "../../../components/post/components/LikePost";
 import usePosts from "../../../hooks/usePosts";
 import MenuSectionDivider from "../../../components/navbar/menu_components/MenuSectionDivider";
 import DeletePost from "./DeletePost";

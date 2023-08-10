@@ -75,10 +75,7 @@ const ChangeProfilePage = () => {
         ref={newProfilePicture}
         onChange={updateProfilePicture}
       ></input>
-      <label
-        htmlFor="change-profile-picture-button"
-        className="hover:cursor-pointer"
-      >
+      <label htmlFor="change-profile-picture-button">
         Change Profile Picture
       </label>
       Biography (Max 255 characters)

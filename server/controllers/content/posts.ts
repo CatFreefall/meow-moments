@@ -4,7 +4,7 @@ import generateUUID from "../../utils/generateUUID";
 import pool from "../../db";
 import {
   post,
-  getTag,
+  getTagByName,
   addTag,
   addPostHashtags,
   updateLastPosted,
@@ -40,7 +40,7 @@ const addPost = async (req: any, res: any) => {
       // post and tag IDs to create a new entry in the post_tags table.
       const hashtags = formatHashtags(req.body.hashtags);
       hashtags.map(async (hashtag) => {
-        const tag = await pool.query(getTag, [hashtag]);
+        const tag = await pool.query(getTagByName, [hashtag]);
         if (tag.rows.length === 0) {
           const tagID = generateUUID();
           await pool.query(addTag, [tagID, hashtag]);

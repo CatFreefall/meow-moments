@@ -35,14 +35,14 @@ const PhotosButton = () => {
         className={`w-full overflow-hidden ${dropdownActive ? "h-fit" : "h-0"}`}
       >
         <MenuSectionDivider />
-        <span onClick={() => navigateTo("/videos/recent")}>
+        <span onClick={() => navigateTo("/photos/recent")}>
           <RecentButton />
         </span>
       </ul>
       <ul
         className={`w-full overflow-hidden ${dropdownActive ? "h-fit" : "h-0"}`}
       >
-        <span onClick={() => navigateTo("/videos/trending")}>
+        <span onClick={() => navigateTo("/photos/trending")}>
           <TrendingButton />
         </span>
       </ul>

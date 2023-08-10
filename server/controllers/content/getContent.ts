@@ -4,9 +4,9 @@ import pool from "../../db";
 import { getEntryByUsername } from "../../queries/generalQueries";
 import { getPostsByRecent, getPostsByUserID } from "../../queries/postsQueries";
 import { getEntryByID } from "../../queries/generalQueries";
+import { getPostHashtags, getTagByID } from "../../queries/postsQueries";
 import { meowMomentsBucket } from "../../utils/bucket";
 import { QueryResult } from "pg";
-import { exit } from "process";
 
 const getContent = async (req: Request, res: Response) => {
   try {
@@ -33,6 +33,14 @@ const getContent = async (req: Request, res: Response) => {
       const username = (await pool.query(getEntryByID, [post.user_id])).rows[0]
         .username;
 
+      const profilePicturePath = await meowMomentsBucket.getFiles({
+        prefix: `${username}/profile/profile-picture.webp`,
+      });
+      const profilePictureURL = await profilePicturePath[0][0].getSignedUrl({
+        action: "read",
+        expires: Date.now() + 1000 * 60 * 30,
+      });
+
       const date_posted = post.date_posted;
 
       //TODO: load only a certain number of posts at a time.
@@ -56,7 +64,14 @@ const getContent = async (req: Request, res: Response) => {
       const description = post.description;
       const post_id = post.post_id;
 
-      return { username, date_posted, mediaFileURLs, description, post_id };
+      const postHashtagIDs = (await pool.query(getPostHashtags, [post_id])).rows;
+      const postHashtags = [];
+      for (const postHashtag of postHashtagIDs) {
+        const tag = (await pool.query(getTagByID, [postHashtag.tag_id])).rows[0].tag_name;
+        postHashtags.push(tag);
+      }
+
+      return { username, profilePictureURL, date_posted, mediaFileURLs, description, post_id, postHashtags };
     });
     const formattedContent = await Promise.all(formattedContentPromises);
 

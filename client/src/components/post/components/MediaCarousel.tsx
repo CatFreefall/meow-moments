@@ -15,17 +15,18 @@ const swiperOptions: SwiperOptions = {
   slidesPerView: 1,
   spaceBetween: 100,
   pagination: true,
+  centeredSlides: true,
   effect: "creative",
   creativeEffect: {
     prev: {
-      shadow: true,
+      shadow: false,
       translate: ["-100%", 0, -1],
-      scale: 0.25,
+      scale: -0.05,
     },
     next: {
-      shadow: true,
+      shadow: false,
       translate: ["100%", 0, -1],
-      scale: 0.25,
+      scale: -0.05,
     },
   },
 };
@@ -36,24 +37,22 @@ type MediaCarouselProps = {
 
 const MediaCarousel = ({ srcURLs }: MediaCarouselProps) => {
   return (
-    <Swiper
-      {...swiperOptions}
-      onSlideChange={() => console.log("slide change")}
-      onSwiper={(swiper) => console.log(swiper)}
-    >
-      {srcURLs.map((url: string, index: Key) => {
-        return (
-          <SwiperSlide key={index}>
-            <img
-              src={url}
-              alt="illustration"
-              loading="lazy"
-              className="w-screen"
-            />
-          </SwiperSlide>
-        );
-      })}
-    </Swiper>
+    <section className="h-52 p-2">
+      <Swiper {...swiperOptions} className="h-full w-full shadow-sm">
+        {srcURLs.map((url: string, index: Key) => {
+          return (
+            <SwiperSlide key={index}>
+              <img
+                src={url}
+                alt="illustration"
+                loading="lazy"
+                className="object-contain h-full w-full bg-lightlightgrey"
+              />
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
+    </section>
   );
 };
 

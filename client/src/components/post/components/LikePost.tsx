@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { postProps } from "../../util/mediaArrayType";
+import { postProps } from "../../../util/mediaArrayType";
 
 const LikePost = ({ post }: postProps) => {
   const [liked, setLiked] = useState<boolean>(false);
@@ -42,14 +42,18 @@ const LikePost = ({ post }: postProps) => {
   }, [liked, post.post_id]);
 
   return (
-    <section>
-      <button
-        className={`button ${liked ? "bg-green" : null}`}
+    <section className="flex items-center">
+      <div className=" mr-1">{totalLikes}</div>
+      <img
+        alt=""
+        src={`${
+          liked
+            ? "/assets/icons/heart-active-icon.webp"
+            : "/assets/icons/heart-inactive-icon.webp"
+        }`}
+        className="w-5 h-5 hover:cursor-pointer"
         onClick={toggleLiked}
-      >
-        {liked ? "Post Liked" : "Like Post"}
-      </button>
-      <div>Total Likes: {totalLikes}</div>
+      ></img>
     </section>
   );
 };
