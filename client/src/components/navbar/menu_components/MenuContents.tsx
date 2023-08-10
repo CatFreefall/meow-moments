@@ -13,6 +13,7 @@ import { useAuthContext } from "../../../hooks/useAuthState";
 
 const MenuContents = () => {
   const {
+    verification: [verified],
     authentication: [authenticated],
   } = useAuthContext();
 
@@ -22,7 +23,7 @@ const MenuContents = () => {
       <PhotosButton />
       <VideosButton />
 
-      {authenticated ? <PostButton /> : null}
+      {verified ? <PostButton /> : null}
       <HashtagsButton />
       <HomeButton />
       <img

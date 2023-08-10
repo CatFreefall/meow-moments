@@ -2,6 +2,8 @@ import { Key } from "react";
 import { postProps } from "../../util/mediaArrayType";
 import { useNavigate } from "react-router-dom";
 
+import MediaCarousel from "./MediaCarousel";
+
 // post areas are initially rendered with an image located in the public
 // folder and replaced with the post image once loaded for lazy loading
 // and a better user experience.
@@ -16,20 +18,7 @@ const FormatPost = ({ post }: postProps) => {
         {post.username}
       </button>
       <div>{datePosted}</div>
-      <div>
-        {post.mediaFileURLs.map((url: string, index: Key) => {
-          return (
-            <div key={index}>
-              <img
-                src={url}
-                alt="illustration"
-                loading="lazy"
-                className="w-screen"
-              />
-            </div>
-          );
-        })}
-      </div>
+      <MediaCarousel srcURLs={post.mediaFileURLs} />
       <div>{post.description}</div>
     </section>
   );
