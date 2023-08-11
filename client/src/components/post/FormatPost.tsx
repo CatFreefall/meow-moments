@@ -1,5 +1,6 @@
-import { postProps } from "../../util/mediaArrayType";
+import { useRef } from "react";
 
+import { postProps } from "../../util/mediaArrayType";
 import MediaCarousel from "./components/MediaCarousel";
 import LikePost from "./components/LikePost";
 import ProfileButton from "./components/ProfileButton";
@@ -11,6 +12,7 @@ import PostHashtags from "./components/PostHashtags";
 // and a better user experience.
 const FormatPost = ({ post }: postProps) => {
   const datePosted = new Date(post.date_posted).toLocaleDateString();
+  const totalPostLikesRef = useRef<number>(post.totalPostLikes);
 
   return (
     <section className="w-60 bg-darkishgrey my-2 shadow-xl rounded-lg h-fit p-4">
@@ -24,9 +26,9 @@ const FormatPost = ({ post }: postProps) => {
       <MenuSectionDivider color="bg-blue" />
       <MediaCarousel srcURLs={post.mediaFileURLs} />
       <MenuSectionDivider color="bg-blue" />
-      <PostHashtags hashtags={post.postHashtags} />
-      <LikePost post={post} />
       <p className="text-xs">{post.description}</p>
+      <PostHashtags hashtags={post.postHashtags} />
+      <LikePost postId={post.post_id} totalPostLikesRef={totalPostLikesRef} />
     </section>
   );
 };

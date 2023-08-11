@@ -1,3 +1,5 @@
+import { useRef } from "react";
+
 import FormatPost from "../../../components/post/FormatPost";
 import LikePost from "../../../components/post/components/LikePost";
 import usePosts from "../../../hooks/usePosts";
@@ -11,6 +13,7 @@ type userPostsProps = {
 // TODO: render the button to delete a post conditionally
 const UserPosts = ({ username }: userPostsProps) => {
   const { content } = usePosts(username);
+  const totalPostLikesRef = useRef<number>(content[0].totalPostLikes);
 
   return (
     <section>
@@ -19,7 +22,10 @@ const UserPosts = ({ username }: userPostsProps) => {
           <div key={index}>
             <MenuSectionDivider />
             <FormatPost post={content[index]} />
-            <LikePost post={content[index]} />
+            <LikePost
+              postId={content[index].post_id}
+              totalPostLikesRef={totalPostLikesRef}
+            />
             <DeletePost post={content[index]} />
           </div>
         );

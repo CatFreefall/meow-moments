@@ -50,11 +50,4 @@ const toggleLiked = async (req: Request, res: Response) => {
   }
 };
 
-const getTotalLikes = async (req: Request, res: Response) => {
-  const postID = req.params.postId;
-  const totalPostLikes = (await pool.query(getPostLikes, [postID])).rows.length;
-
-  res.status(200).json(totalPostLikes);
-};
-
-export { toggleLiked, getLikedState, getTotalLikes };
+export { toggleLiked, getLikedState };

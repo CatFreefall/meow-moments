@@ -2,7 +2,11 @@ import { Request, Response } from "express";
 
 import pool from "../../db";
 import { getEntryByUsername } from "../../queries/generalQueries";
-import { getPostsByRecent, getPostsByUserID } from "../../queries/postsQueries";
+import {
+  getPostLikes,
+  getPostsByRecent,
+  getPostsByUserID,
+} from "../../queries/postsQueries";
 import { getEntryByID } from "../../queries/generalQueries";
 import { getPostHashtags, getTagByID } from "../../queries/postsQueries";
 import { meowMomentsBucket } from "../../utils/bucket";
@@ -64,14 +68,28 @@ const getContent = async (req: Request, res: Response) => {
       const description = post.description;
       const post_id = post.post_id;
 
-      const postHashtagIDs = (await pool.query(getPostHashtags, [post_id])).rows;
+      const postHashtagIDs = (await pool.query(getPostHashtags, [post_id]))
+        .rows;
       const postHashtags = [];
       for (const postHashtag of postHashtagIDs) {
-        const tag = (await pool.query(getTagByID, [postHashtag.tag_id])).rows[0].tag_name;
+        const tag = (await pool.query(getTagByID, [postHashtag.tag_id])).rows[0]
+          .tag_name;
         postHashtags.push(tag);
       }
 
-      return { username, profilePictureURL, date_posted, mediaFileURLs, description, post_id, postHashtags };
+      const totalPostLikes = (await pool.query(getPostLikes, [post_id])).rows
+        .length;
+
+      return {
+        username,
+        profilePictureURL,
+        date_posted,
+        mediaFileURLs,
+        description,
+        post_id,
+        postHashtags,
+        totalPostLikes,
+      };
     });
     const formattedContent = await Promise.all(formattedContentPromises);
 
