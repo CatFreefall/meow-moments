@@ -8,7 +8,8 @@ import {
   getPostsByUserID,
 } from "../../queries/postsQueries";
 import { getEntryByID } from "../../queries/generalQueries";
-import { getPostHashtags, getTagByID } from "../../queries/postsQueries";
+import { getTagByID } from "../../queries/hashtagQueries";
+import { getPostHashtags } from "../../queries/hashtagQueries";
 import { meowMomentsBucket } from "../../utils/bucket";
 import { QueryResult } from "pg";
 

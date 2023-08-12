@@ -4,13 +4,12 @@ import generateUUID from "../../utils/generateUUID";
 import pool from "../../db";
 import {
   post,
-  getTagByName,
-  addTag,
-  addPostHashtags,
   updateLastPosted,
   getPost,
   removePost,
 } from "../../queries/postsQueries";
+import { addPostHashtags } from "../../queries/hashtagQueries";
+import { getTagByName, addTag } from "../../queries/hashtagQueries";
 import { getEntryByUsername } from "../../queries/generalQueries";
 import formatHashtags from "../../utils/formatHashtags";
 

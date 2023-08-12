@@ -3,13 +3,6 @@ const post =
 const removePost = "DELETE FROM posts WHERE post_id = $1";
 const getPost = "SELECT * FROM posts WHERE post_id = $1";
 
-const addTag = "INSERT INTO tags (tag_id, tag_name) VALUES ($1, $2)";
-const getTagByName = "SELECT * FROM tags WHERE tag_name = $1";
-const getTagByID = "SELECT * FROM tags WHERE tag_id = $1";
-const addPostHashtags =
-  "INSERT INTO post_tags (post_id, tag_id) VALUES ($1, $2)";
-const getPostHashtags = "SELECT * FROM post_tags WHERE post_id = $1";
-
 const getPostsByRecent =
   "SELECT * FROM posts WHERE post_type = $1 ORDER BY date_posted DESC";
 const getPostsByUserID =
@@ -27,11 +20,6 @@ const updateLastPosted = "UPDATE users SET last_posted = $1 WHERE id = $2";
 
 export {
   post,
-  addTag,
-  addPostHashtags,
-  getPostHashtags,
-  getTagByName,
-  getTagByID,
   getPostsByRecent,
   getPostsByUserID,
   postLikedByUser,
