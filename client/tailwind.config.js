@@ -8,7 +8,7 @@ module.exports = {
         body: ["Quicksand", "sans-serif"],
       },
       height: {
-        "0.5": "0.125rem",
+        0.5: "0.125rem",
         "7/8": "87.5%",
         "9/10": "90%",
       },

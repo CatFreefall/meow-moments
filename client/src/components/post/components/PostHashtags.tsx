@@ -9,7 +9,7 @@ const PostHashtags = ({ hashtags }: PostHashtagsProps) => {
     <section className="flex overflow-y-scroll">
       {hashtags.map((hashtag: string, index: Key) => {
         return (
-          <button className="bg-lightlightgrey mx-1 mt-2 px-3 rounded-full">
+          <button className="bg-orange mx-1 mt-2 px-3 rounded-full">
             {hashtag}
           </button>
         );
