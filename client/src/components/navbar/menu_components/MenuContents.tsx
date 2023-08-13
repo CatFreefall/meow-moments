@@ -1,13 +1,17 @@
 import LoginButton from "../../common/LoginButton";
 import RegisterButton from "../../common/RegisterButton";
 
-import IllustrationsButton from "./dropdown/IllustrationsButton";
-import PhotosButton from "./dropdown/PhotosButton";
-import VideosButton from "./dropdown/VideosButton";
+import {
+  IllustrationsButton,
+  PhotosButton,
+  VideosButton,
+} from "./dropdown/DropdownButtons";
+
 import HashtagsButton from "./menu_buttons/HashtagsButton";
 import HomeButton from "./menu_buttons/HomeButton";
 import LogoutButton from "../../common/LogoutButton";
-import PostButton from "./menu_buttons/PostButton";
+import PostACatButton from "./menu_buttons/PostACatButton";
+import SettingsButton from "./menu_buttons/SettingsButton";
 
 import { useAuthContext } from "../../../hooks/useAuthState";
 
@@ -23,8 +27,9 @@ const MenuContents = () => {
       <PhotosButton />
       <VideosButton />
 
-      {verified ? <PostButton /> : null}
+      {verified ? <PostACatButton /> : null}
       <HashtagsButton />
+      {authenticated ? <SettingsButton /> : null}
       <HomeButton />
       <img
         src="/assets/images/cat-1.webp"

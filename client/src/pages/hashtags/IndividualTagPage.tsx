@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
 
 import usePosts from "../../hooks/usePosts";
 import FormatPost from "../../components/post/FormatPost";
