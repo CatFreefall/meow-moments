@@ -17,7 +17,7 @@ const multer = Multer({
 router.post("/post/:postType", multer.array("files"), addPost);
 router.delete("/delete-post/:postId", deletePost);
 
-router.get("/getContent/:sortBy", getContent);
+router.get("/getContent/:category/:categoryValue", getContent);
 
 router.put("/toggle-liked-post/:postId", toggleLiked);
 router.get("/get-liked-state/:postId", getLikedState);

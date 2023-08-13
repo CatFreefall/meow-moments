@@ -7,6 +7,7 @@ const getPostsByRecent =
   "SELECT * FROM posts WHERE post_type = $1 ORDER BY date_posted DESC";
 const getPostsByUserID =
   "SELECT * FROM posts WHERE user_id = $1 ORDER BY date_posted DESC";
+const getPostsByPostID = "SELECT * FROM posts WHERE post_id = $1";
 
 const removePostLike =
   "DELETE FROM post_likes WHERE post_id = $1 AND user_id = $2";
@@ -22,6 +23,7 @@ export {
   post,
   getPostsByRecent,
   getPostsByUserID,
+  getPostsByPostID,
   postLikedByUser,
   removePostLike,
   addPostLike,

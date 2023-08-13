@@ -1,11 +1,13 @@
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+
 import usePosts from "../../hooks/usePosts";
 import FormatPost from "../../components/post/FormatPost";
 
-const TrendingPhotos = () => {
-  const { content } = usePosts({ mediaType: "photos" });
+const IndividualTagPage = () => {
+  const { tagname } = useParams();
+  const { content } = usePosts({ hashtag: tagname });
 
-  // creating a copy of the content object as an array so that I can sort
-  // by totalPostLikes
   const contentArray = [...content];
   contentArray.sort((a, b) => b.totalPostLikes - a.totalPostLikes);
 
@@ -22,4 +24,4 @@ const TrendingPhotos = () => {
   );
 };
 
-export default TrendingPhotos;
+export default IndividualTagPage;

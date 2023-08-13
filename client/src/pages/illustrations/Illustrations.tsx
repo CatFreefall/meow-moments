@@ -2,7 +2,7 @@ import usePosts from "../../hooks/usePosts";
 import FormatPost from "../../components/post/FormatPost";
 
 const Illustrations = () => {
-  const { content } = usePosts("illustrations");
+  const { content } = usePosts({mediaType: "illustrations"});
 
   return (
     <section className="mt-16">

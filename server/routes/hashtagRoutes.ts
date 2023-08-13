@@ -1,6 +1,6 @@
 import router from "../router";
 
-import { getHashtags } from "../controllers/content/hashtags";
+import { getHashtags } from "../controllers/content/getHashtags";
 
 router.get("/get-hashtags", getHashtags);
 

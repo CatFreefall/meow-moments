@@ -1,32 +1,27 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
-import FormatPost from "../../../components/post/FormatPost";
-import LikePost from "../../../components/post/components/LikePost";
 import usePosts from "../../../hooks/usePosts";
-import MenuSectionDivider from "../../../components/navbar/menu_components/MenuSectionDivider";
-import DeletePost from "./DeletePost";
+import FormatPost from "../../../components/post/FormatPost";
 
-type userPostsProps = {
+type UserPostsProps = {
   username: string;
 };
 
-// TODO: render the button to delete a post conditionally
-const UserPosts = ({ username }: userPostsProps) => {
-  const { content } = usePosts(username);
-  const totalPostLikesRef = useRef<number>(content[0].totalPostLikes);
+const UserPosts = ({ username }: UserPostsProps) => {
+  const { content } = usePosts({ user: username });
+  const totalPostLikesRef = useRef<number>(0);
+
+  useEffect(() => {
+    totalPostLikesRef.current =
+      content.length > 0 ? content[0].totalPostLikes : 0;
+  }, [content]);
 
   return (
-    <section>
+    <section className="mt-16">
       {content.map((item: any, index: number) => {
         return (
-          <div key={index}>
-            <MenuSectionDivider />
+          <div key={index} className="flex justify-center">
             <FormatPost post={content[index]} />
-            <LikePost
-              postId={content[index].post_id}
-              totalPostLikesRef={totalPostLikesRef}
-            />
-            <DeletePost post={content[index]} />
           </div>
         );
       })}

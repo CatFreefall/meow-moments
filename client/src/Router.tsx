@@ -14,8 +14,11 @@ import TrendingIllustrations from "./pages/illustrations/TrendingIllustrations";
 import TrendingPhotos from "./pages/photos/TrendingPhotos";
 import TrendingVideos from "./pages/videos/TrendingVideos";
 
-import Hashtags from "./pages/hashtags/Hashtags";
 import Post from "./pages/post/Post";
+
+import Hashtags from "./pages/hashtags/Hashtags";
+import IndividualTagPage from "./pages/hashtags/IndividualTagPage";
+
 import UserProfile from "./pages/profile/UserProfile";
 import ChangeProfilePage from "./pages/profile/components/ChangeProfilePage";
 
@@ -55,6 +58,7 @@ const Router = () => {
       <Route path="/videos/trending" element={<TrendingVideos />} />
 
       <Route path="/hashtags" element={<Hashtags />} />
+      <Route path="/hashtag/:tagname" element={<IndividualTagPage />} />
 
       <Route path="/post" element={<Post />} />
 

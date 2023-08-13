@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import IndividualTag from "./IndividualTag";
 import { tag } from "../../util/tagType";
-import Footer from "../../components/common/Footer";
 
 const Hashtags = () => {
   const [totalLikes, setTotalLikes] = useState<tag[]>([]);
