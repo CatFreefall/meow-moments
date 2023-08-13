@@ -1,7 +1,7 @@
-import { useAuthContext } from "../../../hooks/useAuthState";
+import { useAuthContext } from "../../../../hooks/useAuthState";
 
 // if the user is logged in, remove the unverified cookie and set a new verified cookie.
-const UserVerified = () => {
+const UserVerificationMessage = () => {
   const {
     authentication: [authenticated],
   } = useAuthContext();
@@ -14,4 +14,4 @@ const UserVerified = () => {
   return <div className="mt-16">User verified!</div>;
 };
 
-export default UserVerified;
+export default UserVerificationMessage;

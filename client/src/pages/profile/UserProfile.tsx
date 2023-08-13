@@ -5,6 +5,7 @@ import UserPosts from "./components/UserPosts";
 import MenuSectionDivider from "../../components/navbar/menu_components/MenuSectionDivider";
 import ProfilePicture from "./components/ProfilePicture";
 import userDetailsType from "./userDetailsType";
+import Footer from "../../components/common/Footer";
 
 // TODO: MEMOIZE THIS
 const UserProfile = () => {
@@ -27,30 +28,31 @@ const UserProfile = () => {
   }, [username]);
 
   return (
-    <section className="mt-16">
-      <ProfilePicture
-        profileURL={userDetails.profile_picture as string}
-      />
-      <MenuSectionDivider />
-      {username}
-      <br />
-      {`Account Creation Date: ${userDetails.account_creation_date}`}
-      <br />
-      {`Verified: ${userDetails.account_status}`}
-      <br />
-      {`Last Posted on: ${userDetails.last_posted_date}`}
-      <br />
-      {`Biography: ${userDetails.biography}`}
-      <br />
-      <button
-        className="button w-fit"
-        onClick={() => nav(`/profile/${username}/change-profile`)}
-      >
-        Change Profile
-      </button>
-      <MenuSectionDivider />
-      Posts:
-      <UserPosts username={username as string} />
+    <section className="h-screen flex flex-col justify-between">
+      <main className="mt-16">
+        <ProfilePicture profileURL={userDetails.profile_picture as string} />
+        <MenuSectionDivider />
+        {username}
+        <br />
+        {`Account Creation Date: ${userDetails.account_creation_date}`}
+        <br />
+        {`Verified: ${userDetails.account_status}`}
+        <br />
+        {`Last Posted on: ${userDetails.last_posted_date}`}
+        <br />
+        {`Biography: ${userDetails.biography}`}
+        <br />
+        <button
+          className="button w-fit"
+          onClick={() => nav(`/profile/${username}/change-profile`)}
+        >
+          Change Profile
+        </button>
+        <MenuSectionDivider />
+        Posts:
+        <UserPosts username={username as string} />
+      </main>
+      <Footer />
     </section>
   );
 };

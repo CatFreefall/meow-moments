@@ -2,7 +2,8 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
-import userDetailsType from "../userDetailsType";
+import userDetailsType from "./userDetailsType";
+import Footer from "../../components/common/Footer";
 
 // TODO: change this to have the pfp, username, and bio persist
 // from the UserProfile page instead of fetching again (I am so lazy)
@@ -61,32 +62,35 @@ const ChangeProfilePage = () => {
   };
 
   return (
-    <section className="w-screen flex flex-col items-center mt-16">
-      <img
-        src={imageURL ? imageURL : userDetails.profile_picture}
-        alt=""
-        className="rounded-full w-60 h-60"
-      />
-      <input
-        type="file"
-        accept="image/*, video/*"
-        id="change-profile-picture-button"
-        className="w-fit text-sm hidden"
-        ref={newProfilePicture}
-        onChange={updateProfilePicture}
-      ></input>
-      <label htmlFor="change-profile-picture-button">
-        Change Profile Picture
-      </label>
-      Biography (Max 255 characters)
-      <textarea
-        className="w-fit bg-darkishgrey"
-        defaultValue={userDetails.biography}
-        ref={newBio}
-      />
-      <button className="button w-fit" onClick={() => changeProfile()}>
-        Save
-      </button>
+    <section className="h-screen flex flex-col justify-between">
+      <main className="w-screen flex flex-col items-center mt-16">
+        <img
+          src={imageURL ? imageURL : userDetails.profile_picture}
+          alt=""
+          className="rounded-full w-60 h-60"
+        />
+        <input
+          type="file"
+          accept="image/*, video/*"
+          id="change-profile-picture-button"
+          className="w-fit text-sm hidden"
+          ref={newProfilePicture}
+          onChange={updateProfilePicture}
+        ></input>
+        <label htmlFor="change-profile-picture-button">
+          Change Profile Picture
+        </label>
+        Biography (Max 255 characters)
+        <textarea
+          className="w-fit bg-darkishgrey"
+          defaultValue={userDetails.biography}
+          ref={newBio}
+        />
+        <button className="button w-fit" onClick={() => changeProfile()}>
+          Save
+        </button>
+      </main>
+      <Footer />
     </section>
   );
 };

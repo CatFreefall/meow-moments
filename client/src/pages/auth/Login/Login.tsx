@@ -7,6 +7,7 @@ import ResetPasswordButton from "./components/ForgotPasswordButton";
 import PasswordChangeEmailSent from "../../../components/toasts/PasswordChangeEmailSent";
 import EmailUsernameInput from "./components/UsernameEmailInput";
 import PasswordInput from "./components/PasswordInput";
+import Footer from "../../../components/common/Footer";
 
 const Login = () => {
   const [emailUsername, setEmailUsername] = useState<string>("");
@@ -57,49 +58,51 @@ const Login = () => {
   };
 
   return (
-    <section className="h-screen">
+    <section className="h-screen flex flex-col justify-between">
       {userEvent ? <PasswordChangeEmailSent /> : null}
-      <section className="flex flex-col h-full justify-evenly">
-        <img
-          src="/assets/images/cat-16.webp"
-          alt=""
-          className="w-5/12 self-center mt-16"
-        ></img>
-        <div>
-          <div className="flex flex-col items-center">
-            <EmailUsernameInput
-              setEmailUsername={setEmailUsername}
-              errorMessage={errorMessage}
+      <img
+        src="/assets/images/cat-16.webp"
+        alt=""
+        className="w-5/12 self-center mt-24"
+      ></img>
+      <div>
+        <div className="flex flex-col items-center">
+          <EmailUsernameInput
+            setEmailUsername={setEmailUsername}
+            errorMessage={errorMessage}
+          />
+          <PasswordInput
+            setPassword={setPassword}
+            errorMessage={errorMessage}
+          />
+        </div>
+        <div className="flex flex-col items-center h-2 text-xs text-rose-400">
+          {errorMessage}
+        </div>
+        <div className="flex flex-col items-center mt-6">
+          <button onClick={login} className="button rounded-lg w-3/5">
+            Submit
+          </button>
+          <div onClick={() => setUserEvent(true)}>
+            <ResetPasswordButton
+              emailUsername={emailUsername}
+              text="Forgot Password?"
             />
-            <PasswordInput
-              setPassword={setPassword}
-              errorMessage={errorMessage}
-            />
-          </div>
-          <div className="flex flex-col items-center h-2 text-xs text-rose-400">
-            {errorMessage}
-          </div>
-          <div className="flex flex-col items-center mt-6">
-            <button onClick={login} className="button rounded-lg w-3/5">
-              Submit
-            </button>
-            <div onClick={() => setUserEvent(true)}>
-              <ResetPasswordButton emailUsername={emailUsername} text="Forgot Password?" />
-            </div>
           </div>
         </div>
-        <img
-          src="/assets/images/cat-divider.webp"
-          alt=""
-          className="self-center w-56"
-        ></img>
-        <div className="text-xs flex justify-center items-center">
-          <div className="pr-1">Don't have an account?</div>
-          <div className="pl-1">
-            <RegisterButton />
-          </div>
+      </div>
+      <img
+        src="/assets/images/cat-divider.webp"
+        alt=""
+        className="self-center w-56"
+      ></img>
+      <div className="text-xs flex justify-center items-center">
+        <div className="pr-1">Don't have an account?</div>
+        <div className="pl-1">
+          <RegisterButton />
         </div>
-      </section>
+      </div>
+      <Footer />
     </section>
   );
 };

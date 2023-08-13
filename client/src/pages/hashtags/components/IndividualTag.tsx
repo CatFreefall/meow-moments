@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { tagType } from "../../util/tagType";
+import { tagType } from "../../../util/tagType";
 
 const IndividualTag = ({ tag }: tagType) => {
   const nav = useNavigate();

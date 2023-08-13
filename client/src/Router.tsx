@@ -20,7 +20,7 @@ import Hashtags from "./pages/hashtags/Hashtags";
 import IndividualTagPage from "./pages/hashtags/IndividualTagPage";
 
 import UserProfile from "./pages/profile/UserProfile";
-import ChangeProfilePage from "./pages/profile/components/ChangeProfilePage";
+import ChangeProfilePage from "./pages/profile/ChangeProfilePage";
 
 import NoPage from "./pages/NoPage";
 import Settings from "./pages/Settings/Settings";

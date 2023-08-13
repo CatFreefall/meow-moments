@@ -1,3 +1,4 @@
+import Footer from "../../components/common/Footer";
 import MenuSectionDivider from "../../components/navbar/menu_components/MenuSectionDivider";
 import sendConfirmationEmail from "../../util/sendConfirmationEmail";
 import ResetPasswordButton from "../auth/Login/components/ForgotPasswordButton";
@@ -9,19 +10,22 @@ const Settings = () => {
   const verificationStatus = document.cookie.split(";")[1].split("=")[1];
 
   return (
-    <section className="mt-16">
-      <ResetPasswordButton
-        emailUsername={username}
-        text="Want to change your password? Click me!"
-      />
-      <MenuSectionDivider />
-      Verification Status:{" "}
-      {verificationStatus === "true" ? "Verified" : "Unverified"}
-      {verificationStatus === "true" ? null : (
-        <button onClick={() => sendConfirmationEmail(username)}>
-          Send a verification Email!
-        </button>
-      )}
+    <section className="h-screen flex flex-col justify-between">
+      <main className="mt-16">
+        <ResetPasswordButton
+          emailUsername={username}
+          text="Want to change your password? Click me!"
+        />
+        <MenuSectionDivider />
+        Verification Status:{" "}
+        {verificationStatus === "true" ? "Verified" : "Unverified"}
+        {verificationStatus === "true" ? null : (
+          <button onClick={() => sendConfirmationEmail(username)}>
+            Send a verification Email!
+          </button>
+        )}
+      </main>
+      <Footer />
     </section>
   );
 };

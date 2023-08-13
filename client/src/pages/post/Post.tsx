@@ -1,6 +1,7 @@
 import { useRef } from "react";
 
 import FileInput from "./components/FileInput";
+import Footer from "../../components/common/Footer";
 
 // TODO: do file format checking before sending to server
 const Post = () => {
@@ -32,8 +33,8 @@ const Post = () => {
   };
 
   return (
-    <section className="h-screen">
-      <div className="mx-5 flex flex-col h-full items-center justify-evenly">
+    <section className="h-screen flex flex-col justify-between">
+      <main className="mx-5 mt-16 flex flex-col items-center">
         <FileInput fileInput={fileInput} />
         <select className="text-darkgrey" ref={postType}>
           <option value="illustration">Illustration</option>
@@ -54,7 +55,8 @@ const Post = () => {
         <button className="button w-fit" onClick={submitFile}>
           Post!
         </button>
-      </div>
+      </main>
+      <Footer />
     </section>
   );
 };
