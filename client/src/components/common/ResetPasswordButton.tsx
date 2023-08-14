@@ -5,7 +5,10 @@ type ResetPasswordButtonProps = {
   text: string;
 };
 
-const ResetPasswordButton = ({ emailUsername, text }: ResetPasswordButtonProps) => {
+const ResetPasswordButton = ({
+  emailUsername,
+  text,
+}: ResetPasswordButtonProps) => {
   // differentiating between the user entering in with their email or
   // username before sending the request to the server.
   const sendPasswordResetEmail = async (emailUsername: string) => {

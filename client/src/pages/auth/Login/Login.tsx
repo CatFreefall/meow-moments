@@ -1,71 +1,28 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { validate } from "email-validator";
 
-import RegisterButton from "../../../components/common/RegisterButton";
-import ResetPasswordButton from "./components/ForgotPasswordButton";
+import ResetPasswordButton from "../../../components/common/ResetPasswordButton";
 import PasswordChangeEmailSent from "../../../components/toasts/PasswordChangeEmailSent";
 import EmailUsernameInput from "./components/UsernameEmailInput";
 import PasswordInput from "./components/PasswordInput";
 import Footer from "../../../components/common/Footer";
+import LoginImage from "./components/LoginImage";
+import LoginDivider from "./components/LoginDivider";
+import RegistrationContainer from "./components/RegistrationContainer";
+import SubmitButton from "./components/SubmitButton";
 
 const Login = () => {
   const [emailUsername, setEmailUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [userEvent, setUserEvent] = useState(false);
+
+  const [forgotPasswordClicked, setForgotPasswordClicked] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const nav = useNavigate();
-
-  const login = async (e: any) => {
-    e.preventDefault();
-
-    // determining if the user is signing in with their email or username
-    try {
-      const jsonBody = validate(emailUsername)
-        ? JSON.stringify({
-            username: null,
-            email: emailUsername,
-            password: password,
-          })
-        : JSON.stringify({
-            username: emailUsername,
-            email: null,
-            password: password,
-          });
-
-      await fetch("/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: jsonBody,
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          if (res === "Login successful!") {
-            console.log(res);
-            nav("/");
-            window.location.reload();
-          } else return res;
-        })
-        .then((data) => setErrorMessage(data))
-        .catch((e) => console.log(e));
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   return (
     <section className="h-screen flex flex-col justify-between">
-      {userEvent ? <PasswordChangeEmailSent /> : null}
-      <img
-        src="/assets/images/cat-16.webp"
-        alt=""
-        className="w-5/12 self-center mt-24"
-      ></img>
-      <div>
+      {forgotPasswordClicked ? <PasswordChangeEmailSent /> : null}
+      <LoginImage />
+      <main>
         <div className="flex flex-col items-center">
           <EmailUsernameInput
             setEmailUsername={setEmailUsername}
@@ -80,28 +37,21 @@ const Login = () => {
           {errorMessage}
         </div>
         <div className="flex flex-col items-center mt-6">
-          <button onClick={login} className="button rounded-lg w-3/5">
-            Submit
-          </button>
-          <div onClick={() => setUserEvent(true)}>
+          <SubmitButton
+            emailUsername={emailUsername}
+            password={password}
+            setErrorMessage={setErrorMessage}
+          />
+          <h6 onClick={() => setForgotPasswordClicked(true)}>
             <ResetPasswordButton
               emailUsername={emailUsername}
               text="Forgot Password?"
             />
-          </div>
+          </h6>
         </div>
-      </div>
-      <img
-        src="/assets/images/cat-divider.webp"
-        alt=""
-        className="self-center w-56"
-      ></img>
-      <div className="text-xs flex justify-center items-center">
-        <div className="pr-1">Don't have an account?</div>
-        <div className="pl-1">
-          <RegisterButton />
-        </div>
-      </div>
+      </main>
+      <LoginDivider />
+      <RegistrationContainer />
       <Footer />
     </section>
   );

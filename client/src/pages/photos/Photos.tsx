@@ -11,7 +11,7 @@ const Photos = () => {
         {content.map((item: any, index: number) => {
           return (
             <div key={index} className="flex justify-center">
-              <FormatPost post={content[index]} />
+              <FormatPost post={item} />
             </div>
           );
         })}

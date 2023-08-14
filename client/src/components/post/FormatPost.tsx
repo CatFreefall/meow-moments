@@ -26,7 +26,7 @@ const FormatPost = ({ post }: postProps) => {
       <MenuSectionDivider color="bg-blue" />
       <MediaCarousel srcURLs={post.mediaFileURLs} />
       <MenuSectionDivider color="bg-blue" />
-      <p className="text-xs">{post.description}</p>
+      <p className="text-xs break-words">{post.description}</p>
       <PostHashtags hashtags={post.postHashtags} />
       <LikePost postId={post.post_id} totalPostLikesRef={totalPostLikesRef} />
     </section>

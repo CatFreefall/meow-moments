@@ -1,7 +1,7 @@
 import Footer from "../../components/common/Footer";
 import MenuSectionDivider from "../../components/navbar/menu_components/MenuSectionDivider";
 import sendConfirmationEmail from "../../util/sendConfirmationEmail";
-import ResetPasswordButton from "../auth/Login/components/ForgotPasswordButton";
+import ResetPasswordButton from "../../components/common/ResetPasswordButton";
 
 // TODO: make this route conditionally accessible
 // TODO: create a toast notifying the user that the verification email has bee nsent
