@@ -7,7 +7,7 @@ type SubmitButtonProps = {
   setErrorMessage: (message: string) => void;
 };
 
-const SubmitButton = ({
+const LoginButton = ({
   emailUsername,
   password,
   setErrorMessage,
@@ -60,4 +60,4 @@ const SubmitButton = ({
   );
 };
 
-export default SubmitButton;
+export default LoginButton;

@@ -1,16 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { validate } from "email-validator";
 
 import EmailVerificationSent from "../../../components/toasts/EmailVerificationSent";
-import LoginButton from "../../../components/common/LoginButton";
-import EmailInputBox from "./components/EmailInputBox";
+import EmailInput from "./components/EmailInput";
 import Footer from "../../../components/common/Footer";
+import ToLogin from "./components/ToLogin";
+import RegistrationDivider from "./components/RegistrationDivider";
+import RegisterButton from "./components/RegisterButton";
+import UsernameInput from "./components/UsernameInput";
+import PasswordInputBoxes from "./components/PasswordInputBoxes";
+import RegistrationImage from "./components/RegistrationImage";
+import ErrorMessage from "./components/ErrorMessage";
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [email, setEmail] = useState("");
   const [userCreated, setUserCreated] = useState(false);
 
@@ -21,7 +26,6 @@ const Register = () => {
   const currentDate: String =
     date.getMonth() + 1 + "-" + date.getDate() + "-" + date.getFullYear();
 
-  //TODO: check existence of username and email and use a useReducer hook here
   const register = async () => {
     // validating the email using the email-validator lib before querying the database.
     try {
@@ -46,135 +50,37 @@ const Register = () => {
     }
   };
 
-  useEffect(() => {
-    if (username.length > 0) {
-      fetch(`/validate-username/${username}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) =>
-          data === "Username Already Exists."
-            ? setErrorMessage(data)
-            : setErrorMessage("")
-        )
-        .catch((e) => console.log(e));
-    }
-  }, [username]);
-
-  const validateEmail = () => {
-    if (validate(email))
-      fetch(`/validate-email/${email}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data === "Email Already Exists.") {
-            setErrorMessage(data);
-          } else {
-            setErrorMessage("");
-            register();
-          }
-        })
-        .catch((e) => console.log(e));
-    else setErrorMessage("Invalid Email.");
-  };
-
-  useEffect(() => {
-    if (
-      (password.length > 0 &&
-        confirmPassword.length > 0 &&
-        errorMessage === "") ||
-      errorMessage === "Passwords do not match."
-    ) {
-      password === confirmPassword
-        ? setPasswordsMatch(true)
-        : setPasswordsMatch(false);
-      setErrorMessage(passwordsMatch ? "" : "Passwords do not match.");
-    }
-  }, [password, confirmPassword, passwordsMatch, errorMessage]);
-
   return (
     <section className="h-screen flex flex-col justify-between">
       {userCreated ? <EmailVerificationSent /> : <></>}
-      <img
-        src="/assets/images/cat-16.webp"
-        alt=""
-        className="w-5/12 self-center mt-20"
-      ></img>
-      <div>
-        <form className="flex flex-col items-center">
-          <input
-            type="text"
-            placeholder="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className={`mb-1 ${
-              errorMessage.indexOf("Username") !== -1
-                ? "input-box-error"
-                : "input-box"
-            }`}
-          ></input>
-          <EmailInputBox setEmail={setEmail} errorMessage={errorMessage} />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className={`mb-1 ${
-              errorMessage.indexOf("Passwords") !== -1
-                ? "input-box-error"
-                : "input-box"
-            }`}
-          ></input>
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className={` ${
-              errorMessage.indexOf("Passwords") !== -1
-                ? "input-box-error"
-                : "input-box"
-            }`}
-          ></input>
-        </form>
-        <div className="flex flex-col items-center h-2 text-xs text-rose-400">
-          {errorMessage}
-        </div>
-        <div className="flex flex-col items-center mt-6">
-          <button
-            onClick={() => {
-              validateEmail();
-            }}
-            className="button rounded-lg w-3/5 disabled:bg-darkblue"
-            disabled={
-              errorMessage === "Passwords do not match." ||
-              errorMessage === "Username Already Exists."
-                ? true
-                : false
-            }
-          >
-            Register
-          </button>
-        </div>
-      </div>
-      <img
-        src="/assets/images/cat-divider.webp"
-        alt=""
-        className="self-center w-56"
-      ></img>
-      <div className="text-xs flex justify-center items-center">
-        <div className="pr-1">Have an account?</div>
-        <div className="pl-1">
-          <LoginButton />
-        </div>
-      </div>
+      <RegistrationImage />
+
+      <form className="flex flex-col items-center">
+        <UsernameInput
+          username={username}
+          setUsername={setUsername}
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
+        />
+        <EmailInput setEmail={setEmail} errorMessage={errorMessage} />
+        <PasswordInputBoxes
+          password={password}
+          setPassword={setPassword}
+          confirmPassword={confirmPassword}
+          setConfirmPassword={setConfirmPassword}
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
+        />
+      </form>
+      <ErrorMessage errorMessage={errorMessage} />
+      <RegisterButton
+        email={email}
+        register={register}
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
+      />
+      <RegistrationDivider />
+      <ToLogin />
       <Footer />
     </section>
   );

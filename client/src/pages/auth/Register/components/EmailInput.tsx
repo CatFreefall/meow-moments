@@ -3,7 +3,7 @@ type EmailInputBoxProps = {
   errorMessage: string;
 };
 
-const EmailInputBox = ({ setEmail, errorMessage }: EmailInputBoxProps) => {
+const EmailInput = ({ setEmail, errorMessage }: EmailInputBoxProps) => {
   return (
     <input
       type="email"
@@ -16,4 +16,4 @@ const EmailInputBox = ({ setEmail, errorMessage }: EmailInputBoxProps) => {
   );
 };
 
-export default EmailInputBox;
+export default EmailInput;

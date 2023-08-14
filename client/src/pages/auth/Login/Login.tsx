@@ -7,8 +7,8 @@ import PasswordInput from "./components/PasswordInput";
 import Footer from "../../../components/common/Footer";
 import LoginImage from "./components/LoginImage";
 import LoginDivider from "./components/LoginDivider";
-import RegistrationContainer from "./components/RegistrationContainer";
-import SubmitButton from "./components/SubmitButton";
+import ToRegistration from "./components/ToRegistration";
+import LoginButton from "./components/LoginButton";
 
 const Login = () => {
   const [emailUsername, setEmailUsername] = useState<string>("");
@@ -37,7 +37,7 @@ const Login = () => {
           {errorMessage}
         </div>
         <div className="flex flex-col items-center mt-6">
-          <SubmitButton
+          <LoginButton
             emailUsername={emailUsername}
             password={password}
             setErrorMessage={setErrorMessage}
@@ -51,7 +51,7 @@ const Login = () => {
         </div>
       </main>
       <LoginDivider />
-      <RegistrationContainer />
+      <ToRegistration />
       <Footer />
     </section>
   );
