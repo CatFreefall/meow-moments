@@ -40,7 +40,6 @@ const ChangeProfilePage = () => {
 
     fetch(`/change-profile`, {
       method: "POST",
-      credentials: "include",
       body: formData,
     })
       .then(() => nav(`/profile/${username}`))

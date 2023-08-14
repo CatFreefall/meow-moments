@@ -11,14 +11,14 @@ import {
   getProfile,
   getUserPosts,
 } from "../controllers/content/getProfileInfo";
-import { changeProfilePicture } from "../controllers/content/changeProfileInfo";
+import changeProfileInfo from "../controllers/content/changeProfileInfo";
 
 router.get("/profile/:username", getProfile);
 router.get("/user-posts/:username", getUserPosts);
 router.post(
   "/change-profile",
   multer.single("new-profile-picture"),
-  changeProfilePicture
+  changeProfileInfo
 );
 
 export default router;

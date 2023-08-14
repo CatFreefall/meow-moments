@@ -17,7 +17,7 @@ const UserPosts = ({ username }: UserPostsProps) => {
   }, [content]);
 
   return (
-    <section className="mt-16">
+    <section>
       {content.map((item: any, index: number) => {
         return (
           <div key={index} className="flex justify-center">
