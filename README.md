@@ -11,6 +11,7 @@ Meow Moments features a lot of the common functionality you would see in a stand
 This project was built using a number of tools and libraries. The significant ones are as listed:
  - Typescript
  - React using create-react-app
+ - React Router
  - Tailwind
  - A storage bucket to store images posted on the website, a CDN to quickly distribute them throughout parts of the world, and a load balancer to take care of request traffic. I used Google Cloud to provide me all of these services.
  - A Postgres database to store any user data like posts, post likes, hashtags, etc.
