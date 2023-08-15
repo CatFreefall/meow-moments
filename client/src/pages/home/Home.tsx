@@ -5,11 +5,15 @@ import CatASCII from "./components/CatASCII";
 import CatSlogan from "./components/CatSlogan";
 import LoginContainer from "./components/LoginContainer";
 import RegistrationContainer from "./components/RegistrationContainer";
-import TrendingIconsContainer from "./components/TrendingIconsContainer";
+import TrendingHashtagsContainer from "./components/TrendingHashtagsContainer";
 import Welcome from "./components/Welcome";
+import useHashtags from "../../hooks/useHashtags";
+import IndividualTag from "../hashtags/components/IndividualTag";
+import { tag } from "../../util/tagType";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { hashtags } = useHashtags();
 
   const setLoaded = () => {
     setIsLoading(false);
@@ -45,7 +49,12 @@ const Home = () => {
           alt=""
           className="w-28 my-10 self-center"
         ></img>
-        <TrendingIconsContainer />
+        <div>
+          {hashtags.map(
+            (hashtag: tag, index: number) =>
+              index <= 4 && <IndividualTag key={index} tag={hashtag} />
+          )}
+        </div>
         <img
           src="assets/images/fat-cat.gif"
           alt=""
