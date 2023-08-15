@@ -6,6 +6,8 @@ import LikePost from "./components/LikePost";
 import ProfileButton from "./components/ProfileButton";
 import MenuSectionDivider from "../navbar/menu_components/MenuSectionDivider";
 import PostHashtags from "./components/PostHashtags";
+import { useAuthContext } from "../../hooks/useAuthState";
+import DeletePost from "../../pages/profile/components/DeletePost";
 
 // post areas are initially rendered with an image located in the public
 // folder and replaced with the post image once loaded for lazy loading
@@ -13,6 +15,9 @@ import PostHashtags from "./components/PostHashtags";
 const FormatPost = ({ post }: postProps) => {
   const datePosted = new Date(post.date_posted).toLocaleDateString();
   const totalPostLikesRef = useRef<number>(post.totalPostLikes);
+  const {
+    authentication: [authenticated],
+  } = useAuthContext();
 
   return (
     <section className="w-60 bg-darkishgrey my-2 shadow-xl rounded-lg h-fit p-4">
@@ -28,7 +33,9 @@ const FormatPost = ({ post }: postProps) => {
       <MenuSectionDivider color="bg-blue" />
       <p className="text-xs break-words">{post.description}</p>
       <PostHashtags hashtags={post.postHashtags} />
+
       <LikePost postId={post.post_id} totalPostLikesRef={totalPostLikesRef} />
+      {authenticated && <DeletePost post={post} />}
     </section>
   );
 };
