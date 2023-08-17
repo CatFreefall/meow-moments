@@ -5,7 +5,6 @@ import CatASCII from "./components/CatASCII";
 import CatSlogan from "./components/CatSlogan";
 import LoginContainer from "./components/LoginContainer";
 import RegistrationContainer from "./components/RegistrationContainer";
-import TrendingHashtagsContainer from "./components/TrendingHashtagsContainer";
 import Welcome from "./components/Welcome";
 import useHashtags from "../../hooks/useHashtags";
 import IndividualTag from "../hashtags/components/IndividualTag";
