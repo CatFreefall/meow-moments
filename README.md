@@ -13,7 +13,7 @@ This project was built using a number of tools and libraries. The significant on
  - React using create-react-app
  - React Router
  - Tailwind
- - A storage bucket to store images posted on the website, a CDN to quickly distribute them throughout parts of the world, and a load balancer to take care of request traffic. I used Google Cloud to provide me all of these services.
+ - A storage bucket to store images posted on the website, a CDN to quickly distribute them throughout parts of the world, and a load balancer to take care of request traffic. I used Google Cloud to provide me all of these services. These services will be cancelled once the project is completed to prevent billing to my card.
  - A Postgres database to store any user data like posts, post likes, hashtags, etc.
  - JSON Web Token to generate secure refresh and access tokens and protect specific routes.
  - bcrypt to salt and hash passwords before storing them in the database.
@@ -21,3 +21,6 @@ This project was built using a number of tools and libraries. The significant on
 
 ## Getting Started
 cd to the server directory and run "npm run dev" to get the server side of the application started. Then cd to the client and run "npm start" and navigate to http://localhost:3000/.
+
+## Next Steps
+I plan to focus on refining my skills in React, while also learning about TDD with Jest and how to handle global states using Redux + Redux Toolkit.
